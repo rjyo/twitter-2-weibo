@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<project name="weibo4j" default="all" basedir=".">
+	<tstamp>
+		<format property="now.date" pattern="yyyyMMddhhmmss" locale="zh" />
+	</tstamp>
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="lib.dir" value="/src/lib" />
+	<property name="dest.dir" value="${basedir}/dest" />
+	<property name="jar.name" value="weibo4j-${now.date}.jar" />
+	<property name="jar.dir" value="${basedir}/dict" />
+	<fileset id="libDir" dir="/src/lib">
+		<include name="**/*.jar" />
+		<exclude name="./junit-4.1.jar" />
+	</fileset>
+	<path id="classpath">
+		<fileset refid="libDir">
+		</fileset>
+	</path>
+	<target name="compile">
+		<mkdir dir="${dest.dir}" />
+		<javac srcdir="${src.dir}" destdir="${dest.dir}" encoding="UTF-8" classpathref="classpath" />
+	</target>
+	<target name="jar" depends="compile">
+		<mkdir dir="${jar.dir}" />
+		<delete>
+			<fileset dir="${jar.dir}">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+		<jar destfile="${jar.dir}/${jar.name}" basedir="${dest.dir}" />
+		<copy todir="${jar.dir}" overwrite="true">
+			<fileset refid="libDir" />
+		</copy>
+	</target>
+	<target name="clean" description="Cleans up all build-generated output">
+		<delete dir="${dest.dir}" failonerror="false" />
+	</target>
+
+	<target name="all" depends="jar,clean" />
+</project>
