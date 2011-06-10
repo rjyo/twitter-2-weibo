@@ -7,6 +7,7 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import weibo4j.Weibo;
+import weibo4j.WeiboException;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -90,17 +91,15 @@ public class HelloWeibo {
             for (int i = statuses.size() - 1; i >= 0 ; i --) {
                 twitter4j.Status status = statuses.get(i);
                 System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText());
-                // user.updateStatus(filterTwitterStatus(status.getText()));
+                user.updateStatus(filterTwitterStatus(status.getText()));
                 tid.latestId = status.getId();
-                tid.save();
 
                 Thread.sleep(1000);
-                break; // test one only
             }
         } catch (TwitterException te) {
             System.out.println("Failed to get timeline: " + te.getMessage());
-//        } catch (WeiboException e) {
-//            System.out.println("Failed to sendto Weibo: " + e.getMessage());
+        } catch (WeiboException e) {
+            System.out.println("Failed to sendto Weibo: " + e.getMessage());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

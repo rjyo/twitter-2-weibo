@@ -32,7 +32,12 @@ public class TweetID {
         try {
             tid = em.find(TweetID.class, user);
             if (tid == null) {
+                System.out.println("TID NOT FOUND");
                 tid = new TweetID(user);
+                tid.latestId = (long) 0;
+                tid.save();
+            } else {
+                System.out.println("FOUND TID:" + tid.latestId);
             }
         } finally {
             em.close();
