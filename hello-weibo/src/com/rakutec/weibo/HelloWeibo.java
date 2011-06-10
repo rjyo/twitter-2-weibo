@@ -10,13 +10,14 @@ import weibo4j.Weibo;
 import weibo4j.WeiboException;
 
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 /**
  * @author Rakuraku Jyo
  */
 public class HelloWeibo {
+    private static final Logger log = Logger.getLogger(HelloWeibo.class.getName());
     private Weibo user = null;
 
     public HelloWeibo() {
@@ -77,7 +78,7 @@ public class HelloWeibo {
         try {
             TweetID tid = TweetID.loadTweetID(screenName);
             long latestId = tid.latestId;
-            System.out.println("TID = " + latestId);
+            log.info("TID = " + latestId);
 
             List<twitter4j.Status> statuses;
             if (latestId == 0) {
@@ -87,22 +88,24 @@ public class HelloWeibo {
                 statuses = twitter.getUserTimeline(screenName, paging);
             }
 
-            System.out.println("Showing @" + screenName + "'s userId timeline.");
+            log.info("Showing @" + screenName + "'s userId timeline.");
 
             for (int i = statuses.size() - 1; i >= 0 ; i --) {
                 twitter4j.Status status = statuses.get(i);
-                System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText());
+                log.info("@" + status.getUser().getScreenName() + " - " + status.getText());
                 user.updateStatus(filterTwitterStatus(status.getText()));
                 tid.update(status.getId());
 
                 Thread.sleep(1000);
             }
         } catch (TwitterException te) {
-            System.out.println("Failed to get timeline: " + te.getMessage());
+            log.warning("Failed to get timeline: " + te.getMessage());
+            throw new RuntimeException(te);
         } catch (WeiboException e) {
-            System.out.println("Failed to sendto Weibo: " + e.getMessage());
+            log.warning("Failed to sendto Weibo");
+            throw new RuntimeException(e);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

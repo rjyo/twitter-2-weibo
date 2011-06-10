@@ -4,9 +4,12 @@ import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
+import java.util.logging.Logger;
 
 @Entity
 public class TweetID {
+    private static final Logger log = Logger.getLogger(TweetID.class.getName());
+
     @Id
     public String userId;
 
@@ -18,7 +21,7 @@ public class TweetID {
     }
 
     public void update(Long tweetId) {
-        System.out.println("updating latest id to " + tweetId);
+        log.info("updating latest id to " + tweetId);
         EntityManager em = EMFService.get().createEntityManager();
         try {
             em.getTransaction().begin();
@@ -36,12 +39,12 @@ public class TweetID {
         try {
             tid = em.find(TweetID.class, user);
             if (tid == null) {
-                System.out.println("TID NOT FOUND");
+                log.info("TID NOT FOUND");
                 tid = new TweetID(user);
                 tid.latestId = (long) 0;
                 em.persist(tid);
             } else {
-                System.out.println("FOUND TID:" + tid.latestId);
+                log.info("FOUND TID:" + tid.latestId);
             }
         } finally {
             em.close();
