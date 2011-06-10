@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="appengine">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/appengine-java-sdk-1.5.0.1/lib/user/appengine-api-1.0-sdk-1.5.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

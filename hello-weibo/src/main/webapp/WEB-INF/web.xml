@@ -1,18 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd">
 
-	<display-name>Hello Java</display-name>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+    <servlet>
+        <servlet-name>HelloServlet</servlet-name>
+        <servlet-class>com.rakutec.weibo.HelloServlet</servlet-class>
+    </servlet>
 
-	<servlet>
-		<servlet-name>HelloServlet</servlet-name>
-		<servlet-class>org.cloudfoundry.samples.HelloServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>HelloServlet</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>HelloServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
 </web-app>

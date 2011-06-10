@@ -2,87 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1dfa6322-8cc1-4150-86d6-15d72ff3b2b6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_rosaloves_bitlyj_2_0_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_twitter4j_twitter4j_core_2_2_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/org/cloudfoundry/samples/HelloWeibo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/latest_id.txt" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hello-weibo/lib/commons-codec.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hello-weibo/lib/commons-httpclient-3.1.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hello-weibo/lib/commons-logging-1.1.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hello-weibo/src/main/java/org/cloudfoundry/samples/Test.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/Comment.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/Comment.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/Configuration.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/Configuration.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/Constants.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/Constants.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/Count.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/Count.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/DirectMessage.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/DirectMessage.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/Emotion.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/Emotion.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/Gender.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/Gender.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/IDs.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/IDs.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/Paging.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/Paging.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/Query.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/Query.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/RateLimitStatus.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/RateLimitStatus.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/RetweetDetails.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/RetweetDetails.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/SavedSearch.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/SavedSearch.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/SearchResult.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/SearchResult.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/Status.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/Status.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/Tag.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/Tag.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/Trend.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/Trend.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/Trends.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/Trends.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/User.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/User.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/UserTrend.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/UserTrend.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/UserWapper.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/UserWapper.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/Version.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/Version.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/Weibo.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/Weibo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/WeiboException.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/WeiboException.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/WeiboResponse.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/WeiboResponse.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/WeiboSupport.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/WeiboSupport.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/examples/BaseExamples.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/BaseExamples.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/examples/BaseInterface.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/BaseInterface.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/examples/BlocksAPIExamples.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/BlocksAPIExamples.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/examples/DirectMessageAPIExample.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/DirectMessageAPIExample.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/examples/FriendShipsAPIExamples.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/FriendShipsAPIExamples.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/examples/OAuthAPIExamples.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/OAuthAPIExamples.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/examples/SearchAPIExamples.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/SearchAPIExamples.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/examples/SocialGraphAPIExamples.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/SocialGraphAPIExamples.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/examples/TagsAPIExamples.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/TagsAPIExamples.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/examples/Test.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/Test.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/examples/TimeLineAPIExamples.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/TimeLineAPIExamples.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/examples/TrendsAPIExamples.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/TrendsAPIExamples.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/examples/UserAPIExamples.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/UserAPIExamples.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/examples/WeiboViewAPIExamples.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/WeiboViewAPIExamples.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/http/AccessToken.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/http/AccessToken.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/http/BASE64Encoder.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/http/BASE64Encoder.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/http/HTMLEntity.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/http/HTMLEntity.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/http/HttpClient.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/http/HttpClient.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/http/ImageItem.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/http/ImageItem.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/http/OAuth.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/http/OAuth.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/http/OAuthToken.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/http/OAuthToken.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/http/PostParameter.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/http/PostParameter.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/http/RequestToken.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/http/RequestToken.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/http/Response.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/http/Response.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/org/json/CDL.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/org/json/CDL.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/org/json/Cookie.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/org/json/Cookie.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/org/json/CookieList.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/org/json/CookieList.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/org/json/HTTP.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/org/json/HTTP.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/org/json/HTTPTokener.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/org/json/HTTPTokener.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/org/json/JSONArray.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/org/json/JSONArray.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/org/json/JSONException.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/org/json/JSONException.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/org/json/JSONML.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/org/json/JSONML.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/org/json/JSONObject.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/org/json/JSONObject.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/org/json/JSONString.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/org/json/JSONString.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/org/json/JSONStringer.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/org/json/JSONStringer.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/org/json/JSONTokener.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/org/json/JSONTokener.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/org/json/JSONWriter.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/org/json/JSONWriter.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/org/json/Test.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/org/json/Test.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/org/json/XML.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/org/json/XML.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/org/json/XMLTokener.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/org/json/XMLTokener.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/util/BareBonesBrowserLaunch.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/util/BareBonesBrowserLaunch.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/weibo/weibo4j/util/URLEncodeUtils.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/util/URLEncodeUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/appengine.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/hello-weibo/Makefile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/hello-weibo/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/hello-weibo/src/main/webapp/WEB-INF/appengine-web.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/hello-weibo/src/main/webapp/WEB-INF/logging.properties" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/src/main/java/org/cloudfoundry/samples/HelloServlet.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/com/rakutec/weibo/HelloServlet.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/hello-weibo/src/main/java/org/cloudfoundry/samples/HelloWeibo.java" afterPath="$PROJECT_DIR$/hello-weibo/src/main/java/com/rakutec/weibo/HelloWeibo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hello-weibo/hello-weibo.iml" afterPath="$PROJECT_DIR$/hello-weibo/hello-weibo.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hello-weibo/pom.xml" afterPath="$PROJECT_DIR$/hello-weibo/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hello-weibo/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/hello-weibo/src/main/webapp/WEB-INF/web.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/latest_id.txt" afterPath="$PROJECT_DIR$/latest_id.txt" />
     </list>
     <ignored path="sina-weibo4j.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -141,37 +73,84 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/hello-weibo/pom.xml">
+      <file leaf-file-name="HelloServlet.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/java/com/rakutec/weibo/HelloServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="26" selection-start="1373" selection-end="1373" vertical-scroll-proportion="0.66058004">
+            <state line="15" column="59" selection-start="590" selection-end="590" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HelloServlet.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/java/org/cloudfoundry/samples/HelloServlet.java">
+      <file leaf-file-name="README.md" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/hello-weibo/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="31" selection-start="570" selection-end="570" vertical-scroll-proportion="0.0">
+            <state line="6" column="10" selection-start="83" selection-end="83" vertical-scroll-proportion="0.09879254">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Makefile" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hello-weibo/Makefile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="10" selection-start="181" selection-end="181" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="logging.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/webapp/WEB-INF/logging.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="HelloWeibo.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/java/org/cloudfoundry/samples/HelloWeibo.java">
+        <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/java/com/rakutec/weibo/HelloWeibo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="65" selection-start="2201" selection-end="2201" vertical-scroll-proportion="0.0">
+            <state line="139" column="30" selection-start="4767" selection-end="4767" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hello-weibo/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="42" column="21" selection-start="1405" selection-end="1405" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Weibo.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/Weibo.java">
+      <file leaf-file-name="web.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/webapp/WEB-INF/web.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1431" column="61" selection-start="59651" selection-end="59659" vertical-scroll-proportion="0.0">
+            <state line="12" column="22" selection-start="483" selection-end="483" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="appengine-web.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/webapp/WEB-INF/appengine-web.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="16" selection-start="328" selection-end="328" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hello-weibo/build.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -191,21 +170,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/weibo4jV1/web.xml.html" />
-        <option value="$PROJECT_DIR$/weibo4jV1/web.xml" />
-        <option value="$PROJECT_DIR$/weibo4jV1/examples/a.java" />
-        <option value="$PROJECT_DIR$/weibo4jV1/examples/HelloServlet.java" />
-        <option value="$PROJECT_DIR$/weibo4jV1/pom.xml" />
-        <option value="$PROJECT_DIR$/weibo4jV1/src/main/weibo4j/Weibo.java" />
-        <option value="$PROJECT_DIR$/weibo4jV1/src/main/weibo4j/examples/WeiboViewAPIExamples.java" />
-        <option value="$PROJECT_DIR$/weibo4jV1/src/main/weibo4j/examples/Test.java" />
         <option value="$PROJECT_DIR$/weibo4jV1/src/main/java/org/cloudfoundry/samples/Test.java" />
         <option value="$PROJECT_DIR$/weibo4jV1/twitter4j-2.2.3/twitter4j-examples/src/main/java/twitter4j/examples/timeline/GetUserTimeline.java" />
         <option value="$PROJECT_DIR$/hello-weibo/src/main/java/org/cloudfoundry/samples/Test.java" />
         <option value="$PROJECT_DIR$/latest_id.txt" />
         <option value="$PROJECT_DIR$/hello-weibo/src/main/java/org/cloudfoundry/samples/SyncTwitter.java" />
-        <option value="$PROJECT_DIR$/hello-weibo/src/main/java/org/cloudfoundry/samples/HelloWeibo.java" />
         <option value="$PROJECT_DIR$/hello-weibo/pom.xml" />
+        <option value="$PROJECT_DIR$/hello-weibo/src/main/java/org/cloudfoundry/samples/HelloWeibo.java" />
+        <option value="$PROJECT_DIR$/hello-weibo/src/main/java/HelloWeibo.java" />
+        <option value="$PROJECT_DIR$/hello-weibo/src/main/java/com/rakutec/weibo/HelloWeibo.java" />
+        <option value="$PROJECT_DIR$/hello-weibo/app.yaml" />
+        <option value="$PROJECT_DIR$/hello-weibo/src/main/webapp/WEB-INF/appengine-web.xml" />
+        <option value="$PROJECT_DIR$/hello-weibo/server.sh" />
+        <option value="$PROJECT_DIR$/hello-weibo/src/main/webapp/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/hello-weibo/src/main/java/com/rakutec/weibo/HelloServlet.java" />
+        <option value="$PROJECT_DIR$/hello-weibo/README.md" />
+        <option value="$PROJECT_DIR$/hello-weibo/Makefile" />
       </list>
     </option>
   </component>
@@ -330,26 +310,12 @@
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sina-weibo4j" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hello-weibo" />
+              <option name="myItemId" value="webapp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
+              <option name="myItemId" value="WEB-INF" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -374,8 +340,30 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="samples" />
+              <option name="myItemId" value="sina-weibo4j" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hello-weibo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="weibo" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -390,6 +378,24 @@
               <option name="myItemId" value="sina-weibo4j" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hello-weibo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sina-weibo4j" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hello-weibo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com.rakutec.weibo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -397,7 +403,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="false" />
-    <property name="project.structure.last.edited" value="Global Libraries" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="114" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="123" />
@@ -440,8 +446,14 @@
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="java.org.cloudfoundry.samples" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/hello-weibo/src/main/webapp/WEB-INF" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.rakutec.weibo" />
+    </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.HelloWeibo">
     <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings">
@@ -564,19 +576,19 @@
       </method>
     </configuration>
     <configuration default="false" name="HelloWeibo" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="org.cloudfoundry.samples.HelloWeibo" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="MAIN_CLASS_NAME" value="com.rakutec.weibo.HelloWeibo" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="hello-weibo" />
       <envs />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="59859" />
+        <option name="DEBUG_PORT" value="61841" />
         <option name="TRANSPORT" value="0" />
         <option name="LOCAL" value="true" />
       </RunnerSettings>
@@ -648,20 +660,20 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24961948" sideWeight="0.67105263" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.20319635" sideWeight="0.67105263" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24567994" sideWeight="0.740625" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.24943651" sideWeight="0.67105263" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.31666666" sideWeight="0.9992487" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.259375" sideWeight="0.9992487" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.20319635" sideWeight="0.67105263" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24567994" sideWeight="0.671875" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.328125" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.259375" sideWeight="0.9992487" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -713,16 +725,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/WeiboViewAPIExamples.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="151" column="10" selection-start="4480" selection-end="4480" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/BaseExamples.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="0" selection-start="2160" selection-end="2685" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/examples/Test.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="37" column="39" selection-start="1329" selection-end="1391" vertical-scroll-proportion="0.0" />
@@ -738,26 +740,72 @@
         <state line="31" column="26" selection-start="891" selection-end="896" vertical-scroll-proportion="-0.18259935" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/java/org/cloudfoundry/samples/HelloServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="31" selection-start="570" selection-end="570" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/java/weibo4j/Weibo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1431" column="61" selection-start="59651" selection-end="59659" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/java/org/cloudfoundry/samples/HelloWeibo.java">
+    <entry file="file://$PROJECT_DIR$/hello-weibo/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="65" selection-start="2201" selection-end="2201" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/webapp/WEB-INF/appengine-web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="16" selection-start="328" selection-end="328" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/webapp/WEB-INF/logging.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hello-weibo/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="26" selection-start="1373" selection-end="1373" vertical-scroll-proportion="0.66058004">
+        <state line="42" column="21" selection-start="1405" selection-end="1405" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="22" selection-start="483" selection-end="483" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/java/com/rakutec/weibo/HelloWeibo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="139" column="30" selection-start="4767" selection-end="4767" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hello-weibo/src/main/java/com/rakutec/weibo/HelloServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="59" selection-start="590" selection-end="590" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hello-weibo/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="10" selection-start="181" selection-end="181" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hello-weibo/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="10" selection-start="83" selection-end="83" vertical-scroll-proportion="0.09879254">
           <folding />
         </state>
       </provider>
@@ -833,7 +881,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>lib</last-edited>
+          <last-edited>appengine</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

@@ -3,7 +3,7 @@
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
     <excludeFromCompile>
-      <file url="file://$PROJECT_DIR$/hello-weibo/src/main/java/org/cloudfoundry/samples/HelloServlet.java" />
+      <file url="file://$PROJECT_DIR$/hello-weibo/src/main/java/com/rakutec/weibo/HelloServlet.java" />
     </excludeFromCompile>
     <resourceExtensions />
     <wildcardResourcePatterns>
