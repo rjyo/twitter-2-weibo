@@ -2,11 +2,9 @@
   <library name="appengine">
     <CLASSES>
       <root url="file://$PROJECT_DIR$/hello-weibo/war/WEB-INF/lib" />
-      <root url="file://$PROJECT_DIR$/appengine-java-sdk-1.5.0.1/lib/shared" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
-    <jarDirectory url="file://$PROJECT_DIR$/appengine-java-sdk-1.5.0.1/lib/shared" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/hello-weibo/war/WEB-INF/lib" recursive="false" />
   </library>
 </component>

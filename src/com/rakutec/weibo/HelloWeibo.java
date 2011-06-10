@@ -7,7 +7,6 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import weibo4j.Weibo;
-import weibo4j.WeiboException;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -76,7 +75,7 @@ public class HelloWeibo {
         // gets Twitter instance with default credentials
         Twitter twitter = new TwitterFactory().getInstance();
         try {
-            TweetID tid = TweetID.loadTweetID(screenName);
+            TweetIDFile tid = TweetIDFile.loadTweetID(screenName);
             long latestId = tid.latestId;
             log.info("TID = " + latestId);
 
@@ -93,17 +92,19 @@ public class HelloWeibo {
             for (int i = statuses.size() - 1; i >= 0 ; i --) {
                 twitter4j.Status status = statuses.get(i);
                 log.info("@" + status.getUser().getScreenName() + " - " + status.getText());
-                user.updateStatus(filterTwitterStatus(status.getText()));
+//                user.updateStatus(filterTwitterStatus(status.getText()));
                 tid.update(status.getId());
 
                 Thread.sleep(1000);
+
+                break;
             }
         } catch (TwitterException te) {
             log.warning("Failed to get timeline: " + te.getMessage());
             throw new RuntimeException(te);
-        } catch (WeiboException e) {
-            log.warning("Failed to sendto Weibo");
-            throw new RuntimeException(e);
+//        } catch (WeiboException e) {
+//            log.warning("Failed to sendto Weibo");
+//            throw new RuntimeException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

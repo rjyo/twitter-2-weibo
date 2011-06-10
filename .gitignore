@@ -1,2 +1,7 @@
-latest_id.txt
-appengine-java-sdk-1.5.0.1
+.classpath
+.project
+.settings/
+target
+.DS_Store
+classes
+*.id

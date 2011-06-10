@@ -1,0 +1,29 @@
+<project>
+
+
+    <path id="project.classpath">
+        <pathelement path="war/WEB-INF/classes"/>
+        <fileset dir="war/WEB-INF/lib">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+
+    <target name="compile" depends=""
+            description="Compiles Java source and copies other source files to the WAR.">
+        <mkdir dir="war/WEB-INF/classes"/>
+        <copy todir="war/WEB-INF/classes">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <javac
+                srcdir="src"
+                destdir="war/WEB-INF/classes"
+                classpathref="project.classpath"
+                encoding="utf-8"
+                debug="on"/>
+    </target>
+
+
+</project>
