@@ -1,4 +1,3 @@
-GAE_JAVA_SDK_PATH = ../appengine-java-sdk-1.5.0.1
 TARGET_DIR = war
 CLASSES = ./war/WEB-INF/classes
 

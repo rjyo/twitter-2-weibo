@@ -4,22 +4,18 @@
 
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
     <servlet>
-        <servlet-name>HelloServlet</servlet-name>
-        <servlet-class>com.rakutec.weibo.HelloServlet</servlet-class>
+        <servlet-name>SyncServlet</servlet-name>
+        <servlet-class>com.rakutec.weibo.SyncServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>latestId</param-name>
+            <param-value>79260047758213120</param-value>
+        </init-param>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>HelloServlet</servlet-name>
+        <servlet-name>SyncServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>SyncServlet</servlet-name>
-        <servlet-class>com.rakutec.weibo.SyncServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>SyncServlet</servlet-name>
-        <url-pattern>/cron/sync</url-pattern>
-    </servlet-mapping>
 </web-app>

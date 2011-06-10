@@ -7,6 +7,7 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import weibo4j.Weibo;
+import weibo4j.WeiboException;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -15,11 +16,11 @@ import java.util.regex.Pattern;
 /**
  * @author Rakuraku Jyo
  */
-public class HelloWeibo {
-    private static final Logger log = Logger.getLogger(HelloWeibo.class.getName());
+public class T2Weibo {
+    private static final Logger log = Logger.getLogger(T2Weibo.class.getName());
     private Weibo user = null;
 
-    public HelloWeibo() {
+    public T2Weibo() {
         System.setProperty("weibo4j.oauth.consumerKey", Weibo.CONSUMER_KEY);
         System.setProperty("weibo4j.oauth.consumerSecret", Weibo.CONSUMER_SECRET);
         user = new Weibo();
@@ -77,7 +78,9 @@ public class HelloWeibo {
         try {
             TweetIDFile tid = TweetIDFile.loadTweetID(screenName);
             long latestId = tid.latestId;
-            log.info("TID = " + latestId);
+            log.info("==============================");
+            log.info("= TID: " + latestId);
+            log.info("==============================");
 
             List<twitter4j.Status> statuses;
             if (latestId == 0) {
@@ -87,31 +90,29 @@ public class HelloWeibo {
                 statuses = twitter.getUserTimeline(screenName, paging);
             }
 
-            log.info("Showing @" + screenName + "'s userId timeline.");
+            log.info("Checking @" + screenName + "'s userId timeline.");
 
             for (int i = statuses.size() - 1; i >= 0 ; i --) {
                 twitter4j.Status status = statuses.get(i);
                 log.info("@" + status.getUser().getScreenName() + " - " + status.getText());
-//                user.updateStatus(filterTwitterStatus(status.getText()));
+                user.updateStatus(filterTwitterStatus(status.getText()));
                 tid.update(status.getId());
 
                 Thread.sleep(1000);
-
-                break;
             }
         } catch (TwitterException te) {
             log.warning("Failed to get timeline: " + te.getMessage());
             throw new RuntimeException(te);
-//        } catch (WeiboException e) {
-//            log.warning("Failed to sendto Weibo");
-//            throw new RuntimeException(e);
+        } catch (WeiboException e) {
+            log.warning("Failed to sendto Weibo");
+            throw new RuntimeException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static void main(String[] args) {
-        HelloWeibo t = new HelloWeibo();
+        T2Weibo t = new T2Weibo();
         t.syncTwitter("xu_lele");
     }
 }

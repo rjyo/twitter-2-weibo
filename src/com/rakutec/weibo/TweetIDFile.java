@@ -15,7 +15,7 @@ public class TweetIDFile {
     }
 
     public void update(Long tweetId) {
-        log.info("updating latest id to " + tweetId);
+        log.info("Updating latest id to " + tweetId);
         this.latestId = tweetId;
         try {
             FileWriter fw = new FileWriter(this.userId, false);
@@ -30,12 +30,12 @@ public class TweetIDFile {
     public static TweetIDFile loadTweetID(String user) {
         TweetIDFile tid = new TweetIDFile(user);
         try {
-            log.info("FOUND TID:" + tid.latestId);
             BufferedReader in = new BufferedReader(new FileReader(tid.userId));
 
             String line = in.readLine();
             tid.latestId = Long.valueOf(line);
 
+            log.info("FOUND TID:" + tid.latestId);
             in.close();
         } catch (IOException e) {
             tid.latestId = (long) 0;
