@@ -1,14 +1,7 @@
 <component name="libraryTable">
   <library name="lib">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/hello-weibo/lib/commons-logging-1.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/hello-weibo/lib/commons-httpclient-3.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/hello-weibo/lib/commons-codec.jar!/" />
-      <root url="jar://$PROJECT_DIR$/twitter4j-2.2.3/lib/twitter4j-examples-2.2.3.jar!/" />
-      <root url="jar://$PROJECT_DIR$/twitter4j-2.2.3/lib/twitter4j-core-2.2.3.jar!/" />
-      <root url="jar://$PROJECT_DIR$/twitter4j-2.2.3/lib/twitter4j-media-support-2.2.3.jar!/" />
-      <root url="jar://$PROJECT_DIR$/twitter4j-2.2.3/lib/twitter4j-async-2.2.3.jar!/" />
-      <root url="jar://$PROJECT_DIR$/twitter4j-2.2.3/lib/twitter4j-stream-2.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/hello-weibo/lib/twitter4j-core-2.2.3.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

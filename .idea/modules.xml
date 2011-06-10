@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/hello-weibo/hello-weibo.iml" filepath="$PROJECT_DIR$/hello-weibo/hello-weibo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/weibo4jV1/hello-weibo.iml" filepath="$PROJECT_DIR$/weibo4jV1/hello-weibo.iml" />
     </modules>
   </component>
 </project>
