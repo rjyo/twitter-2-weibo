@@ -22,7 +22,7 @@ public class SyncServlet extends HttpServlet {
         response.setStatus(200);
         PrintWriter writer = response.getWriter();
 
-        TweetIDFile f = TweetIDFile.loadTweetID("xu_lele");
+        TweetIDJedis f = TweetIDJedis.loadTweetID("xu_lele");
         String latestId = request.getParameter("id");
         if (latestId != null) {
             f.update(Long.valueOf(latestId));
@@ -40,7 +40,7 @@ public class SyncServlet extends HttpServlet {
 
         String latestId = config.getInitParameter("latestId");
         if (latestId != null) {
-            TweetIDFile f = TweetIDFile.loadTweetID("xu_lele");
+            TweetIDJedis f = TweetIDJedis.loadTweetID("xu_lele");
             f.update(Long.valueOf(latestId));
             log.info("Using init-param, latest tweet ID updated to " + latestId);
         }

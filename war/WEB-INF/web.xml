@@ -9,7 +9,7 @@
         <load-on-startup>1</load-on-startup>
         <init-param>
             <param-name>latestId</param-name>
-            <param-value>79260047758213120</param-value>
+            <param-value>79295167244402688</param-value>
         </init-param>
     </servlet>
 
@@ -17,5 +17,11 @@
         <servlet-name>SyncServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+
+    <context-param>
+        <param-name>contextInitializerClasses</param-name>
+        <param-value>org.cloudfoundry.services.CloudApplicationContextInitializer</param-value>
+    </context-param>
 
 </web-app>

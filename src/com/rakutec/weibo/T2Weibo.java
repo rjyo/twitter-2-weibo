@@ -7,7 +7,6 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import weibo4j.Weibo;
-import weibo4j.WeiboException;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -29,14 +28,14 @@ public class T2Weibo {
     }
 
     private String replace(String s, String orig, String repl) {
-       // Create a pattern to match cat
+        // Create a pattern to match cat
         Pattern p = Pattern.compile(orig);
         // Create a matcher with an input string
         Matcher m = p.matcher(s);
         StringBuffer sb = new StringBuffer();
         boolean result = m.find();
         // Loop through and create a new String with the replacements
-        while(result) {
+        while (result) {
             m.appendReplacement(sb, repl);
             result = m.find();
         }
@@ -47,14 +46,14 @@ public class T2Weibo {
     }
 
     private String extendURL(String s) {
-       // Create a pattern to match cat
+        // Create a pattern to match cat
         Pattern p = Pattern.compile("http://bit.ly/\\w+");
         // Create a matcher with an input string
         Matcher m = p.matcher(s);
         StringBuffer sb = new StringBuffer();
         boolean result = m.find();
         // Loop through and create a new String with the replacements
-        while(result) {
+        while (result) {
             String bitlyUrl = m.group();
             Url url = Bitly.as("rakuraku", "R_26c2081c74b8fd7fc4ce023738444187").call(Bitly.expand(bitlyUrl));
             m.appendReplacement(sb, url.getLongUrl());
@@ -69,7 +68,7 @@ public class T2Weibo {
     private String filterTwitterStatus(String status) {
         status = replace(status, "@xuzhe", "@徐哲-老徐");
         status = replace(status, "@xu_lele", "@乐库-老乐");
-        
+
         return extendURL(status);
     }
 
@@ -77,11 +76,9 @@ public class T2Weibo {
         // gets Twitter instance with default credentials
         Twitter twitter = new TwitterFactory().getInstance();
         try {
-            TweetIDFile tid = TweetIDFile.loadTweetID(screenName);
+            TweetIDJedis tid = TweetIDJedis.loadTweetID(screenName);
             long latestId = tid.latestId;
-            log.info("==============================");
-            log.info("= TID: " + latestId);
-            log.info("==============================");
+            log.info("= TID: " + latestId + " = ");
 
             List<twitter4j.Status> statuses;
             if (latestId == 0) {
@@ -93,20 +90,24 @@ public class T2Weibo {
 
             log.info("Checking @" + screenName + "'s userId timeline.");
 
-            for (int i = statuses.size() - 1; i >= 0 ; i --) {
+            for (int i = statuses.size() - 1; i >= 0; i--) {
                 twitter4j.Status status = statuses.get(i);
                 log.info("@" + status.getUser().getScreenName() + " - " + status.getText());
-                user.updateStatus(filterTwitterStatus(status.getText()));
-                tid.update(status.getId());
-
+//                try {
+//                    user.updateStatus(filterTwitterStatus(status.getText()));
+//                    tid.update(status.getId());
+//                } catch (WeiboException e) {
+//                    if (e.getStatusCode() != 400) { // resending same tweet
+//                        log.warning("Failed to update Weibo");
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+                tid.update(status.getId()); // still update the latestId to skip
                 Thread.sleep(1000);
             }
         } catch (TwitterException te) {
             log.warning("Failed to get timeline: " + te.getMessage());
             throw new RuntimeException(te);
-        } catch (WeiboException e) {
-            log.warning("Failed to sendto Weibo");
-            throw new RuntimeException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
