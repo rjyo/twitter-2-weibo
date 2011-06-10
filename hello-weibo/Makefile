@@ -1,12 +1,13 @@
-GAE_JAVA_SDK_PATH = ~/Downloads/appengine-java-sdk-1.5.0.1
+GAE_JAVA_SDK_PATH = ../appengine-java-sdk-1.5.0.1
+TARGET_DIR = war
 
 package:
-	@mvn clean package
+	@ant datanucleusenhance
 
 dev_server:
-	@$(GAE_JAVA_SDK_PATH)/bin/dev_appserver.sh target/hello-weibo-1.0/
+	@ant runserver
 
 update_app:
-	@$(GAE_JAVA_SDK_PATH)/bin/appcfg.sh update target/hello-weibo-1.0/
+	@$(GAE_JAVA_SDK_PATH)/bin/appcfg.sh update $(TARGET_DIR)
 
 .PHONY: package

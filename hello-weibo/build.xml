@@ -1,40 +1,80 @@
-<?xml version="1.0"?>
-<project name="weibo4j" default="all" basedir=".">
-	<tstamp>
-		<format property="now.date" pattern="yyyyMMddhhmmss" locale="zh" />
-	</tstamp>
-	<property name="src.dir" value="${basedir}/src" />
-	<property name="lib.dir" value="/src/lib" />
-	<property name="dest.dir" value="${basedir}/dest" />
-	<property name="jar.name" value="weibo4j-${now.date}.jar" />
-	<property name="jar.dir" value="${basedir}/dict" />
-	<fileset id="libDir" dir="/src/lib">
-		<include name="**/*.jar" />
-		<exclude name="./junit-4.1.jar" />
-	</fileset>
-	<path id="classpath">
-		<fileset refid="libDir">
-		</fileset>
-	</path>
-	<target name="compile">
-		<mkdir dir="${dest.dir}" />
-		<javac srcdir="${src.dir}" destdir="${dest.dir}" encoding="UTF-8" classpathref="classpath" />
-	</target>
-	<target name="jar" depends="compile">
-		<mkdir dir="${jar.dir}" />
-		<delete>
-			<fileset dir="${jar.dir}">
-				<include name="**/*" />
-			</fileset>
-		</delete>
-		<jar destfile="${jar.dir}/${jar.name}" basedir="${dest.dir}" />
-		<copy todir="${jar.dir}" overwrite="true">
-			<fileset refid="libDir" />
-		</copy>
-	</target>
-	<target name="clean" description="Cleans up all build-generated output">
-		<delete dir="${dest.dir}" failonerror="false" />
-	</target>
+<project>
+    <property name="sdk.dir" location="../appengine-java-sdk-1.5.0.1"/>
 
-	<target name="all" depends="jar,clean" />
+    <import file="${sdk.dir}/config/user/ant-macros.xml"/>
+
+    <path id="project.classpath">
+        <pathelement path="war/WEB-INF/classes"/>
+        <fileset dir="war/WEB-INF/lib">
+            <include name="**/*.jar"/>
+        </fileset>
+        <fileset dir="${sdk.dir}/lib">
+            <include name="shared/**/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="copyjars"
+            description="Copies the App Engine JARs to the WAR.">
+        <copy
+                todir="war/WEB-INF/lib"
+                flatten="true">
+            <fileset dir="${sdk.dir}/lib/user">
+                <include name="**/*.jar"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile" depends="copyjars"
+            description="Compiles Java source and copies other source files to the WAR.">
+        <mkdir dir="war/WEB-INF/classes"/>
+        <copy todir="war/WEB-INF/classes">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <javac
+                srcdir="src"
+                destdir="war/WEB-INF/classes"
+                classpathref="project.classpath"
+                encoding="utf-8"
+                debug="on"/>
+    </target>
+
+    <target name="datanucleusenhance" depends="compile"
+            description="Performs JDO enhancement on compiled data classes.">
+        <enhance_war war="war"/>
+    </target>
+
+    <target name="runserver" depends="datanucleusenhance"
+            description="Starts the development server.">
+        <dev_appserver war="war"/>
+    </target>
+
+    <target name="update" depends="datanucleusenhance"
+            description="Uploads the application to App Engine.">
+        <appcfg action="update" war="war"/>
+    </target>
+
+    <target name="update_indexes" depends="datanucleusenhance"
+            description="Uploads just the datastore index configuration to App Engine.">
+        <appcfg action="update_indexes" war="war"/>
+    </target>
+
+    <target name="rollback" depends="datanucleusenhance"
+            description="Rolls back an interrupted application update.">
+        <appcfg action="rollback" war="war"/>
+    </target>
+
+    <target name="request_logs"
+            description="Downloads log data from App Engine for the application.">
+        <appcfg action="request_logs" war="war">
+            <options>
+                <arg value="--num_days=5"/>
+            </options>
+            <args>
+                <arg value="logs.txt"/>
+            </args>
+        </appcfg>
+    </target>
+
 </project>
