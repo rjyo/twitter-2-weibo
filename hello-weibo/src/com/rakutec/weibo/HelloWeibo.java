@@ -77,6 +77,7 @@ public class HelloWeibo {
         try {
             TweetID tid = TweetID.loadTweetID(screenName);
             long latestId = tid.latestId;
+            System.out.println("TID = " + latestId);
 
             List<twitter4j.Status> statuses;
             if (latestId == 0) {
@@ -92,7 +93,7 @@ public class HelloWeibo {
                 twitter4j.Status status = statuses.get(i);
                 System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText());
                 user.updateStatus(filterTwitterStatus(status.getText()));
-                tid.latestId = status.getId();
+                tid.update(status.getId());
 
                 Thread.sleep(1000);
             }

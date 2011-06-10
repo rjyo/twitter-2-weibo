@@ -17,10 +17,14 @@ public class TweetID {
         this.userId = userId;
     }
 
-    public void save() {
+    public void update(Long tweetId) {
+        System.out.println("updating latest id to " + tweetId);
         EntityManager em = EMFService.get().createEntityManager();
         try {
-            em.persist(this);
+            em.getTransaction().begin();
+            this.latestId = tweetId;
+            em.merge(this);
+            em.getTransaction().commit();
         } finally {
             em.close();
         }
@@ -35,7 +39,7 @@ public class TweetID {
                 System.out.println("TID NOT FOUND");
                 tid = new TweetID(user);
                 tid.latestId = (long) 0;
-                tid.save();
+                em.persist(tid);
             } else {
                 System.out.println("FOUND TID:" + tid.latestId);
             }
