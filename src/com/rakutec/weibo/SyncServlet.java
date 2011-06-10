@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
 
+/**
+ * @author Rakuraku Jyo
+ */
 public class SyncServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(T2Weibo.class.getName());
 

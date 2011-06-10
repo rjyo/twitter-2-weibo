@@ -3,6 +3,9 @@ package com.rakutec.weibo;
 import java.io.*;
 import java.util.logging.Logger;
 
+/**
+ * @author Rakuraku Jyo
+ */
 public class TweetIDFile {
     private static final Logger log = Logger.getLogger(TweetIDFile.class.getName());
 

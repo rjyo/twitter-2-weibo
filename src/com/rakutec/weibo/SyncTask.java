@@ -1,11 +1,7 @@
 package com.rakutec.weibo;
 
 /**
- * Created by IntelliJ IDEA.
- * User: jyo
- * Date: 11/06/11
- * Time: 5:20
- * To change this template use File | Settings | File Templates.
+ * @author Rakuraku Jyo
  */
 public class SyncTask implements Runnable {
 
