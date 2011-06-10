@@ -41,8 +41,12 @@ public class SyncServlet extends HttpServlet {
         String latestId = config.getInitParameter("latestId");
         if (latestId != null) {
             TweetIDJedis f = TweetIDJedis.loadTweetID("xu_lele");
-            f.update(Long.valueOf(latestId));
-            log.info("Using init-param, latest tweet ID updated to " + latestId);
+            if (f.latestId == 0) {
+                f.update(Long.valueOf(latestId));
+                log.info("Using init-param, latest tweet ID updated to " + latestId);
+            } else {
+                log.info("Using current latest tweet ID: " + latestId);
+            }
         }
 
         log.info("inited");

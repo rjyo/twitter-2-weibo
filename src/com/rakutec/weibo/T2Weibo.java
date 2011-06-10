@@ -7,6 +7,7 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import weibo4j.Weibo;
+import weibo4j.WeiboException;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -93,15 +94,15 @@ public class T2Weibo {
             for (int i = statuses.size() - 1; i >= 0; i--) {
                 twitter4j.Status status = statuses.get(i);
                 log.info("@" + status.getUser().getScreenName() + " - " + status.getText());
-//                try {
-//                    user.updateStatus(filterTwitterStatus(status.getText()));
-//                    tid.update(status.getId());
-//                } catch (WeiboException e) {
-//                    if (e.getStatusCode() != 400) { // resending same tweet
-//                        log.warning("Failed to update Weibo");
-//                        throw new RuntimeException(e);
-//                    }
-//                }
+                try {
+                    user.updateStatus(filterTwitterStatus(status.getText()));
+                    tid.update(status.getId());
+                } catch (WeiboException e) {
+                    if (e.getStatusCode() != 400) { // resending same tweet
+                        log.warning("Failed to update Weibo");
+                        throw new RuntimeException(e);
+                    }
+                }
                 tid.update(status.getId()); // still update the latestId to skip
                 Thread.sleep(1000);
             }
