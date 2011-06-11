@@ -2,7 +2,7 @@ package com.rakutec.weibo;
 
 import redis.clients.jedis.Jedis;
 
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 /**
  * @author Rakuraku Jyo

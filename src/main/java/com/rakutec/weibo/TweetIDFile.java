@@ -1,7 +1,8 @@
 package com.rakutec.weibo;
 
 import java.io.*;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 /**
  * @author Rakuraku Jyo

@@ -1,13 +1,14 @@
 package com.rakutec.weibo;
 
+import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
 import weibo4j.org.json.JSONException;
 import weibo4j.org.json.JSONObject;
 
-import java.util.logging.Logger;
 
 public class RedisHelper {
     private static final Logger log = Logger.getLogger(RedisHelper.class.getName());
+
     private static RedisHelper ourInstance = new RedisHelper();
 
     private Jedis jedis;

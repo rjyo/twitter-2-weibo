@@ -10,7 +10,9 @@ import weibo4j.Weibo;
 import weibo4j.WeiboException;
 
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -99,7 +101,7 @@ public class T2Weibo {
                     tid.update(status.getId());
                 } catch (WeiboException e) {
                     if (e.getStatusCode() != 400) { // resending same tweet
-                        log.warning("Failed to update Weibo");
+                        log.warn("Failed to update Weibo");
                         throw new RuntimeException(e);
                     }
                 }
@@ -107,7 +109,7 @@ public class T2Weibo {
                 Thread.sleep(1000);
             }
         } catch (TwitterException te) {
-            log.warning("Failed to get timeline: " + te.getMessage());
+            log.warn("Failed to get timeline: " + te.getMessage());
             throw new RuntimeException(te);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

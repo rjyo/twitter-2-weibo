@@ -19,6 +19,7 @@
     <orderEntry type="library" name="Maven: com.rosaloves:bitlyj:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: redis.clients:jedis:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.5.5" level="project" />
+    <orderEntry type="library" name="Maven: log4j:log4j:1.2.16" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax:javaee-web-api:6.0" level="project" />
   </component>
 </module>
