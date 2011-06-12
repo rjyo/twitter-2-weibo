@@ -8,10 +8,11 @@ Sync what you tweet in Twitter to Sina Weibo
 
 ## Run
 
-### Run server in dev
+### Upload to cloud foundry
 
-    $ make dev_server
+    $ make update
 
-### Upload to appengine
+## TODO
 
-    $ make update_app
+1. Add image directly to Weibo
+2. Support multi users
