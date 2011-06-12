@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1dfa6322-8cc1-4150-86d6-15d72ff3b2b6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/Twitter2Weibo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/filters/KVStatusFilter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/filters/StatusFilter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/filters/StatusFilters.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/filters/TagStatusFilter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/filters/URLStatusFilter.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/T2Weibo.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncTask.java" afterPath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncTask.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/log4j.properties" afterPath="$PROJECT_DIR$/src/main/resources/log4j.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
     </list>
     <ignored path="sina-weibo4j.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -84,10 +76,37 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="log4j.properties" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="log4j.properties" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resources/log4j.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="22" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0">
+            <state line="7" column="51" selection-start="333" selection-end="333" vertical-scroll-proportion="0.09677419">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="web.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="47" selection-start="349" selection-end="349" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RedisHelper.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/RedisHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="11" selection-start="360" selection-end="360" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Logger.class" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.16/log4j-1.2.16.jar!/org/apache/log4j/Logger.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="13" selection-start="154" selection-end="154" vertical-scroll-proportion="-3.0">
               <folding />
             </state>
           </provider>
@@ -97,15 +116,6 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/Twitter2Weibo.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="57" column="0" selection-start="1909" selection-end="1909" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StatusFilter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/filters/StatusFilter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="36" selection-end="36" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -122,10 +132,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SyncServlet.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="SyncServlet.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="8" selection-start="1765" selection-end="1765" vertical-scroll-proportion="0.5529954">
+            <state line="17" column="13" selection-start="414" selection-end="414" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -153,24 +163,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TagStatusFilter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/filters/TagStatusFilter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="26" selection-start="210" selection-end="210" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Weibo.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/weibo4j/Weibo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="25" selection-start="2345" selection-end="2345" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -185,9 +177,7 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/TweetIDFile.java" />
         <option value="$PROJECT_DIR$/src/main/resources/logging.properties" />
-        <option value="$PROJECT_DIR$/src/main/resources/log4j.properties" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/filters/StatusFilterForTag.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/filters/StatusFilter.java" />
@@ -201,6 +191,8 @@
         <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/Twitter2Weibo.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncTask.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/log4j.properties" />
       </list>
     </option>
   </component>
@@ -281,7 +273,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="PackagesPane" proportions="" version="1" splitterProportion="0.5">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -951,26 +943,9 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="20" selection-start="845" selection-end="845" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="0" selection-start="93" selection-end="121" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/RedisHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="13" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/TweetIDJedis.java">
@@ -992,11 +967,6 @@
         <state line="59" column="25" selection-start="2345" selection-end="2345" vertical-scroll-proportion="0.0">
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="22" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/filters/StatusFilter.java">
@@ -1054,9 +1024,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.16/log4j-1.2.16.jar!/org/apache/log4j/Logger.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="13" selection-start="154" selection-end="154" vertical-scroll-proportion="-3.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/RedisHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="11" selection-start="360" selection-end="360" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="8" selection-start="1765" selection-end="1765" vertical-scroll-proportion="0.5529954">
+        <state line="17" column="13" selection-start="414" selection-end="414" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="47" selection-start="349" selection-end="349" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="51" selection-start="333" selection-end="333" vertical-scroll-proportion="0.09677419">
           <folding />
         </state>
       </provider>

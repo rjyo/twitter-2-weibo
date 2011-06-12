@@ -7,10 +7,6 @@
         <servlet-name>SyncServlet</servlet-name>
         <servlet-class>com.rakutec.weibo.SyncServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
-        <init-param>
-            <param-name>latestId</param-name>
-            <param-value>79295167244402688</param-value>
-        </init-param>
     </servlet>
 
     <servlet-mapping>
