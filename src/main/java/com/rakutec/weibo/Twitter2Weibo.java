@@ -1,6 +1,6 @@
 package com.rakutec.weibo;
 
-import com.rakutec.weibo.filters.KVStatusFilter;
+import com.rakutec.weibo.filters.NoReplyFilter;
 import com.rakutec.weibo.filters.StatusFilters;
 import com.rakutec.weibo.filters.URLStatusFilter;
 import org.apache.log4j.Logger;
@@ -22,31 +22,8 @@ public class Twitter2Weibo {
         user = new Weibo();
         user.setToken(token, tokenSecret);
 
-        KVStatusFilter kvFilter = new KVStatusFilter();
-        kvFilter.add("@xuzhe", "@徐哲-老徐");
-        kvFilter.add("@xu_lele", "@乐库-老乐");
-        kvFilter.add("@brighthong", "@roubaozi");
-        filters.use(kvFilter).use(new URLStatusFilter());
+        filters.use(new NoReplyFilter()).use(new URLStatusFilter());
     }
-//
-//    private String replace(String s, String orig, String repl) {
-//        // Create a pattern to match cat
-//        Pattern p = Pattern.compile(orig);
-//        // Create a matcher with an input string
-//        Matcher m = p.matcher(s);
-//        StringBuffer sb = new StringBuffer();
-//        boolean result = m.find();
-//        // Loop through and create a new String with the replacements
-//        while (result) {
-//            m.appendReplacement(sb, repl);
-//            result = m.find();
-//        }
-//        // Add the last segment of input to the new String
-//        m.appendTail(sb);
-//
-//        return sb.toString();
-//    }
-
 
     public void syncTwitter(String screenName) {
         // gets Twitter instance with default credentials
@@ -71,7 +48,10 @@ public class Twitter2Weibo {
                     twitter4j.Status status = statuses.get(i);
                     log.info("@" + status.getUser().getScreenName() + " - " + status.getText());
                     try {
-                        user.updateStatus(filters.filter(status.getText()));
+                        String filtered = filters.filter(status.getText());
+                        if (filtered != null) {
+                            user.updateStatus(filtered);
+                        }
                         tid.updateLatestId(status.getId());
                     } catch (WeiboException e) {
                         if (e.getStatusCode() != 400) { // resending same tweet
