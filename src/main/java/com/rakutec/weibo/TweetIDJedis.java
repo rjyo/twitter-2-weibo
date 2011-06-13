@@ -87,4 +87,12 @@ public class TweetIDJedis {
         Jedis j = RedisHelper.getInstance().getJedis();
         return j.smembers("twitter:ids");
     }
+
+    public static void delete(String userId) {
+        Jedis j = RedisHelper.getInstance().getJedis();
+        j.del("id:" + userId + ":latestId");
+        j.del("id:" + userId + ":token");
+        j.del("id:" + userId + ":tokenSecret");
+        j.srem("twitter:ids", userId);
+    }
 }

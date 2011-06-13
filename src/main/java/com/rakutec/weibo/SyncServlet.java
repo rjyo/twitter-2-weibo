@@ -2,6 +2,7 @@ package com.rakutec.weibo;
 
 import it.sauronsoftware.cron4j.Scheduler;
 import org.apache.log4j.Logger;
+import twitter4j.Twitter;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -34,7 +35,13 @@ public class SyncServlet extends HttpServlet {
             for (Object id : ids) {
                 writer.println("  " + id);
             }
-        } else {
+        } else if ("del".equals(cmd)) {
+            String user = request.getParameter("u");
+            if (user != null) {
+                TweetIDJedis.delete(user);
+                writer.println("  Removed " + user);
+            }
+        } else { // not a command
             String user = request.getParameter("u");
             if (user != null) {
                 TweetIDJedis f = TweetIDJedis.getUser(user);
