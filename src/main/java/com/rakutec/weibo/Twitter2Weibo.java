@@ -1,22 +1,14 @@
 package com.rakutec.weibo;
 
-import com.rakutec.weibo.filters.KVStatusFilter;
-import com.rakutec.weibo.filters.StatusFilter;
+import com.rakutec.weibo.filters.NoReplyFilter;
 import com.rakutec.weibo.filters.StatusFilters;
 import com.rakutec.weibo.filters.URLStatusFilter;
-import com.rosaloves.bitlyj.Bitly;
-import com.rosaloves.bitlyj.Url;
+import org.apache.log4j.Logger;
 import twitter4j.*;
 import weibo4j.Weibo;
 import weibo4j.WeiboException;
 
 import java.util.List;
-
-import org.apache.log4j.Logger;
-
-import javax.enterprise.inject.New;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Rakuraku Jyo
@@ -25,52 +17,32 @@ public class Twitter2Weibo {
     private static final Logger log = Logger.getLogger(Twitter2Weibo.class.getName());
     private Weibo user = null;
     private StatusFilters filters = new StatusFilters();
+    private TweetIDJedis tid;
 
-    public Twitter2Weibo(String token, String tokenSecret) {
-        System.setProperty("weibo4j.oauth.consumerKey", Weibo.CONSUMER_KEY);
-        System.setProperty("weibo4j.oauth.consumerSecret", Weibo.CONSUMER_SECRET);
+    public Twitter2Weibo(String twitterId) {
+        tid = TweetIDJedis.getUser(twitterId);
+
         user = new Weibo();
-        user.setToken(token, tokenSecret);
+        user.setToken(tid.getToken(), tid.getTokenSecret());
 
-        KVStatusFilter kvFilter = new KVStatusFilter();
-        kvFilter.add("@xuzhe", "@徐哲-老徐");
-        kvFilter.add("@xu_lele", "@乐库-老乐");
-        filters.use(kvFilter).use(new URLStatusFilter());
+        filters.use(new NoReplyFilter()).use(new URLStatusFilter());
     }
-//
-//    private String replace(String s, String orig, String repl) {
-//        // Create a pattern to match cat
-//        Pattern p = Pattern.compile(orig);
-//        // Create a matcher with an input string
-//        Matcher m = p.matcher(s);
-//        StringBuffer sb = new StringBuffer();
-//        boolean result = m.find();
-//        // Loop through and create a new String with the replacements
-//        while (result) {
-//            m.appendReplacement(sb, repl);
-//            result = m.find();
-//        }
-//        // Add the last segment of input to the new String
-//        m.appendTail(sb);
-//
-//        return sb.toString();
-//    }
 
-
-    public void syncTwitter(String screenName) {
+    public void syncTwitter() {
         // gets Twitter instance with default credentials
         Twitter twitter = new TwitterFactory().getInstance();
+        String screenName = tid.getUserId();
+        long latestId = tid.getLatestId();
+        log.info("= TID: " + latestId + " = ");
+
+        log.info("Checking @" + screenName + "'s userId timeline.");
+
         try {
-            TweetIDJedis tid = TweetIDJedis.loadTweetID(screenName);
-            long latestId = tid.latestId;
-            log.info("= TID: " + latestId + " = ");
-
-            log.info("Checking @" + screenName + "'s userId timeline.");
-
             if (latestId == 0) {
                 List<Status> statuses = twitter.getUserTimeline(screenName);
                 if (statuses.size() > 0)
-                tid.update(statuses.get(0).getId()); // Record latestId, and sync next time
+                    tid.updateLatestId(statuses.get(0).getId()); // Record latestId, and sync next time
+                log.info("Updating @" + screenName + "'s latestId to " + tid.getLatestId());
             } else {
                 Paging paging = new Paging(latestId);
                 List<Status> statuses = twitter.getUserTimeline(screenName, paging);
@@ -79,15 +51,19 @@ public class Twitter2Weibo {
                     twitter4j.Status status = statuses.get(i);
                     log.info("@" + status.getUser().getScreenName() + " - " + status.getText());
                     try {
-                        user.updateStatus(filters.filter(status.getText()));
-                        tid.update(status.getId());
+                        String filtered = filters.filter(status.getText());
+                        if (filtered != null) {
+                            user.updateStatus(filtered);
+                        } else {
+                            log.info("Skipped " + status.getText() + " because of the filter.");
+                        }
                     } catch (WeiboException e) {
                         if (e.getStatusCode() != 400) { // resending same tweet
                             log.warn("Failed to update Weibo");
                             throw new RuntimeException(e);
                         }
                     }
-                    tid.update(status.getId()); // still update the latestId to skip
+                    tid.updateLatestId(status.getId()); // still update the latestId to skip
                     Thread.sleep(1000);
                 }
             }
@@ -100,7 +76,7 @@ public class Twitter2Weibo {
     }
 
     public static void main(String[] args) {
-        Twitter2Weibo t = new Twitter2Weibo("d9ddc51b9f84f211206eb4124a74601b", "35d1ff8d00d9093a666fbc705acc8629");
-        t.syncTwitter("xu_lele");
+        Twitter2Weibo t = new Twitter2Weibo("xu_lele");
+        t.syncTwitter();
     }
 }

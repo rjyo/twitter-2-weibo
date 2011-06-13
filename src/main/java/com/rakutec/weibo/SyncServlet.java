@@ -1,6 +1,7 @@
 package com.rakutec.weibo;
 
 import it.sauronsoftware.cron4j.Scheduler;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -9,53 +10,53 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import org.apache.log4j.Logger;
+import java.util.Set;
 
 /**
  * @author Rakuraku Jyo
  */
 public class SyncServlet extends HttpServlet {
-    private static final Logger log = Logger.getLogger(Twitter2Weibo.class.getName());
+    private static final Logger log = Logger.getLogger(SyncServlet.class.getName());
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain");
         response.setStatus(200);
         PrintWriter writer = response.getWriter();
 
-        TweetIDJedis f = TweetIDJedis.loadTweetID("xu_lele");
-        String latestId = request.getParameter("id");
-        if (latestId != null) {
-            f.update(Long.valueOf(latestId));
-            writer.println("Latest tweet ID updated to " + latestId);
+        String cmd = request.getParameter("cmd");
+        if ("sync".equals(cmd)) {
+            SyncTask task = new SyncTask();
+            task.run();
+            writer.println("Run!");
+        } else if ("users".equals(cmd)) {
+            Set ids = TweetIDJedis.getAuthorizedIds();
+            writer.println("Syncing user list:");
+            for (Object id : ids) {
+                writer.println("  " + id);
+            }
         } else {
-            writer.println("Latest tweet ID is " + f.latestId);
+            String user = request.getParameter("u");
+            if (user != null) {
+                TweetIDJedis f = TweetIDJedis.getUser(user);
+                writer.println("Latest tweet ID is " + f.getLatestId());
+            } else {
+                writer.write("Welcome!");
+            }
         }
-
         writer.close();
     }
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-//        String latestId = config.getInitParameter("latestId");
-//        if (latestId != null) {
-//            TweetIDJedis f = TweetIDJedis.loadTweetID("xu_lele");
-//            if (f.latestId == 0) {
-//                f.update(Long.valueOf(latestId));
-//                log.info("Using init-param, latest tweet ID updated to " + latestId);
-//            } else {
-//                log.info("Using current latest tweet ID: " + latestId);
-//            }
-//        }
-        
-        // Prepares the task.
-        SyncTask task = new SyncTask("d9ddc51b9f84f211206eb4124a74601b", "35d1ff8d00d9093a666fbc705acc8629", "xu_lele");
-        // Creates the scheduler.
+
+        // Key for Weibo App
+        System.setProperty("weibo4j.oauth.consumerKey", "2917100994");
+        System.setProperty("weibo4j.oauth.consumerSecret", "331e188966be6384c6722b1d3944c89e");
+
+        SyncTask task = new SyncTask();
         Scheduler scheduler = new Scheduler();
-        // Schedules the task, once every minute.
-        scheduler.schedule("*/2 * * * *", task);
-        // Starts the scheduler.
+        scheduler.schedule("*/5 * * * *", task);
         scheduler.start();
 
         log.info("Cron scheduler started.");

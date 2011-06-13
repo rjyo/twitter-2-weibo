@@ -6,3 +6,5 @@
 classes
 target
 *.id
+*.id
+*.log

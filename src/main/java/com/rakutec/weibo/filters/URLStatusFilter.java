@@ -8,11 +8,13 @@ import java.util.regex.Pattern;
 
 public class URLStatusFilter implements StatusFilter {
     @Override
-    public String filter(String s) {
+    public String filter(String input) {
+        if (input == null) return input;
+
         // Create a pattern to match cat
         Pattern p = Pattern.compile("http://bit.ly/\\w+");
         // Create a matcher with an input string
-        Matcher m = p.matcher(s);
+        Matcher m = p.matcher(input);
         StringBuffer sb = new StringBuffer();
         boolean result = m.find();
         // Loop through and create a new String with the replacements

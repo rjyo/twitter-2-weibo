@@ -1,21 +1,21 @@
 package com.rakutec.weibo;
 
+import org.apache.log4j.Logger;
+
+import java.util.Set;
+
 /**
  * @author Rakuraku Jyo
  */
 public class SyncTask implements Runnable {
-    private String token;
-    private String tokenSecret;
-    private String screenName;
-
-    public SyncTask(String token, String tokenSecret, String twitterScreenName) {
-        this.token = token;
-        this.tokenSecret = tokenSecret;
-        this.screenName = twitterScreenName;
-    }
-
+    private static final Logger log = Logger.getLogger(SyncTask.class.getName());
+    
     public void run() {
-        Twitter2Weibo t = new Twitter2Weibo(token, tokenSecret);
-        t.syncTwitter(screenName);
-	}
+        Set ids = TweetIDJedis.getAuthorizedIds();
+        for (Object id : ids) {
+            log.info("Start syncing task.");
+            Twitter2Weibo t = new Twitter2Weibo((String) id);
+            t.syncTwitter();
+        }
+    }
 }
