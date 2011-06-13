@@ -38,7 +38,7 @@ public class CallbackServlet extends HttpServlet {
             PrintWriter writer = response.getWriter();
             AccessToken accessToken = weibo.getOAuthAccessToken(token, tokenSecret, oauthVerifier);
             if (accessToken != null) {
-                TweetIDJedis tj = TweetIDJedis.loadUser(twitterUser);
+                TweetIDJedis tj = TweetIDJedis.getUser(twitterUser);
                 tj.setToken(token);
                 tj.setTokenSecret(tokenSecret);
                 tj.save();

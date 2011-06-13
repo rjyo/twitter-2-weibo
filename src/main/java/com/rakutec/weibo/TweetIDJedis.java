@@ -65,7 +65,7 @@ public class TweetIDJedis {
         j.sadd("twitter:ids", this.userId);
     }
 
-    public static TweetIDJedis loadUser(String userId) {
+    public static TweetIDJedis getUser(String userId) {
         Jedis j = RedisHelper.getInstance().getJedis();
 
         TweetIDJedis tid = new TweetIDJedis();
@@ -75,10 +75,10 @@ public class TweetIDJedis {
             tid.latestId = Long.valueOf(latest);
             tid.token = j.get("id:" + tid.userId + ":token");
             tid.tokenSecret = j.get("id:" + tid.userId + ":tokenSecret");
-            log.info("FOUND TID:" + tid.latestId);
+            log.info("Found data for @" + userId + " = " + tid.latestId);
         } else {
             tid.latestId = (long) 0;
-            log.info("TID NOT FOUND");
+            log.info("Data not found for @" + userId);
         }
         return tid;
     }

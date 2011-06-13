@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Set;
 
 /**
  * @author Rakuraku Jyo
@@ -22,16 +23,21 @@ public class SyncServlet extends HttpServlet {
         response.setStatus(200);
         PrintWriter writer = response.getWriter();
 
-        TweetIDJedis f = TweetIDJedis.loadUser("xu_lele");
-        String latestId = request.getParameter("id");
-        if (latestId != null) {
-            f.updateLatestId(Long.valueOf(latestId));
-            f.save();
-            writer.println("Latest tweet ID updated to " + latestId);
+        String cmd = request.getParameter("cmd");
+        if ("sync".equals(cmd)) {
+            SyncTask task = new SyncTask();
+            task.run();
+        } else if ("users".equals(cmd)) {
+            Set ids = TweetIDJedis.getAuthorizedIds();
+            writer.println("Syncing user list:");
+            for (Object id : ids) {
+                writer.println("  " + id);
+            }
         } else {
+            String user = request.getParameter("u");
+            TweetIDJedis f = TweetIDJedis.getUser(user);
             writer.println("Latest tweet ID is " + f.getLatestId());
         }
-
         writer.close();
     }
 

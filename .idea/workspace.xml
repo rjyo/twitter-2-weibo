@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1dfa6322-8cc1-4150-86d6-15d72ff3b2b6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/filters/NoReplyFilter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Makefile" afterPath="$PROJECT_DIR$/Makefile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/CallbackServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/CallbackServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncTask.java" afterPath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncTask.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/TweetIDJedis.java" afterPath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/TweetIDJedis.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/Twitter2Weibo.java" afterPath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/Twitter2Weibo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/filters/TagStatusFilter.java" afterPath="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/filters/TagStatusFilter.java" />
     </list>
     <ignored path="sina-weibo4j.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -71,7 +74,7 @@
       <file leaf-file-name="CallbackServlet.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/CallbackServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="26" selection-start="1797" selection-end="1797" vertical-scroll-proportion="0.0">
+            <state line="43" column="26" selection-start="1796" selection-end="1796" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -80,16 +83,7 @@
       <file leaf-file-name="SyncTask.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="127" selection-end="127" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Set.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar:///System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar!/java/util/Set.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="17" selection-start="151" selection-end="151" vertical-scroll-proportion="0.0">
+            <state line="12" column="28" selection-start="324" selection-end="324" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -98,10 +92,19 @@
       <file leaf-file-name="SyncServlet.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="24" selection-start="413" selection-end="424" vertical-scroll-proportion="0.0">
+            <state line="37" column="45" selection-start="1316" selection-end="1316" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TweetIDJedis.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/TweetIDJedis.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="67" column="41" selection-start="1509" selection-end="1509" vertical-scroll-proportion="0.5574771">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -115,19 +118,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Weibo.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/weibo4j/Weibo.java">
+      <file leaf-file-name="Twitter2Weibo.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/Twitter2Weibo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="76" selection-start="2414" selection-end="2448" vertical-scroll-proportion="0.0">
+            <state line="52" column="7" selection-start="1944" selection-end="1944" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Twitter2Weibo.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/Twitter2Weibo.java">
+      <file leaf-file-name="Makefile" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Makefile">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="40" selection-start="1364" selection-end="1364" vertical-scroll-proportion="0.3896236">
+            <state line="4" column="0" selection-start="186" selection-end="186" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -183,13 +186,13 @@
         <option value="$PROJECT_DIR$/src/main/java/weibo4j/examples/Test.java" />
         <option value="$PROJECT_DIR$/src/main/java/weibo4j/examples/OAuthAPIExamples.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/CallbackServlet.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/TweetIDJedis.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncTask.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncServlet.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/AuthServlet.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/filters/TagStatusFilter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/Twitter2Weibo.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/filters/NoReplyFilter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncTask.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/Twitter2Weibo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rakutec/weibo/TweetIDJedis.java" />
       </list>
     </option>
   </component>
@@ -399,40 +402,6 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="weibo4j" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twitter-to-weibo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="weibo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="weibo4j" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="examples" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -560,6 +529,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="919" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="921" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="125" />
+    <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="weibo" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="121" />
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="false" />
@@ -961,7 +931,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.20319635" sideWeight="0.67105263" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39969948" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30571032" sideWeight="0.7073643" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30571032" sideWeight="0.67248064" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.32848838" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1017,13 +987,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/weibo4j/examples/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="34" selection-start="1183" selection-end="1183" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/filters/URLStatusFilter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="13" selection-start="183" selection-end="183" vertical-scroll-proportion="0.0">
@@ -1052,13 +1015,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/TweetIDJedis.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="43" selection-start="1460" selection-end="1460" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar!/java/util/Set.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="17" selection-start="151" selection-end="151" vertical-scroll-proportion="0.0">
@@ -1076,29 +1032,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/AuthServlet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="30" column="0" selection-start="1089" selection-end="1089" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="24" selection-start="413" selection-end="424" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/CallbackServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="26" selection-start="1797" selection-end="1797" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="127" selection-end="127" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1124,9 +1057,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="0" selection-start="186" selection-end="186" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/CallbackServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="26" selection-start="1796" selection-end="1796" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/Twitter2Weibo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="40" selection-start="1364" selection-end="1364" vertical-scroll-proportion="0.3896236">
+        <state line="52" column="7" selection-start="1944" selection-end="1944" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="28" selection-start="324" selection-end="324" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/SyncServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="45" selection-start="1316" selection-end="1316" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rakutec/weibo/TweetIDJedis.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="41" selection-start="1509" selection-end="1509" vertical-scroll-proportion="0.5574771">
           <folding />
         </state>
       </provider>
