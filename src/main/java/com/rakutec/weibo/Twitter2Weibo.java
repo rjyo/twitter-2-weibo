@@ -57,7 +57,6 @@ public class Twitter2Weibo {
                         } else {
                             log.info("Skipped " + status.getText() + " because of the filter.");
                         }
-                        tid.updateLatestId(status.getId());
                     } catch (WeiboException e) {
                         if (e.getStatusCode() != 400) { // resending same tweet
                             log.warn("Failed to update Weibo");
