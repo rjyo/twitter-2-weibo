@@ -1,7 +1,8 @@
 .classpath
 .project
 .settings/
-target
+.idea/workspace.xml
 .DS_Store
 classes
+target
 *.id
