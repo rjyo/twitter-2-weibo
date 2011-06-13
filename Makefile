@@ -1,6 +1,9 @@
 TARGET_DIR = ./target/h2weibo
 MVN_INSTALL_FLAGS = install:install-file -Dfile=./lib/cron4j-2.2.3.jar -DgroupId=cron4j -DartifactId=cron4j -Dversion=2.2.3 -Dpackaging=jar
 
+setup:
+	@mvn $(MVN_INSTALL_FLAGS)
+
 compile: clean
 	@mvn package
 
@@ -16,7 +19,7 @@ logs:
 stats:
 	@vmc stats h2weibo
 
-setup:
-	@mvn $(MVN_INSTALL_FLAGS)
+dev: compile
+	@cp $(TARGET_DIR).war /usr/local/Cellar/tomcat/7.0.6/libexec/webapps
 
 .PHONY: compile

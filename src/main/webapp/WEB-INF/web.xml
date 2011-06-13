@@ -14,6 +14,25 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UserAuthServlet</servlet-name>
+        <servlet-class>com.rakutec.weibo.AuthServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserAuthServlet</servlet-name>
+        <url-pattern>/auth</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>OAuthCallbackServlet</servlet-name>
+        <servlet-class>com.rakutec.weibo.CallbackServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>OAuthCallbackServlet</servlet-name>
+        <url-pattern>/callback</url-pattern>
+    </servlet-mapping>
 
     <context-param>
         <param-name>contextInitializerClasses</param-name>

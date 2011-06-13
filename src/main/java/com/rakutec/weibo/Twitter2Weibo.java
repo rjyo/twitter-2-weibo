@@ -1,22 +1,14 @@
 package com.rakutec.weibo;
 
 import com.rakutec.weibo.filters.KVStatusFilter;
-import com.rakutec.weibo.filters.StatusFilter;
 import com.rakutec.weibo.filters.StatusFilters;
 import com.rakutec.weibo.filters.URLStatusFilter;
-import com.rosaloves.bitlyj.Bitly;
-import com.rosaloves.bitlyj.Url;
+import org.apache.log4j.Logger;
 import twitter4j.*;
 import weibo4j.Weibo;
 import weibo4j.WeiboException;
 
 import java.util.List;
-
-import org.apache.log4j.Logger;
-
-import javax.enterprise.inject.New;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Rakuraku Jyo
@@ -27,14 +19,13 @@ public class Twitter2Weibo {
     private StatusFilters filters = new StatusFilters();
 
     public Twitter2Weibo(String token, String tokenSecret) {
-        System.setProperty("weibo4j.oauth.consumerKey", Weibo.CONSUMER_KEY);
-        System.setProperty("weibo4j.oauth.consumerSecret", Weibo.CONSUMER_SECRET);
         user = new Weibo();
         user.setToken(token, tokenSecret);
 
         KVStatusFilter kvFilter = new KVStatusFilter();
         kvFilter.add("@xuzhe", "@徐哲-老徐");
         kvFilter.add("@xu_lele", "@乐库-老乐");
+        kvFilter.add("@brighthong", "@roubaozi");
         filters.use(kvFilter).use(new URLStatusFilter());
     }
 //
@@ -61,8 +52,8 @@ public class Twitter2Weibo {
         // gets Twitter instance with default credentials
         Twitter twitter = new TwitterFactory().getInstance();
         try {
-            TweetIDJedis tid = TweetIDJedis.loadTweetID(screenName);
-            long latestId = tid.latestId;
+            TweetIDJedis tid = TweetIDJedis.loadUser(screenName);
+            long latestId = tid.getLatestId();
             log.info("= TID: " + latestId + " = ");
 
             log.info("Checking @" + screenName + "'s userId timeline.");
@@ -70,7 +61,8 @@ public class Twitter2Weibo {
             if (latestId == 0) {
                 List<Status> statuses = twitter.getUserTimeline(screenName);
                 if (statuses.size() > 0)
-                tid.update(statuses.get(0).getId()); // Record latestId, and sync next time
+                tid.updateLatestId(statuses.get(0).getId()); // Record latestId, and sync next time
+                log.info("Updating @" + screenName + "'s latestId to " + tid.getLatestId());
             } else {
                 Paging paging = new Paging(latestId);
                 List<Status> statuses = twitter.getUserTimeline(screenName, paging);
@@ -80,14 +72,14 @@ public class Twitter2Weibo {
                     log.info("@" + status.getUser().getScreenName() + " - " + status.getText());
                     try {
                         user.updateStatus(filters.filter(status.getText()));
-                        tid.update(status.getId());
+                        tid.updateLatestId(status.getId());
                     } catch (WeiboException e) {
                         if (e.getStatusCode() != 400) { // resending same tweet
                             log.warn("Failed to update Weibo");
                             throw new RuntimeException(e);
                         }
                     }
-                    tid.update(status.getId()); // still update the latestId to skip
+                    tid.updateLatestId(status.getId()); // still update the latestId to skip
                     Thread.sleep(1000);
                 }
             }

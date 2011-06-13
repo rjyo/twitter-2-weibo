@@ -29,7 +29,8 @@ public class Test {
         System.setProperty("weibo4j.oauth.consumerKey", Weibo.CONSUMER_KEY);
         System.setProperty("weibo4j.oauth.consumerSecret", Weibo.CONSUMER_SECRET);
         OAuthAPIExamples oauthAPI = new OAuthAPIExamples();
-        Weibo user = oauthAPI.getWeiboWithToken("d9ddc51b9f84f211206eb4124a74601b", "35d1ff8d00d9093a666fbc705acc8629");
+        //Weibo user = oauthAPI.getWeiboWithToken("d9ddc51b9f84f211206eb4124a74601b", "35d1ff8d00d9093a666fbc705acc8629");
+        Weibo user = oauthAPI.doOAuth();
 
         Status updateStatus = null;
         try {
@@ -40,7 +41,7 @@ public class Test {
             printStatus(updateStatus, sb);
             System.out.println(sb);
         } catch (WeiboException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
     }
 
