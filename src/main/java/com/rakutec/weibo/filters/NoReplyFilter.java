@@ -7,11 +7,20 @@ public class NoReplyFilter implements StatusFilter {
 
     @Override
     public String filter(String input) {
-        if (input.matches("@\\w+")) {
+        input = input.replaceAll("\\n","");
+        input = input.replaceAll("\\r","");
+        
+        if (input.matches(".*@\\w+.*")) {
             log.info("Dropped " + input + " with @somebody");
             return null; // if has @someone, skip
         } else {
             return input; // if has @someone, skip
         }
+    }
+
+    public static void main(String[] args) {
+        NoReplyFilter noReplyFilter = new NoReplyFilter();
+        String filter = noReplyFilter.filter("@xuzhe \n goog!");
+        System.out.println(filter);
     }
 }

@@ -27,6 +27,7 @@ public class SyncServlet extends HttpServlet {
         if ("sync".equals(cmd)) {
             SyncTask task = new SyncTask();
             task.run();
+            writer.println("Run!");
         } else if ("users".equals(cmd)) {
             Set ids = TweetIDJedis.getAuthorizedIds();
             writer.println("Syncing user list:");
@@ -35,8 +36,12 @@ public class SyncServlet extends HttpServlet {
             }
         } else {
             String user = request.getParameter("u");
-            TweetIDJedis f = TweetIDJedis.getUser(user);
-            writer.println("Latest tweet ID is " + f.getLatestId());
+            if (user != null) {
+                TweetIDJedis f = TweetIDJedis.getUser(user);
+                writer.println("Latest tweet ID is " + f.getLatestId());
+            } else {
+                writer.write("Welcome!");
+            }
         }
         writer.close();
     }

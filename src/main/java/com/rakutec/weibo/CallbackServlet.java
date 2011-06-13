@@ -33,15 +33,17 @@ public class CallbackServlet extends HttpServlet {
             log.info("oauthToken = " + oauthToken);
             log.info("oauthVerifier = " + oauthVerifier);
 
-            response.setContentType("text/html");
+            response.setContentType("text/plain");
             response.setStatus(200);
             PrintWriter writer = response.getWriter();
             AccessToken accessToken = weibo.getOAuthAccessToken(token, tokenSecret, oauthVerifier);
             if (accessToken != null) {
                 TweetIDJedis tj = TweetIDJedis.getUser(twitterUser);
-                tj.setToken(token);
-                tj.setTokenSecret(tokenSecret);
+                tj.setToken(accessToken.getToken());
+                tj.setTokenSecret(accessToken.getTokenSecret());
                 tj.save();
+
+                weibo.updateStatus("Hello from T2W Sync!");
                 writer.write(twitterUser + " connected to Weibo.");
             } else {
                 writer.write("Failed to get accesstoken.");
