@@ -64,7 +64,7 @@ public class Twitter2Weibo {
                         }
                     }
                     tid.updateLatestId(status.getId()); // still update the latestId to skip
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 }
             }
         } catch (TwitterException te) {
