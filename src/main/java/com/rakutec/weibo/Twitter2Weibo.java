@@ -2,6 +2,7 @@ package com.rakutec.weibo;
 
 import com.rakutec.weibo.filters.NoReplyFilter;
 import com.rakutec.weibo.filters.StatusFilters;
+import com.rakutec.weibo.filters.TagStatusFilter;
 import com.rakutec.weibo.filters.URLStatusFilter;
 import org.apache.log4j.Logger;
 import twitter4j.*;
@@ -17,15 +18,15 @@ public class Twitter2Weibo {
     private static final Logger log = Logger.getLogger(Twitter2Weibo.class.getName());
     private Weibo user = null;
     private StatusFilters filters = new StatusFilters();
-    private TweetIDJedis tid;
+    private TweetID tid;
 
     public Twitter2Weibo(String twitterId) {
-        tid = TweetIDJedis.getUser(twitterId);
+        tid = TweetID.getUser(twitterId);
 
         user = new Weibo();
         user.setToken(tid.getToken(), tid.getTokenSecret());
 
-        filters.use(new NoReplyFilter()).use(new URLStatusFilter());
+        filters.use(new NoReplyFilter()).use(new URLStatusFilter()).use(new TagStatusFilter());
     }
 
     public void syncTwitter() {

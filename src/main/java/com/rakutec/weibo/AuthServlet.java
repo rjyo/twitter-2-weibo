@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -20,35 +21,39 @@ public class AuthServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String user = request.getParameter("u");
-        request.getSession().setAttribute("twitterUser", user);
+        response.setContentType("text/plain");
+        PrintWriter writer = response.getWriter();
 
-        if (user != null) {
-            try {
-                String server = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        if (TweetID.getUserCount() < 100) {
+            if (user != null && !"your_twitter_id".equals(user)) {
+                HttpSession session = request.getSession();
+                session.setAttribute("twitterUser", user);
+                try {
+                    String server = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 
-                Weibo weibo = new Weibo();
-                RequestToken requestToken = weibo.getOAuthRequestToken(server + "/callback");
+                    Weibo weibo = new Weibo();
+                    RequestToken requestToken = weibo.getOAuthRequestToken(server + "/callback");
 
-                response.setContentType("text/html");
-                response.setStatus(302);
-                response.setHeader("Location", requestToken.getAuthenticationURL());
-                PrintWriter writer = response.getWriter();
-                request.getSession().setAttribute("token", requestToken.getToken());
-                request.getSession().setAttribute("tokenSecret", requestToken.getTokenSecret());
+                    response.setStatus(302);
+                    response.setHeader("Location", requestToken.getAuthenticationURL());
+                    session.setAttribute("token", requestToken.getToken());
+                    session.setAttribute("tokenSecret", requestToken.getTokenSecret());
 
-                writer.write("<h3>Redirecting</h3>");
+                    writer.println("Redirecting...");
+                    writer.close();
+                } catch (WeiboException e) {
+                    e.printStackTrace();
+                    log.error(e);
+                }
+            } else {
+                response.setStatus(200);
+                writer.println("Wrong parameter, not working!");
                 writer.close();
-            } catch (WeiboException e) {
-                e.printStackTrace();
-                log.error(e);
             }
         } else {
-            response.setContentType("text/html");
             response.setStatus(200);
-            PrintWriter writer = response.getWriter();
-            writer.write("<h3>Not working</h3>");
+            writer.println("Server reached max number of users. Please try again later.");
             writer.close();
-
         }
     }
 }

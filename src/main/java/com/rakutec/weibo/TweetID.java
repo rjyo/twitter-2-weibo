@@ -6,10 +6,12 @@ import redis.clients.jedis.Jedis;
 import java.util.Set;
 
 /**
+ * Should rewrite this class to seperate model and static db methods
+ *
  * @author Rakuraku Jyo
  */
-public class TweetIDJedis {
-    private static final Logger log = Logger.getLogger(TweetIDJedis.class.getName());
+public class TweetID {
+    private static final Logger log = Logger.getLogger(TweetID.class.getName());
 
     private String userId;
     private Long latestId;
@@ -48,7 +50,7 @@ public class TweetIDJedis {
         this.tokenSecret = tokenSecret;
     }
 
-    private TweetIDJedis() {
+    private TweetID() {
     }
 
     public void updateLatestId(Long latestId) {
@@ -65,10 +67,10 @@ public class TweetIDJedis {
         j.sadd("twitter:ids", this.userId);
     }
 
-    public static TweetIDJedis getUser(String userId) {
+    public static TweetID getUser(String userId) {
         Jedis j = RedisHelper.getInstance().getJedis();
 
-        TweetIDJedis tid = new TweetIDJedis();
+        TweetID tid = new TweetID();
         tid.userId = userId;
         String latest = j.get("id:" + tid.userId + ":latestId");
         if (latest != null) {
@@ -86,6 +88,11 @@ public class TweetIDJedis {
     public static Set getAuthorizedIds() {
         Jedis j = RedisHelper.getInstance().getJedis();
         return j.smembers("twitter:ids");
+    }
+
+    public static Long getUserCount() {
+        Jedis j = RedisHelper.getInstance().getJedis();
+        return j.scard("twitter:ids");
     }
 
     public static void delete(String userId) {

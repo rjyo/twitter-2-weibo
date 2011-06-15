@@ -38,10 +38,10 @@ public class CallbackServlet extends HttpServlet {
             PrintWriter writer = response.getWriter();
             AccessToken accessToken = weibo.getOAuthAccessToken(token, tokenSecret, oauthVerifier);
             if (accessToken != null) {
-                TweetIDJedis tj = TweetIDJedis.getUser(twitterUser);
-                tj.setToken(accessToken.getToken());
-                tj.setTokenSecret(accessToken.getTokenSecret());
-                tj.save();
+                TweetID user = TweetID.getUser(twitterUser);
+                user.setToken(accessToken.getToken());
+                user.setTokenSecret(accessToken.getTokenSecret());
+                user.save();
 
                 weibo.updateStatus("Hello from T2W Sync!");
                 writer.write(twitterUser + " connected to Weibo.");

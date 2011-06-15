@@ -2,7 +2,6 @@ package com.rakutec.weibo;
 
 import it.sauronsoftware.cron4j.Scheduler;
 import org.apache.log4j.Logger;
-import twitter4j.Twitter;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -30,7 +29,7 @@ public class SyncServlet extends HttpServlet {
             task.run();
             writer.println("Run!");
         } else if ("users".equals(cmd)) {
-            Set ids = TweetIDJedis.getAuthorizedIds();
+            Set ids = TweetID.getAuthorizedIds();
             writer.println("Syncing user list:");
             for (Object id : ids) {
                 writer.println("  " + id);
@@ -38,16 +37,23 @@ public class SyncServlet extends HttpServlet {
         } else if ("del".equals(cmd)) {
             String user = request.getParameter("u");
             if (user != null) {
-                TweetIDJedis.delete(user);
+                TweetID.delete(user);
                 writer.println("  Removed " + user);
             }
         } else { // not a command
             String user = request.getParameter("u");
             if (user != null) {
-                TweetIDJedis f = TweetIDJedis.getUser(user);
+                TweetID f = TweetID.getUser(user);
                 writer.println("Latest tweet ID is " + f.getLatestId());
             } else {
-                writer.write("Welcome!");
+                writer.println("Welcome!");
+                writer.println("");
+                writer.println("Features:");
+                writer.println("  - Use oauth to connect to Weibo, no need for user/password");
+                writer.println("  - Sync in less than 5 minutes");
+                writer.println("  - Auto drop replies and RTs with @somebody in the tweet");
+                writer.println("  - Auto expand bit.ly URL");
+                writer.println("  - Auto translate twitter style #tag to weibo style #tag#");
             }
         }
         writer.close();

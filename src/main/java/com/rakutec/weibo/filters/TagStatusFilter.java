@@ -9,7 +9,7 @@ public class TagStatusFilter implements StatusFilter {
 
     public static void main(String[] args) {
         TagStatusFilter tagStatusFilter = new TagStatusFilter();
-        String s = tagStatusFilter.filter("asd2fhlad #af asdfhweal");
+        String s = tagStatusFilter.filter("asd2fhlad #a_f asdfhweal #redis");
         System.out.println(s);
     }
 }
