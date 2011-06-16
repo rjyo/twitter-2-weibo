@@ -102,6 +102,11 @@ strong {
     font-weight: bold;
 }
 
+em {
+  	text-decoration: underline;
+	font-style: normal;
+}
+
 a {
     color: #FFCC00;
     text-decoration: none;
