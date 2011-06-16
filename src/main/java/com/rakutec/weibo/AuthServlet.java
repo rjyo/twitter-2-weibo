@@ -24,7 +24,7 @@ public class AuthServlet extends HttpServlet {
         response.setContentType("text/plain");
         PrintWriter writer = response.getWriter();
 
-        if (TweetID.getUserCount() < 100) {
+        if (RedisHelper.getUserCount() < 100) {
             if (user != null && !"your_twitter_id".equals(user)) {
                 HttpSession session = request.getSession();
                 session.setAttribute("twitterUser", user);

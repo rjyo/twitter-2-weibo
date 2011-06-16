@@ -1,0 +1,113 @@
+html {
+    background: #eee url(../images/bg.png) repeat;
+}
+
+body {
+    margin: 0 auto;
+    width: 910px;
+}
+
+h1, h2, h3 {
+    font-family: 'Geo', arial, serif;
+    color: #FFF;
+    text-shadow: 1px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    margin-top: 50px;
+    font-size: 30px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+h1, h2 {
+	border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+	padding-bottom: 3px;
+}
+
+hr {
+  	border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+div, p, ol, ul {
+    font-family: 'Geo', arial, serif;
+    color: #FFF;
+    line-height: 1.4em;
+    font-size: 18px;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+}
+
+#h_feature, #h_usage, #h_faq, h1 {
+  padding-left: 55px;
+}
+
+#h_feature {
+  background: url(../images/h_feature.png) 30px 0 no-repeat no-repeat;
+}
+
+#h_usage {
+  background: url(../images/h_usage.png) 30px 0 no-repeat no-repeat;
+}
+
+#h_faq {
+  background: url(../images/h_faq.png) 30px 0 no-repeat no-repeat;
+}
+
+#paper {
+	background: #eee url(../images/paper_repeat.png) top left repeat-y;
+	margin-top: 30px;
+}
+
+#header {
+	background: url(../images/paper_header.png) top left no-repeat;
+}
+
+#footer {
+	background: url(../images/paper_footer.png) bottom left no-repeat;
+	padding-bottom: 30px;
+}
+
+#content {
+	padding: 60px 54px 0 56px;
+}
+
+#page_footer {
+	font-size: 14px;
+	color: #474747;
+	font-family: 'Lobster', arial, serif;
+	padding: 0px 70px 40px;
+	text-shadow: none;
+	text-align: right;
+}
+
+#page_footer a {
+  	color: #999;
+}
+
+#paper p, #paper ul, #paper ol{
+  	padding-left: 4em;
+}
+
+ul {
+    list-style: none;
+}
+
+ul li {
+  	margin-left: 0em;
+}
+
+strong {
+    font-weight: bold;
+}
+
+a {
+    color: #FFCC00;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+

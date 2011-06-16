@@ -29,7 +29,7 @@ public class SyncServlet extends HttpServlet {
             task.run();
             writer.println("Run!");
         } else if ("users".equals(cmd)) {
-            Set ids = TweetID.getAuthorizedIds();
+            Set ids = RedisHelper.getAuthorizedIds();
             writer.println("Syncing user list:");
             for (Object id : ids) {
                 writer.println("  " + id);
@@ -37,13 +37,13 @@ public class SyncServlet extends HttpServlet {
         } else if ("del".equals(cmd)) {
             String user = request.getParameter("u");
             if (user != null) {
-                TweetID.delete(user);
+                RedisHelper.delete(user);
                 writer.println("  Removed " + user);
             }
         } else { // not a command
             String user = request.getParameter("u");
             if (user != null) {
-                TweetID f = TweetID.getUser(user);
+                TweetID f = TweetID.findOneByUser(user);
                 writer.println("Latest tweet ID is " + f.getLatestId());
             } else {
                 writer.println("Welcome!");
@@ -51,9 +51,24 @@ public class SyncServlet extends HttpServlet {
                 writer.println("Features:");
                 writer.println("  - Use oauth to connect to Weibo, no need for user/password");
                 writer.println("  - Sync in less than 5 minutes");
-                writer.println("  - Auto drop replies and RTs with @somebody in the tweet");
+                writer.println("  - Auto drop tweets with @somebody style metions");
                 writer.println("  - Auto expand bit.ly URL");
                 writer.println("  - Auto translate twitter style #tag to weibo style #tag#");
+                writer.println("");
+                writer.println("Usage:");
+                writer.println("  - 1. Access http://h2weibo.cloudfoundry.com/auth?u=your_twitter_id");
+                writer.println("  - 2. Boom!");
+                writer.println("");
+                writer.println("FAQ:");
+                writer.println("  - Q1: What if I get error message from Sina API");
+                writer.println("  - A1: Refresh your browser.");
+                writer.println("");
+                writer.println("  - Q2: Why my tweet like \"I support 32 * 2 ...\" is missing");
+                writer.println("  - A2: Weibo made the decision.");
+                writer.println("");
+                writer.println("Contact:");
+                writer.println("  - Write a comment in my blog: http://jyorr.com");
+                writer.println("  - Write an email to jyo.rakuraku on gmail.com");
             }
         }
         writer.close();

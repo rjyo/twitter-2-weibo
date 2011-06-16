@@ -21,7 +21,7 @@ public class Twitter2Weibo {
     private TweetID tid;
 
     public Twitter2Weibo(String twitterId) {
-        tid = TweetID.getUser(twitterId);
+        tid = TweetID.findOneByUser(twitterId);
 
         user = new Weibo();
         user.setToken(tid.getToken(), tid.getTokenSecret());

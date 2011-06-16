@@ -3,8 +3,6 @@ package com.rakutec.weibo;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
 
-import java.util.Set;
-
 /**
  * Should rewrite this class to seperate model and static db methods
  *
@@ -67,7 +65,7 @@ public class TweetID {
         j.sadd("twitter:ids", this.userId);
     }
 
-    public static TweetID getUser(String userId) {
+    public static TweetID findOneByUser(String userId) {
         Jedis j = RedisHelper.getInstance().getJedis();
 
         TweetID tid = new TweetID();
@@ -83,23 +81,5 @@ public class TweetID {
             log.info("Data not found for @" + userId);
         }
         return tid;
-    }
-
-    public static Set getAuthorizedIds() {
-        Jedis j = RedisHelper.getInstance().getJedis();
-        return j.smembers("twitter:ids");
-    }
-
-    public static Long getUserCount() {
-        Jedis j = RedisHelper.getInstance().getJedis();
-        return j.scard("twitter:ids");
-    }
-
-    public static void delete(String userId) {
-        Jedis j = RedisHelper.getInstance().getJedis();
-        j.del("id:" + userId + ":latestId");
-        j.del("id:" + userId + ":token");
-        j.del("id:" + userId + ":tokenSecret");
-        j.srem("twitter:ids", userId);
     }
 }

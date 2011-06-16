@@ -5,6 +5,8 @@ import redis.clients.jedis.Jedis;
 import weibo4j.org.json.JSONException;
 import weibo4j.org.json.JSONObject;
 
+import java.util.Set;
+
 
 public class RedisHelper {
     private static final Logger log = Logger.getLogger(RedisHelper.class.getName());
@@ -12,6 +14,24 @@ public class RedisHelper {
     private static RedisHelper ourInstance = new RedisHelper();
 
     private Jedis jedis;
+
+    public static Set getAuthorizedIds() {
+        Jedis j = getInstance().getJedis();
+        return j.smembers("twitter:ids");
+    }
+
+    public static Long getUserCount() {
+        Jedis j = getInstance().getJedis();
+        return j.scard("twitter:ids");
+    }
+
+    public static void delete(String userId) {
+        Jedis j = getInstance().getJedis();
+        j.del("id:" + userId + ":latestId");
+        j.del("id:" + userId + ":token");
+        j.del("id:" + userId + ":tokenSecret");
+        j.srem("twitter:ids", userId);
+    }
 
     public Jedis getJedis() {
         return jedis;
