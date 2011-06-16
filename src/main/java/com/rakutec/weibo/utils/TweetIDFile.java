@@ -1,4 +1,4 @@
-package com.rakutec.weibo;
+package com.rakutec.weibo.utils;
 
 import java.io.*;
 

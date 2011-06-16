@@ -11,17 +11,27 @@
 
     <servlet-mapping>
         <servlet-name>SyncServlet</servlet-name>
-        <url-pattern>/c</url-pattern>
+        <url-pattern>/cmd/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>UserAuthServlet</servlet-name>
+        <servlet-name>AuthServlet</servlet-name>
         <servlet-class>com.rakutec.weibo.AuthServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>UserAuthServlet</servlet-name>
-        <url-pattern>/auth</url-pattern>
+        <servlet-name>AuthServlet</servlet-name>
+        <url-pattern>/auth/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>com.rakutec.weibo.UserServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/u/*</url-pattern>
     </servlet-mapping>
 
     <servlet>

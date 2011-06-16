@@ -1,5 +1,7 @@
 package com.rakutec.weibo;
 
+import com.rakutec.weibo.utils.HttpServletRouter;
+import com.rakutec.weibo.utils.RedisHelper;
 import org.apache.log4j.Logger;
 import weibo4j.Weibo;
 import weibo4j.WeiboException;
@@ -20,14 +22,16 @@ public class AuthServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(AuthServlet.class.getName());
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String user = request.getParameter("u");
+        HttpServletRouter r = new HttpServletRouter(request);
+        r.setPattern("/:id");
+
         response.setContentType("text/plain");
         PrintWriter writer = response.getWriter();
 
-        if (RedisHelper.getUserCount() < 100) {
-            if (user != null && !"your_twitter_id".equals(user)) {
+        if (RedisHelper.getInstance().getUserCount() < 100) {
+            if (r.has(":id") && !r.is(":id", "your_twitter_id")) {
                 HttpSession session = request.getSession();
-                session.setAttribute("twitterUser", user);
+                session.setAttribute("twitterUser", r.get(":id"));
                 try {
                     String server = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 

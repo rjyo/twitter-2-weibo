@@ -1,4 +1,4 @@
-package com.rakutec.weibo;
+package com.rakutec.weibo.utils;
 
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
@@ -63,6 +63,14 @@ public class TweetID {
         j.set("id:" + this.userId + ":tokenSecret", this.tokenSecret);
 
         j.sadd("twitter:ids", this.userId);
+    }
+
+    public void delete() {
+        Jedis j = RedisHelper.getInstance().getJedis();
+        j.del("id:" + this.userId + ":latestId");
+        j.del("id:" + this.userId + ":token");
+        j.del("id:" + this.userId + ":tokenSecret");
+        j.srem("twitter:ids", this.userId);
     }
 
     public static TweetID findOneByUser(String userId) {

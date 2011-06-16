@@ -10,6 +10,9 @@ setup:
 clean:
 	@mvn clean
 
+run:
+	@mvn tomcat:run
+
 update:
 	@vmc update h2weibo --path $(TARGET_DIR)
 
@@ -18,9 +21,6 @@ logs:
 
 stats:
 	@vmc stats h2weibo
-
-dev: compile
-	@cp $(TARGET_DIR).war /usr/local/Cellar/tomcat/7.0.6/libexec/webapps
 
 restart:
 	@vmc stop h2weibo

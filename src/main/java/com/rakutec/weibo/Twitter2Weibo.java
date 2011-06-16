@@ -4,6 +4,7 @@ import com.rakutec.weibo.filters.NoReplyFilter;
 import com.rakutec.weibo.filters.StatusFilters;
 import com.rakutec.weibo.filters.TagStatusFilter;
 import com.rakutec.weibo.filters.URLStatusFilter;
+import com.rakutec.weibo.utils.TweetID;
 import org.apache.log4j.Logger;
 import twitter4j.*;
 import weibo4j.Weibo;

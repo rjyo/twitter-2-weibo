@@ -1,5 +1,8 @@
 package com.rakutec.weibo;
 
+import com.rakutec.weibo.utils.HttpServletRouter;
+import com.rakutec.weibo.utils.RedisHelper;
+import com.rakutec.weibo.utils.TweetID;
 import it.sauronsoftware.cron4j.Scheduler;
 import org.apache.log4j.Logger;
 
@@ -19,57 +22,39 @@ public class SyncServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(SyncServlet.class.getName());
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpServletRouter router = new HttpServletRouter(request);
+        router.setPattern("/:cmd/:id");
+
         response.setContentType("text/plain");
         response.setStatus(200);
         PrintWriter writer = response.getWriter();
 
-        String cmd = request.getParameter("cmd");
-        if ("sync".equals(cmd)) {
+        if (router.is(":cmd", "sync")) {
             SyncTask task = new SyncTask();
             task.run();
             writer.println("Run!");
-        } else if ("users".equals(cmd)) {
-            Set ids = RedisHelper.getAuthorizedIds();
+        } else if (router.is(":cmd", "users")) {
+            Set ids = RedisHelper.getInstance().getAuthorizedIds();
             writer.println("Syncing user list:");
             for (Object id : ids) {
                 writer.println("  " + id);
             }
-        } else if ("del".equals(cmd)) {
+        } else if (router.is(":cmd", "del")) {
             String user = request.getParameter("u");
             if (user != null) {
-                RedisHelper.delete(user);
+                TweetID id = TweetID.findOneByUser(user);
+                id.delete();
                 writer.println("  Removed " + user);
             }
-        } else { // not a command
-            String user = request.getParameter("u");
-            if (user != null) {
-                TweetID f = TweetID.findOneByUser(user);
+        } else if (router.is(":cmd", "u")) {
+            if (router.has(":id")) {
+                TweetID f = TweetID.findOneByUser(router.get("id"));
                 writer.println("Latest tweet ID is " + f.getLatestId());
             } else {
-                writer.println("Welcome!");
-                writer.println("");
-                writer.println("Features:");
-                writer.println("  - Use oauth to connect to Weibo, no need for user/password");
-                writer.println("  - Sync in less than 5 minutes");
-                writer.println("  - Auto drop tweets with @somebody style metions");
-                writer.println("  - Auto expand bit.ly URL");
-                writer.println("  - Auto translate twitter style #tag to weibo style #tag#");
-                writer.println("");
-                writer.println("Usage:");
-                writer.println("  - 1. Access http://h2weibo.cloudfoundry.com/auth?u=your_twitter_id");
-                writer.println("  - 2. Boom!");
-                writer.println("");
-                writer.println("FAQ:");
-                writer.println("  - Q1: What if I get error message from Sina API");
-                writer.println("  - A1: Refresh your browser.");
-                writer.println("");
-                writer.println("  - Q2: Why my tweet like \"I support 32 * 2 ...\" is missing");
-                writer.println("  - A2: Weibo made the decision.");
-                writer.println("");
-                writer.println("Contact:");
-                writer.println("  - Write a comment in my blog: http://jyorr.com");
-                writer.println("  - Write an email to jyo.rakuraku on gmail.com");
+                response.sendRedirect(request.getContextPath());
             }
+        } else {
+            response.sendRedirect(request.getContextPath());
         }
         writer.close();
     }

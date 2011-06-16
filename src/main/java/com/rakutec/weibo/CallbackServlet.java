@@ -1,5 +1,6 @@
 package com.rakutec.weibo;
 
+import com.rakutec.weibo.utils.TweetID;
 import org.apache.log4j.Logger;
 import weibo4j.Weibo;
 import weibo4j.WeiboException;
