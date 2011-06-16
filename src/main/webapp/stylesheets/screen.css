@@ -32,14 +32,14 @@ hr {
 }
 
 div, p, ol, ul {
-    font-family: 'Geo', arial, serif;
+    font-family: 'Geo', Helvetica, arial, sans-serif;
     color: #FFF;
     line-height: 1.4em;
     font-size: 18px;
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
 }
 
-#h_feature, #h_usage, #h_faq, h1 {
+h1, h2 {
   padding-left: 55px;
 }
 
@@ -86,7 +86,7 @@ div, p, ol, ul {
   	color: #999;
 }
 
-#paper p, #paper ul, #paper ol{
+#content > p, #content > ul, #content > ol, #content > div {
   	padding-left: 4em;
 }
 

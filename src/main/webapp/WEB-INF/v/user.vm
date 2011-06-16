@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href='http://fonts.googleapis.com/css?family=Geo&v1' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lobster&v1' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/stylesheets/reset-min.css" type='text/css'/>
+    <link rel="stylesheet" href="/stylesheets/screen.css" type='text/css'/>
+    <title>Twitter2Weibo</title>
+</head>
+
+<body>
+<div id="paper">
+    <div id="header">
+        <div id="footer">
+            <div id="content">
+                <h1>» User Settings</h1>
+<p>&nbsp;</p>
+                <h2>Link to Weibo</h2>
+                <div style="verical-align:middle"><img src="$userImage">
+                $user.name
+                </div>
+                <h2>Link to Twitter</h2>
+                <div>
+                    <input type="button" value="Link">
+                </div>
+<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="page_footer">
+    © 2011, a <a href="http://jyorr.com">Rakuraku Jyo</a> 200/0 project
+</div>
+</body>
+
+</html>

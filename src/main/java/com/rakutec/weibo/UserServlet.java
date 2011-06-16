@@ -3,46 +3,44 @@ package com.rakutec.weibo;
 import com.rakutec.weibo.utils.HttpServletRouter;
 import com.rakutec.weibo.utils.TweetID;
 import org.apache.log4j.Logger;
+import org.apache.velocity.Template;
+import org.apache.velocity.context.Context;
+import org.apache.velocity.tools.view.VelocityViewServlet;
 import weibo4j.User;
 import weibo4j.Weibo;
 import weibo4j.WeiboException;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * @author Rakuraku Jyo
  */
 
-public class UserServlet extends HttpServlet {
+public class UserServlet extends VelocityViewServlet {
     private static final Logger log = Logger.getLogger(UserServlet.class.getName());
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    protected Template handleRequest(HttpServletRequest request, HttpServletResponse response, Context ctx) {
         HttpServletRouter r = new HttpServletRouter(request);
         r.setPattern("/:id");
 
-        response.setContentType("text/plain");
-        PrintWriter writer = response.getWriter();
-
         if (r.has(":id")) {
-            TweetID tid= TweetID.findOneByUser(r.get(":id"));
+            TweetID tid = TweetID.findOneByUser(r.get(":id"));
 
             Weibo w = new Weibo();
             w.setToken(tid.getToken(), tid.getTokenSecret());
 
             try {
                 User user = w.verifyCredentials();
-                writer.println(user.getName());
+                ctx.put("user", user);
+                ctx.put("userImage", user.getProfileImageURL().toString());
             } catch (WeiboException e) {
                 e.printStackTrace();
             }
-
         }
+
+        return getTemplate("user.vm");
 
 //        String user = request.get("u");
 //        response.setContentType("text/plain");
