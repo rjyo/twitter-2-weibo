@@ -47,7 +47,7 @@ public class CallbackServlet extends HttpServlet {
                     tid.setTokenSecret(accessToken.getTokenSecret());
                     tid.save();
 
-                    weibo.updateStatus("Hello from T2W Sync! Check " + server);
+                    weibo.updateStatus("Weibo, Say hello to Twitter, from T2W Sync " + server);
                 }
             } catch (WeiboException e) {
                 log.error(e);
@@ -66,7 +66,7 @@ public class CallbackServlet extends HttpServlet {
                     tid.setTwitterToken(accessToken.getToken());
                     tid.setTwitterTokenSecret(accessToken.getTokenSecret());
                     tid.save();
-                    t.updateStatus("Hello from T2W Sync! Check " + server);
+                    t.updateStatus("Twitter, Say hello to Weibo, from T2W Sync " + server);
                 }
             } catch (TwitterException e) {
                 log.error(e);
