@@ -1,7 +1,9 @@
 package com.rakutec.weibo.utils;
 
+import org.apache.commons.pool.impl.GenericObjectPool;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 import weibo4j.org.json.JSONException;
 import weibo4j.org.json.JSONObject;
 
@@ -10,38 +12,37 @@ import java.util.Set;
 
 public class RedisHelper {
     private static final Logger log = Logger.getLogger(RedisHelper.class.getName());
-
     private static RedisHelper ourInstance = new RedisHelper();
 
-    private Jedis jedis;
-    private String hostname;
-    private String password;
-    private int port;
+    private JedisPool jedisPool;
 
-    public Set getAuthorizedIds() {
-        return getJedis().smembers("twitter:ids");
+    public Set<String> getAuthorizedIds() {
+        Jedis jedis = getJedis();
+        Set<String> set = jedis.smembers("twitter:ids");
+        jedisPool.returnResource(jedis);
+        return set;
     }
 
     public Long getUserCount() {
-        return getJedis().scard("twitter:ids");
+        Jedis jedis = getJedis();
+        Long scard = jedis.scard("twitter:ids");
+        jedisPool.returnResource(jedis);
+        return scard;
     }
 
     public boolean isUser(String user) {
-        return getJedis().sismember("twitter:ids", user);
+        Jedis jedis = getJedis();
+        Boolean ismember = jedis.sismember("twitter:ids", user);
+        jedisPool.returnResource(jedis);
+        return ismember;
     }
 
     protected Jedis getJedis() {
-        if (jedis == null || !jedis.isConnected()) {
-            if (hostname != null) {
-                jedis = new Jedis(hostname, port);
-                jedis.auth(password);
-                log.info("Using Redis on " + hostname + ":" + port);
-            } else {
-                jedis = new Jedis("localhost");
-                log.info("Using localhost Redis server");
-            }
-        }
-        return jedis;
+        return jedisPool.getResource();
+    }
+
+    protected void releaseJedis(Jedis j) {
+        jedisPool.returnResource(j);
     }
 
     public static RedisHelper getInstance() {
@@ -49,6 +50,12 @@ public class RedisHelper {
     }
 
     private RedisHelper() {
+        GenericObjectPool.Config config = new GenericObjectPool.Config();
+        config.testOnBorrow = true;
+        config.maxActive = 20;
+        config.maxIdle = 5;
+        config.minIdle = 1;
+
         try {
             String services = System.getenv("VCAP_SERVICES");
 
@@ -56,9 +63,14 @@ public class RedisHelper {
                 JSONObject obj = new JSONObject(services);
                 obj = obj.getJSONArray("redis-2.2").getJSONObject(0).getJSONObject("credentials");
 
-                hostname = obj.getString("hostname");
-                port = obj.getInt("port");
-                password = obj.getString("password");
+                String hostname = obj.getString("hostname");
+                int port = obj.getInt("port");
+                String password = obj.getString("password");
+
+                jedisPool = new JedisPool(config, hostname, port, 0, password);
+            } else {
+                jedisPool = new JedisPool(config, "localhost");
+                log.info("Using localhost Redis server");
             }
         } catch (JSONException e) {
             e.printStackTrace();

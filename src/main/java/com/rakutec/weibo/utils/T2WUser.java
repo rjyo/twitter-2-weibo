@@ -75,7 +75,8 @@ public class T2WUser {
     }
 
     public void save() {
-        Jedis j = RedisHelper.getInstance().getJedis();
+        RedisHelper instance = RedisHelper.getInstance();
+        Jedis j = instance.getJedis();
         j.set("id:" + this.userId + ":latestId", String.valueOf(this.latestId));
         if (this.token != null) j.set("id:" + this.userId + ":token", this.token);
         if (this.tokenSecret != null) j.set("id:" + this.userId + ":tokenSecret", this.tokenSecret);
@@ -84,20 +85,24 @@ public class T2WUser {
             j.set("id:" + this.userId + ":twitter_tokenSecret", this.twitterTokenSecret);
 
         j.sadd("twitter:ids", this.userId);
+        instance.releaseJedis(j);
     }
 
     public void delete() {
-        Jedis j = RedisHelper.getInstance().getJedis();
+        RedisHelper instance = RedisHelper.getInstance();
+        Jedis j = instance.getJedis();
         j.del("id:" + this.userId + ":latestId");
         j.del("id:" + this.userId + ":token");
         j.del("id:" + this.userId + ":tokenSecret");
         j.del("id:" + this.userId + ":twitter_token");
         j.del("id:" + this.userId + ":twitter_tokenSecret");
         j.srem("twitter:ids", this.userId);
+        instance.releaseJedis(j);
     }
 
     public static T2WUser findOneByUser(String userId) {
-        Jedis j = RedisHelper.getInstance().getJedis();
+        RedisHelper instance = RedisHelper.getInstance();
+        Jedis j = instance.getJedis();
 
         T2WUser tid = new T2WUser();
         tid.userId = userId;
@@ -115,6 +120,7 @@ public class T2WUser {
 
             log.info("Data not found for @" + userId);
         }
+        instance.releaseJedis(j);
 
         return tid;
     }
