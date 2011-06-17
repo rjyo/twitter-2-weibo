@@ -70,6 +70,6 @@ public class CallbackServlet extends HttpServlet {
                 log.error(e);
             }
         }
-        //response.sendRedirect("/u/" + user);
+        response.sendRedirect("/u/" + user);
     }
 }

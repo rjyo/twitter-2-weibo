@@ -1,7 +1,6 @@
 package com.rakutec.weibo;
 
 import com.rakutec.weibo.utils.HttpServletRouter;
-import com.rakutec.weibo.utils.RedisHelper;
 import org.apache.log4j.Logger;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -34,45 +33,45 @@ public class AuthServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
 
-        if (RedisHelper.getInstance().getUserCount() < 10) {
-            if (r.is(":type", "weibo")) {
-                try {
-                    Weibo weibo = new Weibo();
-                    RequestToken requestToken = weibo.getOAuthRequestToken(serverPath + "/callback/weibo");
+        if (r.is(":type", "weibo")) {
+            try {
+                Weibo weibo = new Weibo();
+                RequestToken requestToken = weibo.getOAuthRequestToken(serverPath + "/callback/weibo");
 
-                    response.setStatus(302);
-                    response.setHeader("Location", requestToken.getAuthenticationURL());
-                    session.setAttribute("token", requestToken.getToken());
-                    session.setAttribute("tokenSecret", requestToken.getTokenSecret());
+                response.setStatus(302);
+                response.setHeader("Location", requestToken.getAuthenticationURL());
+                session.setAttribute("token", requestToken.getToken());
+                session.setAttribute("tokenSecret", requestToken.getTokenSecret());
 
-                    log.info("Redirecting Weibo...");
-                } catch (WeiboException e) {
-                    log.error(e);
-                }
-            } else if (r.is(":type", "twitter")) {
-                try {
-                    TwitterFactory factory = new TwitterFactory();
-                    Twitter t = factory.getInstance();
-                    twitter4j.auth.RequestToken requestToken = t.getOAuthRequestToken(serverPath + "/callback/twitter");
-
-                    response.setStatus(302);
-                    response.setHeader("Location", requestToken.getAuthenticationURL());
-                    session.setAttribute("requestToken", requestToken);
-
-                    log.info("Redirecting Twitter...");
-                } catch (TwitterException e) {
-                    log.error(e);
-                }
-                writer.close();
-            } else {
-                response.setStatus(200);
-                writer.println("Wrong parameter, not working!");
-                writer.close();
+                log.info("Redirecting Weibo...");
+            } catch (WeiboException e) {
+                log.error(e);
             }
+        } else if (r.is(":type", "twitter")) {
+            try {
+                TwitterFactory factory = new TwitterFactory();
+                Twitter t = factory.getInstance();
+                twitter4j.auth.RequestToken requestToken = t.getOAuthRequestToken(serverPath + "/callback/twitter");
+
+                response.setStatus(302);
+                response.setHeader("Location", requestToken.getAuthenticationURL());
+                session.setAttribute("requestToken", requestToken);
+
+                log.info("Redirecting Twitter...");
+            } catch (TwitterException e) {
+                log.error(e);
+            }
+            writer.close();
         } else {
             response.setStatus(200);
-            writer.println("Server reached max number of users. Please try again later.");
+            writer.println("Wrong parameter, not working!");
             writer.close();
         }
+//        if (RedisHelper.getInstance().getUserCount() < 10) {
+//        } else {
+//            response.setStatus(200);
+//            writer.println("Server reached max number of users. Please try again later.");
+//            writer.close();
+//        }
     }
 }

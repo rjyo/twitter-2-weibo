@@ -35,7 +35,7 @@
                 #end
             </div>
         </div>
-        <div id="message">You are ready to go!</div>
+        #if ($weibo_login && $twitter_login) <div id="message">You are ready to go!</div> #end
         <p>&nbsp;</p>
     </div>
 </div></div></div>
