@@ -31,6 +31,7 @@ public class CallbackServlet extends HttpServlet {
 
         if (request.getParameter("denied") != null) {
             response.sendRedirect("/");
+            return;
         }
 
         HttpSession session = request.getSession(false);
