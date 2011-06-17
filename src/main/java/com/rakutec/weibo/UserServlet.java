@@ -1,17 +1,22 @@
 package com.rakutec.weibo;
 
 import com.rakutec.weibo.utils.HttpServletRouter;
-import com.rakutec.weibo.utils.TweetID;
+import com.rakutec.weibo.utils.T2WUser;
 import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.view.VelocityViewServlet;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
 import weibo4j.User;
 import weibo4j.Weibo;
 import weibo4j.WeiboException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Rakuraku Jyo
@@ -25,57 +30,45 @@ public class UserServlet extends VelocityViewServlet {
         HttpServletRouter r = new HttpServletRouter(request);
         r.setPattern("/:id");
 
+        T2WUser tid = T2WUser.findOneByUser(r.get(":id"));
+        System.out.println(tid.toString());
+
         if (r.has(":id")) {
-            TweetID tid = TweetID.findOneByUser(r.get(":id"));
+            HttpSession session = request.getSession();
+            session.setAttribute("user", r.get(":id"));
 
             Weibo w = new Weibo();
             w.setToken(tid.getToken(), tid.getTokenSecret());
 
             try {
                 User user = w.verifyCredentials();
-                ctx.put("user", user);
-                ctx.put("userImage", user.getProfileImageURL().toString());
-            } catch (WeiboException e) {
-                e.printStackTrace();
+                ctx.put("weibo_user", user);
+                ctx.put("weibo_user_image", user.getProfileImageURL().toString());
+                ctx.put("weibo_login", 1);
+            } catch (Exception e) {
+                // 401 = not logged in
+                if (e instanceof WeiboException && ((WeiboException) e).getStatusCode() != 401) {
+                    e.printStackTrace();
+                }
+            }
+
+            try {
+                TwitterFactory factory = new TwitterFactory();
+                Twitter t = factory.getInstance();
+                t.setOAuthAccessToken(new AccessToken(tid.getTwitterToken(), tid.getTwitterTokenSecret()));
+
+                twitter4j.User user = t.verifyCredentials();
+                ctx.put("twitter_user", user);
+                ctx.put("twitter_user_image", user.getProfileImageURL().toString());
+                ctx.put("twitter_login", 1);
+            } catch (Exception e) {
+                // 401 = not logged in
+                if (e instanceof TwitterException && ((TwitterException) e).getStatusCode() != 401) {
+                    e.printStackTrace();
+                }
             }
         }
 
         return getTemplate("user.vm");
-
-//        String user = request.get("u");
-//        response.setContentType("text/plain");
-//        PrintWriter writer = response.getWriter();
-//
-//        if (RedisHelper.getInstance().getUserCount() < 100) {
-//            if (user != null && !"your_twitter_id".equals(user)) {
-//                HttpSession session = request.getSession();
-//                session.setAttribute("twitterUser", user);
-//                try {
-//                    String server = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-//
-//                    Weibo weibo = new Weibo();
-//                    RequestToken requestToken = weibo.getOAuthRequestToken(server + "/callback");
-//
-//                    response.setStatus(302);
-//                    response.setHeader("Location", requestToken.getAuthenticationURL());
-//                    session.setAttribute("token", requestToken.getToken());
-//                    session.setAttribute("tokenSecret", requestToken.getTokenSecret());
-//
-//                    writer.println("Redirecting...");
-//                    writer.close();
-//                } catch (WeiboException e) {
-//                    e.printStackTrace();
-//                    log.error(e);
-//                }
-//            } else {
-//                response.setStatus(200);
-//                writer.println("Wrong parameter, not working!");
-//                writer.close();
-//            }
-//        } else {
-//            response.setStatus(200);
-//            writer.println("Server reached max number of users. Please try again later.");
-//            writer.close();
-//        }
     }
 }

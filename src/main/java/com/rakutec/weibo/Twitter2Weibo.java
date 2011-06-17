@@ -4,7 +4,7 @@ import com.rakutec.weibo.filters.NoReplyFilter;
 import com.rakutec.weibo.filters.StatusFilters;
 import com.rakutec.weibo.filters.TagStatusFilter;
 import com.rakutec.weibo.filters.URLStatusFilter;
-import com.rakutec.weibo.utils.TweetID;
+import com.rakutec.weibo.utils.T2WUser;
 import org.apache.log4j.Logger;
 import twitter4j.*;
 import weibo4j.Weibo;
@@ -19,10 +19,10 @@ public class Twitter2Weibo {
     private static final Logger log = Logger.getLogger(Twitter2Weibo.class.getName());
     private Weibo user = null;
     private StatusFilters filters = new StatusFilters();
-    private TweetID tid;
+    private T2WUser tid;
 
     public Twitter2Weibo(String twitterId) {
-        tid = TweetID.findOneByUser(twitterId);
+        tid = T2WUser.findOneByUser(twitterId);
 
         user = new Weibo();
         user.setToken(tid.getToken(), tid.getTokenSecret());

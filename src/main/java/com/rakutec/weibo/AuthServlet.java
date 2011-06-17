@@ -15,9 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 /**
@@ -28,32 +26,44 @@ public class AuthServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpServletRouter r = new HttpServletRouter(request);
-        r.setPattern("/:id");
+        r.setPattern("/:type");
 
         response.setContentType("text/plain");
         PrintWriter writer = response.getWriter();
+        String serverPath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 
-        if (RedisHelper.getInstance().getUserCount() < 100) {
-            if (r.has(":id") && !r.is(":id", "your_twitter_id")) {
-                HttpSession session = request.getSession();
-                session.setAttribute("twitterUser", r.get(":id"));
+        HttpSession session = request.getSession(false);
+
+        if (RedisHelper.getInstance().getUserCount() < 10) {
+            if (r.is(":type", "weibo")) {
                 try {
-                    String server = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-
                     Weibo weibo = new Weibo();
-                    RequestToken requestToken = weibo.getOAuthRequestToken(server + "/callback");
+                    RequestToken requestToken = weibo.getOAuthRequestToken(serverPath + "/callback/weibo");
 
                     response.setStatus(302);
                     response.setHeader("Location", requestToken.getAuthenticationURL());
                     session.setAttribute("token", requestToken.getToken());
                     session.setAttribute("tokenSecret", requestToken.getTokenSecret());
 
-                    writer.println("Redirecting...");
-                    writer.close();
+                    log.info("Redirecting Weibo...");
                 } catch (WeiboException e) {
-                    e.printStackTrace();
                     log.error(e);
                 }
+            } else if (r.is(":type", "twitter")) {
+                try {
+                    TwitterFactory factory = new TwitterFactory();
+                    Twitter t = factory.getInstance();
+                    twitter4j.auth.RequestToken requestToken = t.getOAuthRequestToken(serverPath + "/callback/twitter");
+
+                    response.setStatus(302);
+                    response.setHeader("Location", requestToken.getAuthenticationURL());
+                    session.setAttribute("requestToken", requestToken);
+
+                    log.info("Redirecting Twitter...");
+                } catch (TwitterException e) {
+                    log.error(e);
+                }
+                writer.close();
             } else {
                 response.setStatus(200);
                 writer.println("Wrong parameter, not working!");
@@ -63,34 +73,6 @@ public class AuthServlet extends HttpServlet {
             response.setStatus(200);
             writer.println("Server reached max number of users. Please try again later.");
             writer.close();
-
-/*
-        // http://twitter.com/oauth_clients/new にてアプリケーションを登録した際の
-            // Consumer key と Consumer secret を使用
-            String consumerKey = ""; // Consumer key をセット
-            String consumerSecret = ""; // Consumer secret をセット
-
-            // 認証用URLを取得
-            TwitterFactory factory = new TwitterFactory();
-            Twitter twitter = factory.getInstance();
-            twitter.setOAuthConsumer(consumerKey, consumerSecret);
-            twitter4j.auth.RequestToken requestToken = null;
-            try {
-                requestToken = twitter.getOAuthRequestToken("");
-            } catch (TwitterException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
-            String authorizationURL = requestToken.getAuthorizationURL();
-
-            System.out.println(authorizationURL + " にウェブブラウザでアクセスして認証を許可してください。");
-            System.out.println("認証を許可したらウェブブラウザにPINコードが表示されます。");
-            System.out.println("PINコードを入力して[Enter]キーを押してください。");
-
-            // 入力待ち
-            BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
-            String pin = r.readLine();
-
-*/
         }
     }
 }

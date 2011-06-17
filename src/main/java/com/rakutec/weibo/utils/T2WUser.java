@@ -8,13 +8,15 @@ import redis.clients.jedis.Jedis;
  *
  * @author Rakuraku Jyo
  */
-public class TweetID {
-    private static final Logger log = Logger.getLogger(TweetID.class.getName());
+public class T2WUser {
+    private static final Logger log = Logger.getLogger(T2WUser.class.getName());
 
     private String userId;
     private Long latestId;
     private String token;
     private String tokenSecret;
+    private String twitterTokenSecret;
+    private String twitterToken;
 
     public String getUserId() {
         return userId;
@@ -48,7 +50,23 @@ public class TweetID {
         this.tokenSecret = tokenSecret;
     }
 
-    private TweetID() {
+    public void setTwitterTokenSecret(String twitterTokenSecret) {
+        this.twitterTokenSecret = twitterTokenSecret;
+    }
+
+    public String getTwitterTokenSecret() {
+        return twitterTokenSecret;
+    }
+
+    public void setTwitterToken(String twitterToken) {
+        this.twitterToken = twitterToken;
+    }
+
+    public String getTwitterToken() {
+        return twitterToken;
+    }
+
+    private T2WUser() {
     }
 
     public void updateLatestId(Long latestId) {
@@ -59,8 +77,11 @@ public class TweetID {
     public void save() {
         Jedis j = RedisHelper.getInstance().getJedis();
         j.set("id:" + this.userId + ":latestId", String.valueOf(this.latestId));
-        j.set("id:" + this.userId + ":token", this.token);
-        j.set("id:" + this.userId + ":tokenSecret", this.tokenSecret);
+        if (this.token != null) j.set("id:" + this.userId + ":token", this.token);
+        if (this.tokenSecret != null) j.set("id:" + this.userId + ":tokenSecret", this.tokenSecret);
+        if (this.twitterToken != null) j.set("id:" + this.userId + ":twitter_token", this.twitterToken);
+        if (this.twitterTokenSecret != null)
+            j.set("id:" + this.userId + ":twitter_tokenSecret", this.twitterTokenSecret);
 
         j.sadd("twitter:ids", this.userId);
     }
@@ -70,24 +91,43 @@ public class TweetID {
         j.del("id:" + this.userId + ":latestId");
         j.del("id:" + this.userId + ":token");
         j.del("id:" + this.userId + ":tokenSecret");
+        j.del("id:" + this.userId + ":twitter_token");
+        j.del("id:" + this.userId + ":twitter_tokenSecret");
         j.srem("twitter:ids", this.userId);
     }
 
-    public static TweetID findOneByUser(String userId) {
+    public static T2WUser findOneByUser(String userId) {
         Jedis j = RedisHelper.getInstance().getJedis();
 
-        TweetID tid = new TweetID();
+        T2WUser tid = new T2WUser();
         tid.userId = userId;
         String latest = j.get("id:" + tid.userId + ":latestId");
         if (latest != null) {
             tid.latestId = Long.valueOf(latest);
             tid.token = j.get("id:" + tid.userId + ":token");
             tid.tokenSecret = j.get("id:" + tid.userId + ":tokenSecret");
+            tid.twitterToken = j.get("id:" + tid.userId + ":twitter_token");
+            tid.twitterTokenSecret = j.get("id:" + tid.userId + ":twitter_tokenSecret");
+
             log.info("Found data for @" + userId + " = " + tid.latestId);
         } else {
             tid.latestId = (long) 0;
+
             log.info("Data not found for @" + userId);
         }
+
         return tid;
+    }
+
+    @Override
+    public String toString() {
+        return "TweetID{" +
+                "userId='" + userId + '\'' +
+                ", latestId=" + latestId +
+                ", token='" + token + '\'' +
+                ", tokenSecret='" + tokenSecret + '\'' +
+                ", twitterTokenSecret='" + twitterTokenSecret + '\'' +
+                ", twitterToken='" + twitterToken + '\'' +
+                '}';
     }
 }

@@ -31,6 +31,11 @@ Welcome! This app syncs what you tweet from Twitter to Sina Weibo.
     $ make setup # for the first time
     $ make
 
+### Get Docs
+
+    $ mvn dependency:resolve -Dclassifier=javadoc
+    $ mvn dependency:resolve -Dclassifier=sources
+
 ### Upload to cloud foundry
 
     $ make update

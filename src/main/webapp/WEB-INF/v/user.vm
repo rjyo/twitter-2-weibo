@@ -7,32 +7,60 @@
     <link href='http://fonts.googleapis.com/css?family=Lobster&v1' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/stylesheets/reset-min.css" type='text/css'/>
     <link rel="stylesheet" href="/stylesheets/screen.css" type='text/css'/>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
     <title>Twitter2Weibo</title>
 </head>
 
 <body>
-<div id="paper">
-    <div id="header">
-        <div id="footer">
-            <div id="content">
-                <h1>» User Settings</h1>
-<p>&nbsp;</p>
-                <h2>Link to Weibo</h2>
-                <div style="verical-align:middle"><img src="$userImage">
-                $user.name
-                </div>
-                <h2>Link to Twitter</h2>
-                <div>
-                    <input type="button" value="Link">
-                </div>
-<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+<div id="paper"><div id="header"><div id="footer">
+    <div id="content">
+        <h1>Home » User Settings</h1>
+
+        <p>Link your Twitter &amp; Weibo account here.</p>
+
+        <div id="logins">
+            <div id="twitter_login"><div class="button"></div>
+                #if ($twitter_login)
+                    @$twitter_user.screenName
+                #else
+                Not Linked Yet
+                #end
+            </div>
+            <div id="sync" class="#if ($weibo_login && $twitter_login) enabled #end"></div>
+            <div id="weibo_login"><div class="button"></div>
+                #if ($weibo_login)
+                    @$weibo_user.screenName
+                #else
+                    Not Linked Yet
+                #end
             </div>
         </div>
+        <div id="message">You are ready to go!</div>
+        <p>&nbsp;</p>
     </div>
-</div>
+</div></div></div>
 <div id="page_footer">
     © 2011, a <a href="http://jyorr.com">Rakuraku Jyo</a> 200/0 project
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+    #if (!$twitter_login)
+        $('#twitter_login').addClass('login');
+        $('#twitter_login').click(function(e) {
+            window.location = "/auth/twitter";
+        });
+    #end
+
+    #if (!$weibo_login)
+        $('#weibo_login').addClass('login');
+        $('#weibo_login').click(function(e) {
+            window.location = "/auth/weibo";
+        });
+    #end
+
+    });
+</script>
 </body>
 
 </html>

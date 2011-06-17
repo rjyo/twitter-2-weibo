@@ -2,7 +2,7 @@ package com.rakutec.weibo;
 
 import com.rakutec.weibo.utils.HttpServletRouter;
 import com.rakutec.weibo.utils.RedisHelper;
-import com.rakutec.weibo.utils.TweetID;
+import com.rakutec.weibo.utils.T2WUser;
 import it.sauronsoftware.cron4j.Scheduler;
 import org.apache.log4j.Logger;
 
@@ -42,13 +42,13 @@ public class SyncServlet extends HttpServlet {
         } else if (router.is(":cmd", "del")) {
             String user = request.getParameter("u");
             if (user != null) {
-                TweetID id = TweetID.findOneByUser(user);
+                T2WUser id = T2WUser.findOneByUser(user);
                 id.delete();
                 writer.println("  Removed " + user);
             }
         } else if (router.is(":cmd", "u")) {
             if (router.has(":id")) {
-                TweetID f = TweetID.findOneByUser(router.get("id"));
+                T2WUser f = T2WUser.findOneByUser(router.get("id"));
                 writer.println("Latest tweet ID is " + f.getLatestId());
             } else {
                 response.sendRedirect(request.getContextPath());
@@ -67,9 +67,14 @@ public class SyncServlet extends HttpServlet {
         System.setProperty("weibo4j.oauth.consumerKey", "2917100994");
         System.setProperty("weibo4j.oauth.consumerSecret", "331e188966be6384c6722b1d3944c89e");
 
+        // Key for Twitter App
+        System.setProperty("twitter4j.oauth.consumerKey", "Scwn2HbdT7v3yOEjkAQrfQ");
+        System.setProperty("twitter4j.oauth.consumerSecret", "QIz4dbgb5ABzNMjfP1Sb0YdwKTY2oKQwhLoehk0ug");
+
+
         SyncTask task = new SyncTask();
         Scheduler scheduler = new Scheduler();
-        scheduler.schedule("*/5 * * * *", task);
+        scheduler.schedule("0,15,30,45 * * * *", task);
         scheduler.start();
 
         log.info("Cron scheduler started.");

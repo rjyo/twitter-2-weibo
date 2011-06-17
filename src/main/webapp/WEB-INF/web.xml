@@ -41,7 +41,7 @@
 
     <servlet-mapping>
         <servlet-name>OAuthCallbackServlet</servlet-name>
-        <url-pattern>/callback</url-pattern>
+        <url-pattern>/callback/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -58,14 +58,14 @@
           the following locations.
         -->
         <!--<init-param>-->
-            <!--<param-name>org.apache.velocity.toolbox</param-name>-->
-            <!--<param-value>/WEB-INF/toolbox.xml</param-value>-->
+        <!--<param-name>org.apache.velocity.toolbox</param-name>-->
+        <!--<param-value>/WEB-INF/toolbox.xml</param-value>-->
         <!--</init-param>-->
 
-        <!--<init-param>-->
-            <!--<param-name>org.apache.velocity.properties</param-name>-->
-            <!--<param-value>/WEB-INF/velocity.properties</param-value>-->
-        <!--</init-param>-->
+        <init-param>
+            <param-name>org.apache.velocity.properties</param-name>
+            <param-value>/WEB-INF/velocity.properties</param-value>
+        </init-param>
     </servlet>
 
     <!-- Map *.vm files to Velocity -->
@@ -82,5 +82,14 @@
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.vm</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/500.vm</location>
+    </error-page>
 
 </web-app>
