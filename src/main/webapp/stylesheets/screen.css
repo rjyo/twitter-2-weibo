@@ -45,6 +45,31 @@ h1, h2 {
   padding-left: 55px;
 }
 
+ul {
+    list-style: none;
+}
+
+ul li {
+  	margin-left: 0em;
+}
+
+strong {
+    font-weight: bold;
+}
+
+em {
+  	text-decoration: underline;
+	font-style: normal;
+}
+
+a {
+    color: #FFCC00;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
 #h_feature {
   background: url(../images/h_feature.png) 30px 0 no-repeat no-repeat;
 }
@@ -75,23 +100,22 @@ h1, h2 {
 	padding: 60px 54px 0 56px;
 }
 
-#content #id_search {
-	padding-left: 1em;    
-}
-
 #content #id_search input {
     font-family: 'Geo', Helvetica, arial, sans-serif;
     line-height: 1.5em;
-    font-size: 16px;
     padding: 2px 5px;
 }
 
 #content #id_search input[type=text] {
-	width: 120px;
-	color: #333;
+	width: 240px;
+    border: 0;
+    color: #333;
+    height: 24px;
+    background-color: white;
 	border-radius: 5px;
-	border: 0px;
+    font-size: 16px;
 }
+
 
 #page_footer {
 	font-size: 14px;
@@ -106,35 +130,10 @@ h1, h2 {
   	color: #999;
 }
 
-#content > p, #content > ul, #content > ol, #content > div {
+#content > p, #content > ul, #content > ol, #content > div, #content > form {
   	padding-left: 4em;
 }
 
-ul {
-    list-style: none;
-}
-
-ul li {
-  	margin-left: 0em;
-}
-
-strong {
-    font-weight: bold;
-}
-
-em {
-  	text-decoration: underline;
-	font-style: normal;
-}
-
-a {
-    color: #FFCC00;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
 
 #logins {
 	display: block;    

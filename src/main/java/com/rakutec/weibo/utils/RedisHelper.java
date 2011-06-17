@@ -14,20 +14,33 @@ public class RedisHelper {
     private static RedisHelper ourInstance = new RedisHelper();
 
     private Jedis jedis;
+    private String hostname;
+    private String password;
+    private int port;
 
     public Set getAuthorizedIds() {
-        return jedis.smembers("twitter:ids");
+        return getJedis().smembers("twitter:ids");
     }
 
     public Long getUserCount() {
-        return jedis.scard("twitter:ids");
+        return getJedis().scard("twitter:ids");
     }
 
     public boolean isUser(String user) {
-        return jedis.sismember("twitter:ids", user);
+        return getJedis().sismember("twitter:ids", user);
     }
 
-    public Jedis getJedis() {
+    protected Jedis getJedis() {
+        if (jedis == null || !jedis.isConnected()) {
+            if (hostname != null) {
+                jedis = new Jedis(hostname, port);
+                jedis.auth(password);
+                log.info("Using Redis on " + hostname + ":" + port);
+            } else {
+                jedis = new Jedis("localhost");
+                log.info("Using localhost Redis server");
+            }
+        }
         return jedis;
     }
 
@@ -43,16 +56,9 @@ public class RedisHelper {
                 JSONObject obj = new JSONObject(services);
                 obj = obj.getJSONArray("redis-2.2").getJSONObject(0).getJSONObject("credentials");
 
-                String hostname = obj.getString("hostname");
-                int port = obj.getInt("port");
-                String password = obj.getString("password");
-
-                jedis = new Jedis(hostname, port);
-                jedis.auth(password);
-                log.info("Using Redis on " + hostname + ":" + port);
-            } else {
-                jedis = new Jedis("localhost");
-                log.info("Using localhost Redis server");
+                hostname = obj.getString("hostname");
+                port = obj.getInt("port");
+                password = obj.getString("password");
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -14,7 +14,7 @@
 <body>
 <div id="paper"><div id="header"><div id="footer">
     <div id="content">
-        <h1>Home » User Settings</h1>
+        <h1><a href="/">Home</a> » User Settings » $user_id</h1>
 
         <p>Link your Twitter &amp; Weibo account here.</p>
 

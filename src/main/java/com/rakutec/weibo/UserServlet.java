@@ -41,6 +41,7 @@ public class UserServlet extends VelocityViewServlet {
         if (r.has(":id")) {
             HttpSession session = request.getSession();
             session.setAttribute("user", r.get(":id"));
+            ctx.put("user_id", r.get(":id"));
 
             Weibo w = new Weibo();
             w.setToken(t2WUser.getToken(), t2WUser.getTokenSecret());
