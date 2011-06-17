@@ -54,7 +54,7 @@ public class SyncServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath());
             }
         } else {
-            response.sendRedirect(request.getContextPath());
+            response.sendRedirect("/");
         }
         writer.close();
     }
