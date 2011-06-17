@@ -15,7 +15,7 @@ public class SyncTask implements Runnable {
     public void run() {
         Set<String> ids = RedisHelper.getInstance().getAuthorizedIds();
         for (String id : ids) {
-            log.info("Start syncing task.");
+            log.info("Start syncing task for " + id);
             Twitter2Weibo t = new Twitter2Weibo(id);
             t.syncTwitter();
         }

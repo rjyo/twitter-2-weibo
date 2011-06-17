@@ -6,10 +6,4 @@ public class TagStatusFilter implements StatusFilter {
         if (input == null) return input;
         return input.replaceAll("(#\\w+)", "$1#");
     }
-
-    public static void main(String[] args) {
-        TagStatusFilter tagStatusFilter = new TagStatusFilter();
-        String s = tagStatusFilter.filter("asd2fhlad #a_f asdfhweal #redis");
-        System.out.println(s);
-    }
 }

@@ -39,13 +39,17 @@ public class Twitter2Weibo {
     }
 
     public void syncTwitter() {
+        if (!user.ready()) {
+            log.info("Skipping @" + user.getUserId() + " ...");
+            return;
+        }
+
         // gets Twitter instance with default credentials
         String screenName = user.getUserId();
         long latestId = user.getLatestId();
         log.info("= TID: " + latestId + " = ");
 
         log.info("Checking @" + screenName + "'s userId timeline.");
-
 
         try {
             if (latestId == 0) {

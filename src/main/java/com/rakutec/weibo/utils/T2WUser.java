@@ -136,4 +136,8 @@ public class T2WUser {
                 ", twitterToken='" + twitterToken + '\'' +
                 '}';
     }
+
+    public boolean ready() {
+        return (token != null && twitterToken != null);
+    }
 }

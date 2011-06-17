@@ -17,10 +17,4 @@ public class NoReplyFilter implements StatusFilter {
             return input; // if has @someone, skip
         }
     }
-
-    public static void main(String[] args) {
-        NoReplyFilter noReplyFilter = new NoReplyFilter();
-        String filter = noReplyFilter.filter("@xuzhe \n goog!");
-        System.out.println(filter);
-    }
 }

@@ -71,10 +71,12 @@ public class SyncServlet extends HttpServlet {
         System.setProperty("twitter4j.oauth.consumerKey", "Scwn2HbdT7v3yOEjkAQrfQ");
         System.setProperty("twitter4j.oauth.consumerSecret", "QIz4dbgb5ABzNMjfP1Sb0YdwKTY2oKQwhLoehk0ug");
 
+        // Disable weibo4j Debug outputs
+        System.setProperty("weibo4j.debug", "false");
 
         SyncTask task = new SyncTask();
         Scheduler scheduler = new Scheduler();
-        scheduler.schedule("0,15,30,45 * * * *", task);
+        scheduler.schedule("*/5 * * * *", task);
         scheduler.start();
 
         log.info("Cron scheduler started.");
