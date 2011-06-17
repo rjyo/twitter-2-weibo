@@ -32,7 +32,7 @@ public class SyncServlet extends HttpServlet {
         if (router.is(":cmd", "sync")) {
             SyncTask task = new SyncTask();
             task.run();
-            writer.println("Run!");
+            response.sendRedirect("/");
         } else if (router.is(":cmd", "users")) {
             Set ids = RedisHelper.getInstance().getAuthorizedIds();
             writer.println("Syncing user list:");
@@ -40,11 +40,11 @@ public class SyncServlet extends HttpServlet {
                 writer.println("  " + id);
             }
         } else if (router.is(":cmd", "del")) {
-            String user = request.getParameter("u");
-            if (user != null) {
+            if (router.has(":id")) {
+                String user = router.get(":id");
                 T2WUser id = T2WUser.findOneByUser(user);
                 id.delete();
-                writer.println("  Removed " + user);
+                response.sendRedirect("/u/" + user);
             }
         } else if (router.is(":cmd", "u")) {
             if (router.has(":id")) {

@@ -16,13 +16,15 @@ public class RedisHelper {
     private Jedis jedis;
 
     public Set getAuthorizedIds() {
-        Jedis j = jedis;
-        return j.smembers("twitter:ids");
+        return jedis.smembers("twitter:ids");
     }
 
     public Long getUserCount() {
-        Jedis j = jedis;
-        return j.scard("twitter:ids");
+        return jedis.scard("twitter:ids");
+    }
+
+    public boolean isUser(String user) {
+        return jedis.sismember("twitter:ids", user);
     }
 
     public Jedis getJedis() {

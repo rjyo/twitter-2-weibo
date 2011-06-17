@@ -1,6 +1,7 @@
 package com.rakutec.weibo;
 
 import com.rakutec.weibo.utils.HttpServletRouter;
+import com.rakutec.weibo.utils.RedisHelper;
 import com.rakutec.weibo.utils.T2WUser;
 import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
@@ -30,15 +31,19 @@ public class UserServlet extends VelocityViewServlet {
         HttpServletRouter r = new HttpServletRouter(request);
         r.setPattern("/:id");
 
-        T2WUser tid = T2WUser.findOneByUser(r.get(":id"));
-        System.out.println(tid.toString());
+        // Service limit
+        RedisHelper helper = RedisHelper.getInstance();
+        if (!helper.isUser(r.get(":id")) && helper.getUserCount() > 50) {
+            return getTemplate("full.vm");
+        }
 
+        T2WUser t2WUser = T2WUser.findOneByUser(r.get(":id"));
         if (r.has(":id")) {
             HttpSession session = request.getSession();
             session.setAttribute("user", r.get(":id"));
 
             Weibo w = new Weibo();
-            w.setToken(tid.getToken(), tid.getTokenSecret());
+            w.setToken(t2WUser.getToken(), t2WUser.getTokenSecret());
 
             try {
                 User user = w.verifyCredentials();
@@ -55,7 +60,7 @@ public class UserServlet extends VelocityViewServlet {
             try {
                 TwitterFactory factory = new TwitterFactory();
                 Twitter t = factory.getInstance();
-                t.setOAuthAccessToken(new AccessToken(tid.getTwitterToken(), tid.getTwitterTokenSecret()));
+                t.setOAuthAccessToken(new AccessToken(t2WUser.getTwitterToken(), t2WUser.getTwitterTokenSecret()));
 
                 twitter4j.User user = t.verifyCredentials();
                 ctx.put("twitter_user", user);

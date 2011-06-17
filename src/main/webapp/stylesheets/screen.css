@@ -75,6 +75,24 @@ h1, h2 {
 	padding: 60px 54px 0 56px;
 }
 
+#content #id_search {
+	padding-left: 1em;    
+}
+
+#content #id_search input {
+    font-family: 'Geo', Helvetica, arial, sans-serif;
+    line-height: 1.5em;
+    font-size: 16px;
+    padding: 2px 5px;
+}
+
+#content #id_search input[type=text] {
+	width: 120px;
+	color: #333;
+	border-radius: 5px;
+	border: 0px;
+}
+
 #page_footer {
 	font-size: 14px;
 	color: #474747;
