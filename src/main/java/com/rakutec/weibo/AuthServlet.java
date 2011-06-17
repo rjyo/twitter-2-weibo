@@ -67,11 +67,5 @@ public class AuthServlet extends HttpServlet {
             writer.println("Wrong parameter, not working!");
             writer.close();
         }
-//        if (RedisHelper.getInstance().getUserCount() < 10) {
-//        } else {
-//            response.setStatus(200);
-//            writer.println("Server reached max number of users. Please try again later.");
-//            writer.close();
-//        }
     }
 }

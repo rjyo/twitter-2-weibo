@@ -19,6 +19,9 @@ update:
 logs:
 	@vmc logs h2weibo
 
+clear:
+	@rm -rf target/tomcat/work
+
 stats:
 	@vmc stats h2weibo
 

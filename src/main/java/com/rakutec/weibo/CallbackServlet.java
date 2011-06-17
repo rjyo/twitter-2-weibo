@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.User;
 import twitter4j.auth.RequestToken;
 import weibo4j.Weibo;
 import weibo4j.WeiboException;
@@ -28,8 +29,12 @@ public class CallbackServlet extends HttpServlet {
         HttpServletRouter r = new HttpServletRouter(request);
         r.setPattern("/:type");
 
+        if (request.getParameter("denied") != null) {
+            response.sendRedirect("/");
+        }
+
         HttpSession session = request.getSession(false);
-        String user = (String) session.getAttribute("user");
+        String login_user = (String) session.getAttribute("login_user");
         String token = (String) session.getAttribute("token");
         String tokenSecret = (String) session.getAttribute("tokenSecret");
         String oauthVerifier = request.getParameter("oauth_verifier");
@@ -42,15 +47,16 @@ public class CallbackServlet extends HttpServlet {
 
                 AccessToken accessToken = weibo.getOAuthAccessToken(token, tokenSecret, oauthVerifier);
                 if (accessToken != null) {
-                    T2WUser tid = T2WUser.findOneByUser(user);
+                    T2WUser tid = T2WUser.findOneByUser(login_user);
                     tid.setToken(accessToken.getToken());
                     tid.setTokenSecret(accessToken.getTokenSecret());
                     tid.save();
 
-                    weibo.updateStatus("Weibo, Say hello to Twitter, from T2W Sync " + server);
+                    weibo.updateStatus("Weibo, say hello to Twitter. From T2W Sync " + server + " #t2w_sync#");
                 }
             } catch (WeiboException e) {
                 log.error(e);
+                throw new RuntimeException(e);
             }
         } else if (r.is(":type", "twitter")) {
             try {
@@ -62,16 +68,26 @@ public class CallbackServlet extends HttpServlet {
                 session.removeAttribute("requestToken");
 
                 if (accessToken != null) {
-                    T2WUser tid = T2WUser.findOneByUser(user);
+                    t.setOAuthAccessToken(accessToken);
+                    User user = t.verifyCredentials();
+                    login_user = user.getScreenName();
+
+                    T2WUser tid = T2WUser.findOneByUser(login_user);
                     tid.setTwitterToken(accessToken.getToken());
                     tid.setTwitterTokenSecret(accessToken.getTokenSecret());
                     tid.save();
-                    t.updateStatus("Twitter, Say hello to Weibo, from T2W Sync " + server);
+                    
+                    if (tid.isNewUser()) {
+                        t.updateStatus("Twitter, say hello to Weibo. From T2W Sync " + server + " #t2w_sync");
+                    }
+
+                    session.setAttribute("login_user", login_user);
                 }
             } catch (TwitterException e) {
                 log.error(e);
+                throw new RuntimeException(e);
             }
         }
-        response.sendRedirect("/u/" + user);
+        response.sendRedirect("/u/" + login_user);
     }
 }

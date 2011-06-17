@@ -33,15 +33,18 @@ public class UserServlet extends VelocityViewServlet {
 
         // Service limit
         RedisHelper helper = RedisHelper.getInstance();
-        if (!helper.isUser(r.get(":id")) && helper.getUserCount() > 50) {
+        String uId = r.get(":id");
+        if (!helper.isUser(uId) && helper.getUserCount() > 50) {
             return getTemplate("full.vm");
         }
 
-        T2WUser t2WUser = T2WUser.findOneByUser(r.get(":id"));
+        T2WUser t2WUser = T2WUser.findOneByUser(uId);
         if (r.has(":id")) {
+            log.info("Displaying user info for @" + uId);
+
             HttpSession session = request.getSession();
-            session.setAttribute("user", r.get(":id"));
-            ctx.put("user_id", r.get(":id"));
+            session.setAttribute("user", uId);
+            ctx.put("user_id", uId);
 
             Weibo w = new Weibo();
             w.setToken(t2WUser.getToken(), t2WUser.getTokenSecret());

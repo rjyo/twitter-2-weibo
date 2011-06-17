@@ -1,8 +1,6 @@
-package com.rakutec.weibo.filters;
+package com.rakutec.weibo.utils.filters;
 
-import javax.enterprise.inject.New;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class KVStatusFilter implements StatusFilter {

@@ -68,6 +68,17 @@
         </init-param>
     </servlet>
 
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>com.rakutec.weibo.LoginFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/u/*</url-pattern>
+    </filter-mapping>
+
+
     <!-- Map *.vm files to Velocity -->
     <servlet-mapping>
         <servlet-name>velocity</servlet-name>

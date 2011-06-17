@@ -1,4 +1,4 @@
-package com.rakutec.weibo.filters;
+package com.rakutec.weibo.utils.filters;
 
 public class TagStatusFilter implements StatusFilter {
     @Override

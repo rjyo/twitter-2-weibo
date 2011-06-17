@@ -1,9 +1,9 @@
 package com.rakutec.weibo.utils;
 
-import com.rakutec.weibo.filters.NoReplyFilter;
-import com.rakutec.weibo.filters.StatusFilters;
-import com.rakutec.weibo.filters.TagStatusFilter;
-import com.rakutec.weibo.filters.URLStatusFilter;
+import com.rakutec.weibo.utils.filters.NoReplyFilter;
+import com.rakutec.weibo.utils.filters.StatusFilters;
+import com.rakutec.weibo.utils.filters.TagStatusFilter;
+import com.rakutec.weibo.utils.filters.URLStatusFilter;
 import org.apache.log4j.Logger;
 import twitter4j.*;
 import twitter4j.auth.AccessToken;
@@ -87,10 +87,5 @@ public class Twitter2Weibo {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static void main(String[] args) {
-        Twitter2Weibo t = new Twitter2Weibo("xu_lele");
-        t.syncTwitter();
     }
 }

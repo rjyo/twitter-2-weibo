@@ -1,4 +1,4 @@
-package com.rakutec.weibo.filters;
+package com.rakutec.weibo.utils.filters;
 
 import com.rosaloves.bitlyj.Bitly;
 import com.rosaloves.bitlyj.Url;
