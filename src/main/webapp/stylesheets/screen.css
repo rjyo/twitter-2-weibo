@@ -16,13 +16,15 @@ h1, h2, h3 {
 }
 
 h1 {
-  margin-top: 50px;
+  margin-top: 2em;
   font-size: 30px;
 }
 
 h2 {
+  margin-top: 1.5em;
   font-size: 24px;
 }
+
 
 h1, h2 {
   border-bottom: 3px solid rgba(255, 255, 255, 0.3);
@@ -106,7 +108,7 @@ a:hover {
 }
 
 #content {
-  padding: 60px 54px 0 56px;
+  padding: 60px 54px 20px 56px;
 }
 
 #page_footer {
