@@ -13,7 +13,7 @@ clean:
 run:
 	@mvn tomcat:run
 
-update:
+update: compile
 	@vmc update h2weibo --path $(TARGET_DIR)
 
 logs:
