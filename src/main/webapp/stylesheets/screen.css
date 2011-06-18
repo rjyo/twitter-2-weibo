@@ -234,10 +234,9 @@ button.clean-gray {
   font-family: 'Geo', Verdana, Tahoma, sans-serif;
   font-size: 16px;
   line-height: 1.5em;
-  padding: 4px 0;
+  padding: 4px 14px;
   text-align: center;
   text-shadow: 0 1px 0 #eee;
-  width: 100px;
   box-shadow         : rgba(0, 0, 0, 0.4) 0px 0px 4px;
   -moz-box-shadow    : rgba(0, 0, 0, 0.4) 0px 0px 4px;
   -webkit-box-shadow : rgba(0, 0, 0, 0.4) 0px 0px 4px;

@@ -31,8 +31,14 @@ public class LoginUserFilter implements Filter {
         if ("/u/save".equals(uri) || r.is(":id", user)) {
             chain.doFilter(req, res);
         } else {
-            log.info("Not logged in. Redirect to twitter login.");
-            ((HttpServletResponse) res).sendRedirect("/auth/twitter");
+            if ("/u/logout".equals(uri)) {
+                log.info("Logged @" + user + " out");
+                session.removeAttribute(Keys.SESSION_LOGIN_USER);
+                ((HttpServletResponse) res).sendRedirect("/");
+            } else {
+                log.info("Not logged in. Redirect to twitter login.");
+                ((HttpServletResponse) res).sendRedirect("/auth/twitter");
+            }
         }
     }
 

@@ -15,18 +15,15 @@
 
 <h2 id="h_usage">Usage</h2>
 
-<form id="id_search" method="get" action="/user">
 <div>
     #if ($session.SESSION_LOGIN_USER)
         #set ($user = $session.SESSION_LOGIN_USER)
-        Logged in as <a href="http://twitter.com/$user">@$user</a>. You can <a href="/u/$user">change your options for sync</a>.</li>
+        Logged in as <a href="http://twitter.com/$user">@$user</a>. You can <a href="/u/$user">change your options for sync</a>, or <a href="/u/logout">logout</a>.</li>
 
     #else
-        <input type="text" id="id_user" name="user" placeholder="Enter your twitter ID">
-        <button class="clean-gray" id="go_button">BOOM!</button>
+        Just <button class="clean-gray" id="go_button">Login to twitter ...</button>, that's it!
     #end
 </div>
-</form>
 
 <h2 id="h_faq">FAQ</h2>
 
@@ -48,14 +45,8 @@
 </ul>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#id_search').bind('submit', function(e) {
-            var userId = $('#id_user').val();
-            if (userId) {
-                window.location = '/u/' + $('#id_user').val();
-            }
-            return false;
+        $('#go_button').bind('click', function(e) {
+            window.location = '/auth/twitter';
         });
-
-        $('#id_user').placehold();
     });
 </script>

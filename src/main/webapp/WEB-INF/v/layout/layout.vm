@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="/stylesheets/reset-min.css" type='text/css'/>
     <link rel="stylesheet" href="/stylesheets/screen.css" type='text/css'/>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-    <script type="text/javascript" src="/javascripts/jquery.placehold.min.js"></script>
     <title>$!page_title</title>
 </head>
 
