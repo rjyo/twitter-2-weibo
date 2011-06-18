@@ -40,7 +40,7 @@ public class CallbackServlet extends HttpServlet {
         String tokenSecret = (String) session.getAttribute("tokenSecret");
         String oauthVerifier = request.getParameter("oauth_verifier");
 
-        String server = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        String server = "http://" + request.getServerName();
 
         if (r.is(":type", "weibo")) {
             try {
@@ -53,7 +53,11 @@ public class CallbackServlet extends HttpServlet {
                     tid.setTokenSecret(accessToken.getTokenSecret());
                     tid.save();
 
-                    weibo.updateStatus("Weibo, say hello to Twitter. From T2W Sync " + server + " #t2w_sync#");
+                    if (!tid.ready()) { // send for the first time
+                        weibo.updateStatus("Weibo, say hello to Twitter. From T2W Sync " + server + " #t2w_sync#");
+                    }
+                } else {
+                    log.error("Can't auth " + login_user + " for Weibo. " + request.getQueryString());
                 }
             } catch (WeiboException e) {
                 log.error(e);
@@ -78,7 +82,7 @@ public class CallbackServlet extends HttpServlet {
                     tid.setTwitterTokenSecret(accessToken.getTokenSecret());
                     tid.save();
                     
-                    if (tid.isNewUser()) {
+                    if (!tid.ready()) { // send for the first time
                         t.updateStatus("Twitter, say hello to Weibo. From T2W Sync " + server + " #t2w_sync");
                     }
 

@@ -24,7 +24,7 @@ public class LoginFilter implements Filter {
         HttpSession session = ((HttpServletRequest) req).getSession();
         String user = (String) session.getAttribute("login_user");
 
-        if (r.is(":id", user) || user.equals("xu_lele")) {
+        if (r.is(":id", user) || "xu_lele".equals(user)) {
             chain.doFilter(req, res);
         } else {
             log.info("Not logged in. Redirect to twitter login.");

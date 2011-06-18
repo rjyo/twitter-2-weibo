@@ -38,7 +38,7 @@ public class UserServlet extends VelocityLayoutServlet {
             return getTemplate("full.vm");
         }
 
-        T2WUser t2WUser = T2WUser.findOneByUser(uId);
+        T2WUser t2wUser = T2WUser.findOneByUser(uId);
         if (r.has(":id")) {
             log.info("Displaying user info for @" + uId);
 
@@ -47,7 +47,7 @@ public class UserServlet extends VelocityLayoutServlet {
             ctx.put("user_id", uId);
 
             Weibo w = new Weibo();
-            w.setToken(t2WUser.getToken(), t2WUser.getTokenSecret());
+            w.setToken(t2wUser.getToken(), t2wUser.getTokenSecret());
 
             try {
                 User user = w.verifyCredentials();
@@ -64,7 +64,7 @@ public class UserServlet extends VelocityLayoutServlet {
             try {
                 TwitterFactory factory = new TwitterFactory();
                 Twitter t = factory.getInstance();
-                t.setOAuthAccessToken(new AccessToken(t2WUser.getTwitterToken(), t2WUser.getTwitterTokenSecret()));
+                t.setOAuthAccessToken(new AccessToken(t2wUser.getTwitterToken(), t2wUser.getTwitterTokenSecret()));
 
                 twitter4j.User user = t.verifyCredentials();
                 ctx.put("twitter_user", user);

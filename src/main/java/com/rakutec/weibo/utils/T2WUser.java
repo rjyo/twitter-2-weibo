@@ -17,15 +17,6 @@ public class T2WUser {
     private String tokenSecret;
     private String twitterTokenSecret;
     private String twitterToken;
-    private boolean newUser;
-
-    public boolean isNewUser() {
-        return newUser;
-    }
-
-    public void setNewUser(boolean newUser) {
-        this.newUser = newUser;
-    }
 
     public String getUserId() {
         return userId;
@@ -122,12 +113,10 @@ public class T2WUser {
             tid.tokenSecret = j.get("id:" + tid.userId + ":tokenSecret");
             tid.twitterToken = j.get("id:" + tid.userId + ":twitter_token");
             tid.twitterTokenSecret = j.get("id:" + tid.userId + ":twitter_tokenSecret");
-            tid.newUser = false;
 
             log.info("Found data for @" + userId + " = " + tid.latestId);
         } else {
             tid.latestId = (long) 0;
-            tid.newUser = true;
 
             log.info("Data not found for @" + userId);
         }
