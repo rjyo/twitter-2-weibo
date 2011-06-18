@@ -1,6 +1,6 @@
 package com.rakutec.weibo;
 
-import com.rakutec.weibo.utils.HttpServletRouter;
+import com.rakutec.weibo.utils.Keys;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -19,13 +19,13 @@ public class AdminFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpSession session = ((HttpServletRequest) req).getSession();
-        String user = (String) session.getAttribute("login_user");
+        String user = (String) session.getAttribute(Keys.SESSION_LOGIN_USER);
 
         log.info("Logged in user " + user);
 
         if (user == null || !"xu_lele".equals(user)) {
             log.info("Not logged in. Redirect to twitter login.");
-            session.setAttribute("request_url", ((HttpServletRequest) req).getRequestURL().toString());
+            session.setAttribute(Keys.SESSION_REQUEST_URL, ((HttpServletRequest) req).getRequestURL().toString());
             ((HttpServletResponse) res).sendRedirect("/auth/twitter");
         } else {
             chain.doFilter(req, res);

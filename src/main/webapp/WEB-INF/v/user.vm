@@ -20,7 +20,9 @@
     </div>
 </div>
 #if ($weibo_login && $twitter_login) <div id="message">You are ready to go!</div> #end
-<p>&nbsp;</p>
+
+<h2>Options</h2>
+
 
 <script type="text/javascript">
     $(document).ready(function() {

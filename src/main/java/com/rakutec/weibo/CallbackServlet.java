@@ -1,6 +1,7 @@
 package com.rakutec.weibo;
 
 import com.rakutec.weibo.utils.HttpServletRouter;
+import com.rakutec.weibo.utils.Keys;
 import com.rakutec.weibo.utils.T2WUser;
 import org.apache.log4j.Logger;
 import twitter4j.Twitter;
@@ -35,9 +36,9 @@ public class CallbackServlet extends HttpServlet {
         }
 
         HttpSession session = request.getSession(false);
-        String login_user = (String) session.getAttribute("login_user");
-        String token = (String) session.getAttribute("token");
-        String tokenSecret = (String) session.getAttribute("tokenSecret");
+        String login_user = (String) session.getAttribute(Keys.SESSION_LOGIN_USER);
+        String token = (String) session.getAttribute(Keys.SESSION_TOKEN);
+        String tokenSecret = (String) session.getAttribute(Keys.SESSION_TOKEN_SECRET);
         String oauthVerifier = request.getParameter("oauth_verifier");
 
         String server = "http://" + request.getServerName();
@@ -68,9 +69,9 @@ public class CallbackServlet extends HttpServlet {
                 TwitterFactory factory = new TwitterFactory();
                 Twitter t = factory.getInstance();
 
-                twitter4j.auth.RequestToken req = (RequestToken) session.getAttribute("requestToken");
+                twitter4j.auth.RequestToken req = (RequestToken) session.getAttribute(Keys.SESSION_REQUEST_TOKEN);
                 twitter4j.auth.AccessToken accessToken = t.getOAuthAccessToken(req, oauthVerifier);
-                session.removeAttribute("requestToken");
+                session.removeAttribute(Keys.SESSION_REQUEST_TOKEN);
 
                 if (accessToken != null) {
                     t.setOAuthAccessToken(accessToken);
@@ -86,7 +87,7 @@ public class CallbackServlet extends HttpServlet {
                     tid.setTwitterTokenSecret(accessToken.getTokenSecret());
                     tid.save();
                     
-                    session.setAttribute("login_user", login_user);
+                    session.setAttribute(Keys.SESSION_LOGIN_USER, login_user);
                 }
             } catch (TwitterException e) {
                 log.error(e);
@@ -94,9 +95,9 @@ public class CallbackServlet extends HttpServlet {
             }
         }
 
-        String requestUrl = (String)session.getAttribute("request_url");
+        String requestUrl = (String)session.getAttribute(Keys.SESSION_REQUEST_URL);
         if (requestUrl != null) {
-            session.removeAttribute("request_url");
+            session.removeAttribute(Keys.SESSION_REQUEST_URL);
             response.sendRedirect(requestUrl);
         } else {
             response.sendRedirect("/u/" + login_user);

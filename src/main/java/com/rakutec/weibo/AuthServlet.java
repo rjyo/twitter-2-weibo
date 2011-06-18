@@ -1,6 +1,7 @@
 package com.rakutec.weibo;
 
 import com.rakutec.weibo.utils.HttpServletRouter;
+import com.rakutec.weibo.utils.Keys;
 import org.apache.log4j.Logger;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -40,8 +41,8 @@ public class AuthServlet extends HttpServlet {
 
                 response.setStatus(302);
                 response.setHeader("Location", requestToken.getAuthenticationURL());
-                session.setAttribute("token", requestToken.getToken());
-                session.setAttribute("tokenSecret", requestToken.getTokenSecret());
+                session.setAttribute(Keys.SESSION_TOKEN, requestToken.getToken());
+                session.setAttribute(Keys.SESSION_TOKEN_SECRET, requestToken.getTokenSecret());
 
                 log.info("Redirecting Weibo...");
             } catch (WeiboException e) {
@@ -55,7 +56,7 @@ public class AuthServlet extends HttpServlet {
 
                 response.setStatus(302);
                 response.setHeader("Location", requestToken.getAuthenticationURL());
-                session.setAttribute("requestToken", requestToken);
+                session.setAttribute(Keys.SESSION_REQUEST_TOKEN, requestToken);
 
                 log.info("Redirecting Twitter...");
             } catch (TwitterException e) {

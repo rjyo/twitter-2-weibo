@@ -1,6 +1,7 @@
 package com.rakutec.weibo;
 
 import com.rakutec.weibo.utils.HttpServletRouter;
+import com.rakutec.weibo.utils.Keys;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -22,7 +23,7 @@ public class LoginFilter implements Filter {
         r.setPattern("/:id");
 
         HttpSession session = ((HttpServletRequest) req).getSession();
-        String user = (String) session.getAttribute("login_user");
+        String user = (String) session.getAttribute(Keys.SESSION_LOGIN_USER);
 
         if (r.is(":id", user) || "xu_lele".equals(user)) {
             chain.doFilter(req, res);
