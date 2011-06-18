@@ -1,1 +1,5 @@
-Internal Error!
+<div style="margin-top: 100px;"></div>
+<h1><a href="/">Home</a> » 500 - Something Is Wrong!</h1>
+
+<div id="message">Something is wrong in the system. We'll take a look at it ASAP.</div>
+<div style="margin-bottom: 200px;"></div>

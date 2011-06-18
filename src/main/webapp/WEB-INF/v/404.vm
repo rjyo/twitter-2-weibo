@@ -1,1 +1,5 @@
-not found!
+<div style="margin-top: 100px;"></div>
+<h1><a href="/">Home</a> » 404 - Page Not Found!</h1>
+
+<div id="message">The URL can't be found in the system.</div>
+<div style="margin-bottom: 200px;"></div>

@@ -1,0 +1,50 @@
+<h1>Twitter 2 Weibo</h1>
+
+<p>Welcome! This app syncs what you tweet from Twitter to Sina Weibo.</p>
+
+<h2 id="h_feature">Features</h2>
+
+<ul>
+    <li># Use oauth to connect to Weibo, no need for user/password</li>
+    <li># Sync in less than 5 minutes</li>
+    <li># Auto drop tweets with @somebody style metions</li>
+    <li># Auto expand bit.ly URL</li>
+    <li># Auto translate twitter style #tag to weibo style #tag#</li>
+</ul>
+
+<h2 id="h_usage">Usage</h2>
+
+<form id="id_search" method="get" action="/user"><input type="text" id="id_user" name="user" placeholder="Enter your twitter ID">
+    <button class="clean-gray" id="go_button">BOOM!</button></form>
+
+<h2 id="h_faq">FAQ</h2>
+
+<ul class="qa">
+    <li><strong>Q:</strong> What if I get error message from Sina API</li>
+    <li><strong>A:</strong> Refresh your browser. If still not working, contact me <a href="http://twitter.com/xu_lele">@xu_lele</a></li>
+</ul>
+
+<ul class="qa">
+    <li><strong>Q:</strong> Why my tweet like &quot;I support 32 * 2 ...&quot; is missing</li>
+    <li><strong>A:</strong> Weibo made the decision.</li>
+</ul>
+
+<h2 id="h_credit">Credits</h2>
+
+<ul class="qa">
+    <li># Thanks <a href="http://twitter.com/baotuo">@baotuo</a> for helping me out with JedisPool.</li>
+    <li># Thanks VMWare and CloudFoundry for this great PaaS platform.</li>
+</ul>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#id_search').bind('submit', function(e) {
+            var userId = $('#id_user').val();
+            if (userId) {
+                window.location = '/u/' + $('#id_user').val();
+            }
+            return false;
+        });
+
+        $('#id_user').placehold();
+    });
+</script>

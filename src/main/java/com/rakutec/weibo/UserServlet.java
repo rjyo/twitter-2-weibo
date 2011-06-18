@@ -6,7 +6,7 @@ import com.rakutec.weibo.utils.T2WUser;
 import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.context.Context;
-import org.apache.velocity.tools.view.VelocityViewServlet;
+import org.apache.velocity.tools.view.VelocityLayoutServlet;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  * @author Rakuraku Jyo
  */
 
-public class UserServlet extends VelocityViewServlet {
+public class UserServlet extends VelocityLayoutServlet {
     private static final Logger log = Logger.getLogger(UserServlet.class.getName());
 
     @Override

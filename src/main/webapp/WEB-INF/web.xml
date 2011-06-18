@@ -47,7 +47,7 @@
     <servlet>
         <servlet-name>velocity</servlet-name>
         <servlet-class>
-            org.apache.velocity.tools.view.VelocityViewServlet
+            org.apache.velocity.tools.view.VelocityLayoutServlet
         </servlet-class>
 
         <!--
@@ -99,7 +99,7 @@
     </context-param>
 
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.vm</welcome-file>
     </welcome-file-list>
 
     <error-page>

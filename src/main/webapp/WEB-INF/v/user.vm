@@ -1,47 +1,28 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link href='http://fonts.googleapis.com/css?family=Geo&v1' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Lobster&v1' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/stylesheets/reset-min.css" type='text/css'/>
-    <link rel="stylesheet" href="/stylesheets/screen.css" type='text/css'/>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-    <title>Twitter 2 Weibo</title>
-</head>
+<h1><a href="/">Home</a> » User Settings » $user_id</h1>
 
-<body>
-<div id="paper"><div id="header"><div id="footer">
-    <div id="content">
-        <h1><a href="/">Home</a> » User Settings » $user_id</h1>
+<p>Link your Twitter &amp; Weibo account here.</p>
 
-        <p>Link your Twitter &amp; Weibo account here.</p>
-
-        <div id="logins">
-            <div id="twitter_login"><div class="button"></div>
-                #if ($twitter_login)
-                    @$twitter_user.screenName
-                #else
-                Not Linked Yet
-                #end
-            </div>
-            <div id="sync" class="#if ($weibo_login && $twitter_login) enabled #end"></div>
-            <div id="weibo_login"><div class="button"></div>
-                #if ($weibo_login)
-                    @$weibo_user.screenName
-                #else
-                    Not Linked Yet
-                #end
-            </div>
-        </div>
-        #if ($weibo_login && $twitter_login) <div id="message">You are ready to go!</div> #end
-        <p>&nbsp;</p>
+<div id="logins">
+    <div id="twitter_login"><div class="button"></div>
+        #if ($twitter_login)
+            @$twitter_user.screenName
+        #else
+        Not Linked Yet
+        #end
     </div>
-</div></div></div>
-<div id="page_footer">
-    © 2011, a <a href="http://jyorr.com">Rakuraku Jyo</a> 200/0 project
+    <div id="sync" class="#if ($weibo_login && $twitter_login) enabled #end"></div>
+    <div id="weibo_login"><div class="button"></div>
+        #if ($weibo_login)
+            @$weibo_user.screenName
+        #else
+            Not Linked Yet
+        #end
+    </div>
 </div>
+#if ($weibo_login && $twitter_login) <div id="message">You are ready to go!</div> #end
+<p>&nbsp;</p>
+
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -61,6 +42,3 @@
 
     });
 </script>
-</body>
-
-</html>
