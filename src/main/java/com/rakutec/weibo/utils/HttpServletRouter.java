@@ -9,6 +9,7 @@ public class HttpServletRouter {
 
     public HttpServletRouter(HttpServletRequest req) {
         String pathInfo = req.getPathInfo();
+        if (pathInfo == null) pathInfo = "";
 
         this.paths = pathInfo.split("/");
         this.maps = new HashMap<String, String>(this.paths.length);

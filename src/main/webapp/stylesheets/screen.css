@@ -1,27 +1,27 @@
 /* @override http://localhost:8080/stylesheets/screen.css */
 
 html {
-    background: #eee url(../images/bg.png) repeat;
+  background: #eee url(../images/bg.png) repeat;
 }
 
 body {
-    margin: 0 auto;
-    width: 910px;
+  margin: 0 auto;
+  width: 910px;
 }
 
 h1, h2, h3 {
-    font-family: 'Geo', Verdana, Tahoma, sans-serif;
-    color: #FFF;
-    text-shadow: 1px 2px 0px rgba(0, 0, 0, 0.3);
+  font-family: 'Geo', Verdana, Tahoma, sans-serif;
+  color: #FFF;
+  text-shadow: 1px 2px 0px rgba(0, 0, 0, 0.3);
 }
 
 h1 {
-    margin-top: 50px;
-    font-size: 30px;
+  margin-top: 50px;
+  font-size: 30px;
 }
 
 h2 {
-    font-size: 24px;
+  font-size: 24px;
 }
 
 h1, h2 {
@@ -30,15 +30,15 @@ h1, h2 {
 }
 
 hr {
-    border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.3);
 }
 
 div, p, ol, ul {
-    font-family: 'Geo', Verdana, Tahoma, sans-serif;
-    color: #FFF;
-    line-height: 1.4em;
-    font-size: 18px;
-    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+  font-family: 'Geo', Verdana, Tahoma, sans-serif;
+  color: #FFF;
+  line-height: 1.4em;
+  font-size: 18px;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
 }
 
 h1, h2 {
@@ -46,29 +46,29 @@ h1, h2 {
 }
 
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 ul li {
-    margin-left: 0em;
+  margin-left: 0em;
 }
 
 strong {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 em {
-    text-decoration: underline;
+  text-decoration: underline;
   font-style: normal;
 }
 
 a {
-    color: #FFCC00;
-    text-decoration: none;
+  color: #FFCC00;
+  text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 #h_feature {
@@ -85,6 +85,10 @@ a:hover {
 
 #h_credits {
   background: url(../images/h_credits.png) 30px 0 no-repeat no-repeat;
+}
+
+#h_options {
+  background: url(../images/h_options.png) 30px 0 no-repeat no-repeat;
 }
 
 #paper {
@@ -115,11 +119,11 @@ a:hover {
 }
 
 #page_footer a {
-    color: #999;
+  color: #999;
 }
 
-#content > p, #content > ul, #content > ol, #content > div, #content > form {
-    padding-left: 4em;
+#content > p, #content > ul, #content > ol, #content > div, #content > form > div {
+  padding-left: 4em;
 }
 
 
@@ -157,7 +161,7 @@ a:hover {
 }
 
 #logins .login div.button {
-    -webkit-transition: opacity 0.3s ease-in-out;
+  -webkit-transition: opacity 0.3s ease-in-out;
   -moz-transition: opacity 0.3s ease-in-out;
   -o-transition: opacity 0.3s ease-in-out;
   -ms-transition: opacity 0.3s ease-in-out;
@@ -193,93 +197,102 @@ div#weibo_login {
 }
 
 div#twitter_login > div {
-    background: url(../images/twitter_logo.png) top left no-repeat;
+  background: url(../images/twitter_logo.png) top left no-repeat;
 }
 
 div#weibo_login > div {
-    background: url(../images/weibo_logo.png) top left no-repeat;
+  background: url(../images/weibo_logo.png) top left no-repeat;
 }
 
 div#message {
-    clear: both;
-    padding-left: 0;
-    text-align: center;
-    font-size: 30px;
+  font-size: 30px;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 20px 0;
+}
+
+div.middle {
+  clear: both;
+  padding-left: 0 !important;
+  text-align: center !important;
 }
 
 
- /* clean gray
- *******************************************************************************/
- button.clean-gray {
-   background: #eee;
-   background: -moz-linear-gradient(top, #eee 0%, #ccc 100%);
-   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#ccc));
-   border: 1px solid #ccc;
-   border-bottom: 1px solid #bbb;
-   -moz-border-radius: 3px;
-   -webkit-border-radius: 3px;
-   border-radius: 3px;
-   color: #333;
-   font-family: 'Geo', Verdana, Tahoma, sans-serif;
-   font-size: 16px;
-   font-weight: bold;
-   line-height: 1;
-   padding: 8px 0;
-   text-align: center;
-   text-shadow: 0 1px 0 #eee;
-   width: 100px;
- }
+/* clean gray
+*******************************************************************************/
+button.clean-gray {
+  background: #eee;
+  background: -moz-linear-gradient(top, #eee 0%, #ccc 100%);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#ccc));
+  border: 1px solid #ccc;
+  border-bottom: 1px solid #bbb;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  color: #333;
+  font-family: 'Geo', Verdana, Tahoma, sans-serif;
+  font-size: 16px;
+  line-height: 1;
+  padding: 8px 0;
+  text-align: center;
+  text-shadow: 0 1px 0 #eee;
+  width: 100px;
+}
 
- button.clean-gray:hover {
-   background: #ddd;
-   background: -moz-linear-gradient(top, #ddd 0%, #bbb 100%);
-   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ddd), to(#bbb));
-   border: 1px solid #bbb;
-   border-bottom: 1px solid #999;
-   cursor: pointer;
-   text-shadow: 0 1px 0 #ddd;
- }
+button.clean-gray:hover {
+  background: #ddd;
+  background: -moz-linear-gradient(top, #ddd 0%, #bbb 100%);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ddd), to(#bbb));
+  border: 1px solid #bbb;
+  border-bottom: 1px solid #999;
+  cursor: pointer;
+  text-shadow: 0 1px 0 #ddd;
+}
 
- button.clean-gray:active {
-   border: 1px solid #aaa;
-   border-bottom: 1px solid #888;
-   -moz-box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
-   -webkit-box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
-   box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
- }
+button.clean-gray:active {
+  border: 1px solid #aaa;
+  border-bottom: 1px solid #888;
+  -moz-box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
+  -webkit-box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
+  box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
+}
 
 /* form
  *******************************************************************************/
 #content #id_search input[type=text] {
-  font-family      : 'Geo', Verdana, Tahoma, sans-serif;
-  font-size        : 16px;
+  font-family    : 'Geo', Verdana, Tahoma, sans-serif;
+  font-size    : 16px;
 
-  padding          : 2px 5px;
-  width            : 240px;
-  border           : 0;
-  color            : #333;
-  height           : 28px;
+  padding      : 2px 5px;
+  width      : 240px;
+  border       : 0;
+  color      : #333;
+  height       : 28px;
   background-color : white;
-  margin-right     : 10px;
+  margin-right   : 10px;
 
-  border           : solid 1px #E5E5E5;
-  outline          : 0;
+  border       : solid 1px #E5E5E5;
+  outline      : 0;
 
 
-  box-shadow            : rgba(0, 0, 0, 0.4) 0px 0px 4px;
-  -moz-box-shadow       : rgba(0, 0, 0, 0.4) 0px 0px 4px;
-  -webkit-box-shadow    : rgba(0, 0, 0, 0.4) 0px 0px 4px;
+  box-shadow      : rgba(0, 0, 0, 0.4) 0px 0px 4px;
+  -moz-box-shadow     : rgba(0, 0, 0, 0.4) 0px 0px 4px;
+  -webkit-box-shadow  : rgba(0, 0, 0, 0.4) 0px 0px 4px;
 
-  border-radius         : 5px;
-  -moz-border-radius    : 5px;
+  border-radius     : 5px;
+  -moz-border-radius  : 5px;
   -webkit-border-radius : 5px;
 
 }
 
 #content #id_search input[type=text]:hover,
 #content #id_search input[type=text]:focus {
-  box-shadow         : rgba(255, 255, 255, 0.8) 0px 0px 8px;
-  -moz-box-shadow    : rgba(255, 255, 255, 0.8) 0px 0px 8px;
+  box-shadow     : rgba(255, 255, 255, 0.8) 0px 0px 8px;
+  -moz-box-shadow  : rgba(255, 255, 255, 0.8) 0px 0px 8px;
   -webkit-box-shadow : rgba(255, 255, 255, 0.8) 0px 0px 8px;
-  border             : solid 1px #fff;
+  border       : solid 1px #fff;
+}
+
+#content input[type=checkbox] {
+  padding:0;
+  margin-right:10px;
 }

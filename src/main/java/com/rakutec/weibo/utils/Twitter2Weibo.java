@@ -1,6 +1,6 @@
 package com.rakutec.weibo.utils;
 
-import com.rakutec.weibo.utils.filters.NoReplyFilter;
+import com.rakutec.weibo.utils.filters.NoMentionFilter;
 import com.rakutec.weibo.utils.filters.StatusFilters;
 import com.rakutec.weibo.utils.filters.TagStatusFilter;
 import com.rakutec.weibo.utils.filters.URLStatusFilter;
@@ -35,7 +35,7 @@ public class Twitter2Weibo {
             log.info("Using OAuth for " + id);
         }
 
-        filters.use(new NoReplyFilter()).use(new URLStatusFilter()).use(new TagStatusFilter());
+        filters.use(new NoMentionFilter()).use(new URLStatusFilter()).use(new TagStatusFilter());
     }
 
     public void syncTwitter() {

@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class LoginFilter implements Filter {
-    private static final Logger log = Logger.getLogger(LoginFilter.class.getName());
+public class LoginUserFilter implements Filter {
+    private static final Logger log = Logger.getLogger(LoginUserFilter.class.getName());
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -25,7 +25,7 @@ public class LoginFilter implements Filter {
         HttpSession session = ((HttpServletRequest) req).getSession();
         String user = (String) session.getAttribute(Keys.SESSION_LOGIN_USER);
 
-        if (r.is(":id", user) || "xu_lele".equals(user)) {
+        if (r.is(":id", user)) {
             chain.doFilter(req, res);
         } else {
             log.info("Not logged in. Redirect to twitter login.");

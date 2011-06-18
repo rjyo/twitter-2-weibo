@@ -3,6 +3,9 @@ package com.rakutec.weibo.utils;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
 
+import java.util.Arrays;
+import java.util.Set;
+
 /**
  * Should rewrite this class to seperate model and static db methods
  *
@@ -17,6 +20,10 @@ public class T2WUser {
     private String tokenSecret;
     private String twitterTokenSecret;
     private String twitterToken;
+    private String[] options;
+    private boolean dropRTAndReply;
+    private boolean dropMetions;
+    private boolean withGeo;
 
     public String getUserId() {
         return userId;
@@ -66,6 +73,26 @@ public class T2WUser {
         return twitterToken;
     }
 
+    public void setOptions(String[] values) {
+        this.options = values;
+    }
+
+    public String[] getOptions() {
+        return options;
+    }
+
+    public boolean isDropRTAndReply() {
+        return dropRTAndReply;
+    }
+
+    public boolean isDropMetions() {
+        return dropMetions;
+    }
+
+    public boolean isWithGeo() {
+        return withGeo;
+    }
+
     private T2WUser() {
     }
 
@@ -77,6 +104,7 @@ public class T2WUser {
     public void save() {
         RedisHelper instance = RedisHelper.getInstance();
         Jedis j = instance.getJedis();
+
         j.set("id:" + this.userId + ":latestId", String.valueOf(this.latestId));
         if (this.token != null) j.set("id:" + this.userId + ":token", this.token);
         if (this.tokenSecret != null) j.set("id:" + this.userId + ":tokenSecret", this.tokenSecret);
@@ -84,19 +112,31 @@ public class T2WUser {
         if (this.twitterTokenSecret != null)
             j.set("id:" + this.userId + ":twitter_tokenSecret", this.twitterTokenSecret);
 
+        String optionsKey = "id:" + this.userId + ":options";
+        j.del(optionsKey);
+        if (this.options != null) {
+            for (String option : options) {
+                log.debug("Adding " + option + " to " + optionsKey);
+                j.sadd(optionsKey, option);
+            }
+        }
         j.sadd("twitter:ids", this.userId);
+
         instance.releaseJedis(j);
     }
 
     public void delete() {
         RedisHelper instance = RedisHelper.getInstance();
         Jedis j = instance.getJedis();
+
         j.del("id:" + this.userId + ":latestId");
         j.del("id:" + this.userId + ":token");
         j.del("id:" + this.userId + ":tokenSecret");
         j.del("id:" + this.userId + ":twitter_token");
         j.del("id:" + this.userId + ":twitter_tokenSecret");
+        j.del("id:" + this.userId + ":options");
         j.srem("twitter:ids", this.userId);
+
         instance.releaseJedis(j);
     }
 
@@ -113,6 +153,16 @@ public class T2WUser {
             tid.tokenSecret = j.get("id:" + tid.userId + ":tokenSecret");
             tid.twitterToken = j.get("id:" + tid.userId + ":twitter_token");
             tid.twitterTokenSecret = j.get("id:" + tid.userId + ":twitter_tokenSecret");
+            Set<String> options = j.smembers("id:" + tid.userId + ":options");
+
+            tid.dropRTAndReply = false;
+            tid.dropMetions = false;
+            tid.withGeo = false;
+            for (String s : options) {
+                if ("drop_rt".equals(s)) tid.dropRTAndReply = true;
+                if ("drop_at".equals(s)) tid.dropMetions = true;
+                if ("with_geo".equals(s)) tid.withGeo = true;
+            }
 
             log.info("Found data for @" + userId + " = " + tid.latestId);
         } else {
@@ -127,13 +177,14 @@ public class T2WUser {
 
     @Override
     public String toString() {
-        return "TweetID{" +
+        return "T2WUser{" +
                 "userId='" + userId + '\'' +
                 ", latestId=" + latestId +
                 ", token='" + token + '\'' +
                 ", tokenSecret='" + tokenSecret + '\'' +
                 ", twitterTokenSecret='" + twitterTokenSecret + '\'' +
                 ", twitterToken='" + twitterToken + '\'' +
+                ", options=" + (options == null ? null : Arrays.asList(options)) +
                 '}';
     }
 

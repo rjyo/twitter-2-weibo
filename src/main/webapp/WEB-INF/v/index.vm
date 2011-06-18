@@ -14,8 +14,11 @@
 
 <h2 id="h_usage">Usage</h2>
 
-<form id="id_search" method="get" action="/user"><input type="text" id="id_user" name="user" placeholder="Enter your twitter ID">
-    <button class="clean-gray" id="go_button">BOOM!</button></form>
+<form id="id_search" method="get" action="/user">
+<div><input type="text" id="id_user" name="user" placeholder="Enter your twitter ID">
+    <button class="clean-gray" id="go_button">BOOM!</button>
+</div>
+</form>
 
 <h2 id="h_faq">FAQ</h2>
 
@@ -29,7 +32,7 @@
     <li><strong>A:</strong> Weibo made the decision.</li>
 </ul>
 
-<h2 id="h_credit">Credits</h2>
+<h2 id="h_credits">Credits</h2>
 
 <ul class="qa">
     <li># Thanks <a href="http://twitter.com/baotuo">@baotuo</a> for helping me out with JedisPool.</li>

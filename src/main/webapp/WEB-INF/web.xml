@@ -35,6 +35,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>SaveOptionsServlet</servlet-name>
+        <servlet-class>com.rakutec.weibo.SaveOptionsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SaveOptionsServlet</servlet-name>
+        <url-pattern>/u/save</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>OAuthCallbackServlet</servlet-name>
         <servlet-class>com.rakutec.weibo.CallbackServlet</servlet-class>
     </servlet>
@@ -70,7 +80,7 @@
 
     <filter>
         <filter-name>LoginFilter</filter-name>
-        <filter-class>com.rakutec.weibo.LoginFilter</filter-class>
+        <filter-class>com.rakutec.weibo.LoginUserFilter</filter-class>
     </filter>
 
     <filter-mapping>

@@ -5,7 +5,7 @@
 <div id="logins">
     <div id="twitter_login"><div class="button"></div>
         #if ($twitter_login)
-            @$twitter_user.screenName
+            @$twitter_user
         #else
         Not Linked Yet
         #end
@@ -13,19 +13,39 @@
     <div id="sync" class="#if ($weibo_login && $twitter_login) enabled #end"></div>
     <div id="weibo_login"><div class="button"></div>
         #if ($weibo_login)
-            @$weibo_user.screenName
+            @$weibo_user
         #else
             Not Linked Yet
         #end
     </div>
 </div>
-#if ($weibo_login && $twitter_login) <div id="message">You are ready to go!</div> #end
 
-<h2>Options</h2>
+#if ($message) <div id="message" class="middle">$message</div> #end
 
+<h2 id="h_options">Options</h2>
+<form method="post" action="/u/save">
+<ul>
+  <li><input type="checkbox" name="options" value="drop_rt" id="drop_rt" #if ($user.dropRTAndReply) checked #end><label for="drop_rt">Do not sync retweets and replies</label></li>
+  <li><input type="checkbox" name="options" value="drop_at" id="drop_at" #if ($user.dropMetions) checked #end><label for="drop_at">Do not sync any tweets with metions (@someone)</label></li>
+  <li><input type="checkbox" name="options" value="with_geo" id="with_location" #if ($user.withGeo) checked #end><label for="with_location">Sync geo locations</label></li>
+</ul>
+
+<br/>
+
+<div class="middle">
+  <button class="clean-gray" id="save_button">Save</button>
+</div>
+</form>
+<br/>
 
 <script type="text/javascript">
     $(document).ready(function() {
+
+    #if ($message)
+        setTimeout(function() {
+          $('#message').slideUp(500);
+        }, 1000);
+    #end
 
     #if (!$twitter_login)
         $('#twitter_login').addClass('login');

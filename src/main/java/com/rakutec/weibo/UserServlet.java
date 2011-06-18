@@ -1,6 +1,7 @@
 package com.rakutec.weibo;
 
 import com.rakutec.weibo.utils.HttpServletRouter;
+import com.rakutec.weibo.utils.Keys;
 import com.rakutec.weibo.utils.RedisHelper;
 import com.rakutec.weibo.utils.T2WUser;
 import org.apache.log4j.Logger;
@@ -11,7 +12,6 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
-import weibo4j.User;
 import weibo4j.Weibo;
 import weibo4j.WeiboException;
 
@@ -31,6 +31,8 @@ public class UserServlet extends VelocityLayoutServlet {
         HttpServletRouter r = new HttpServletRouter(request);
         r.setPattern("/:id");
 
+        HttpSession session = request.getSession(false);
+
         // Service limit
         RedisHelper helper = RedisHelper.getInstance();
         String uId = r.get(":id");
@@ -42,16 +44,20 @@ public class UserServlet extends VelocityLayoutServlet {
         if (r.has(":id")) {
             log.info("Displaying user info for @" + uId);
 
-            HttpSession session = request.getSession();
-            session.setAttribute("user", uId);
             ctx.put("user_id", uId);
-
-            Weibo w = new Weibo();
-            w.setToken(t2wUser.getToken(), t2wUser.getTokenSecret());
+            ctx.put("user", T2WUser.findOneByUser(uId));
 
             try {
-                User user = w.verifyCredentials();
-                ctx.put("weibo_user", user);
+                weibo4j.User user = (weibo4j.User) session.getAttribute(Keys.SESSION_WEIBO_USER);
+                if (user == null) {
+                    Weibo w = new Weibo();
+                    w.setToken(t2wUser.getToken(), t2wUser.getTokenSecret());
+                    user = w.verifyCredentials();
+
+                    session.setAttribute(Keys.SESSION_WEIBO_USER, user);
+                }
+
+                ctx.put("weibo_user", user.getScreenName());
                 ctx.put("weibo_user_image", user.getProfileImageURL().toString());
                 ctx.put("weibo_login", 1);
             } catch (Exception e) {
@@ -62,12 +68,17 @@ public class UserServlet extends VelocityLayoutServlet {
             }
 
             try {
-                TwitterFactory factory = new TwitterFactory();
-                Twitter t = factory.getInstance();
-                t.setOAuthAccessToken(new AccessToken(t2wUser.getTwitterToken(), t2wUser.getTwitterTokenSecret()));
+                twitter4j.User user = (twitter4j.User) session.getAttribute(Keys.SESSION_TWITTER_USER);
+                if (user == null) {
+                    TwitterFactory factory = new TwitterFactory();
+                    Twitter t = factory.getInstance();
+                    t.setOAuthAccessToken(new AccessToken(t2wUser.getTwitterToken(), t2wUser.getTwitterTokenSecret()));
 
-                twitter4j.User user = t.verifyCredentials();
-                ctx.put("twitter_user", user);
+                    user = t.verifyCredentials();
+                    session.setAttribute(Keys.SESSION_TWITTER_USER, user);
+                }
+
+                ctx.put("twitter_user", user.getScreenName());
                 ctx.put("twitter_user_image", user.getProfileImageURL().toString());
                 ctx.put("twitter_login", 1);
             } catch (Exception e) {
@@ -76,6 +87,12 @@ public class UserServlet extends VelocityLayoutServlet {
                     e.printStackTrace();
                 }
             }
+        }
+
+        Object message = session.getAttribute(Keys.SESSION_MESSAGE);
+        if (message != null) {
+            ctx.put("message", message);
+            session.removeAttribute(Keys.SESSION_MESSAGE);
         }
 
         return getTemplate("user.vm");

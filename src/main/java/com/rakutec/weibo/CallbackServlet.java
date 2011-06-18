@@ -36,7 +36,7 @@ public class CallbackServlet extends HttpServlet {
         }
 
         HttpSession session = request.getSession(false);
-        String login_user = (String) session.getAttribute(Keys.SESSION_LOGIN_USER);
+        String loginUser = (String) session.getAttribute(Keys.SESSION_LOGIN_USER);
         String token = (String) session.getAttribute(Keys.SESSION_TOKEN);
         String tokenSecret = (String) session.getAttribute(Keys.SESSION_TOKEN_SECRET);
         String oauthVerifier = request.getParameter("oauth_verifier");
@@ -49,16 +49,17 @@ public class CallbackServlet extends HttpServlet {
 
                 AccessToken accessToken = weibo.getOAuthAccessToken(token, tokenSecret, oauthVerifier);
                 if (accessToken != null) {
-                    T2WUser tid = T2WUser.findOneByUser(login_user);
+                    T2WUser tid = T2WUser.findOneByUser(loginUser);
                     if (tid.getToken() == null) { // send for the first time
                         weibo.updateStatus("Weibo, say hello to Twitter. From T2W Sync " + server + " #t2w_sync#");
+                        session.setAttribute(Keys.SESSION_MESSAGE, "You are ready to go!");
                     }
 
                     tid.setToken(accessToken.getToken());
                     tid.setTokenSecret(accessToken.getTokenSecret());
                     tid.save();
                 } else {
-                    log.error("Can't auth " + login_user + " for Weibo. " + request.getQueryString());
+                    log.error("Can't auth " + loginUser + " for Weibo. " + request.getQueryString());
                 }
             } catch (WeiboException e) {
                 log.error(e);
@@ -76,9 +77,9 @@ public class CallbackServlet extends HttpServlet {
                 if (accessToken != null) {
                     t.setOAuthAccessToken(accessToken);
                     User user = t.verifyCredentials();
-                    login_user = user.getScreenName();
+                    loginUser = user.getScreenName();
 
-                    T2WUser tid = T2WUser.findOneByUser(login_user);
+                    T2WUser tid = T2WUser.findOneByUser(loginUser);
                     if (tid.getTwitterToken() == null) { // send for the first time
                         t.updateStatus("Twitter, say hello to Weibo. From T2W Sync " + server + " #t2w_sync");
                     }
@@ -86,8 +87,8 @@ public class CallbackServlet extends HttpServlet {
                     tid.setTwitterToken(accessToken.getToken());
                     tid.setTwitterTokenSecret(accessToken.getTokenSecret());
                     tid.save();
-                    
-                    session.setAttribute(Keys.SESSION_LOGIN_USER, login_user);
+
+                    session.setAttribute(Keys.SESSION_LOGIN_USER, loginUser);
                 }
             } catch (TwitterException e) {
                 log.error(e);
@@ -95,12 +96,12 @@ public class CallbackServlet extends HttpServlet {
             }
         }
 
-        String requestUrl = (String)session.getAttribute(Keys.SESSION_REQUEST_URL);
+        String requestUrl = (String) session.getAttribute(Keys.SESSION_REQUEST_URL);
         if (requestUrl != null) {
             session.removeAttribute(Keys.SESSION_REQUEST_URL);
             response.sendRedirect(requestUrl);
         } else {
-            response.sendRedirect("/u/" + login_user);
+            response.sendRedirect("/u/" + loginUser);
         }
     }
 }

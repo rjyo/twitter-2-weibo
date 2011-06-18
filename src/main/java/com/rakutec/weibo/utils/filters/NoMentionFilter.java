@@ -2,8 +2,8 @@ package com.rakutec.weibo.utils.filters;
 
 import org.apache.log4j.Logger;
 
-public class NoReplyFilter implements StatusFilter {
-    private static final Logger log = Logger.getLogger(NoReplyFilter.class.getName());
+public class NoMentionFilter implements StatusFilter {
+    private static final Logger log = Logger.getLogger(NoMentionFilter.class.getName());
 
     @Override
     public String filter(String input) {
