@@ -10,7 +10,7 @@ body {
 }
 
 h1, h2, h3 {
-    font-family: 'Geo', arial, serif;
+    font-family: 'Geo', Verdana, Tahoma, sans-serif;
     color: #FFF;
     text-shadow: 1px 2px 0px rgba(0, 0, 0, 0.3);
 }
@@ -25,16 +25,16 @@ h2 {
 }
 
 h1, h2 {
-	border-bottom: 3px solid rgba(255, 255, 255, 0.3);
-	padding-bottom: 3px;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 3px;
 }
 
 hr {
-  	border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.3);
 }
 
 div, p, ol, ul {
-    font-family: 'Geo', Helvetica, arial, sans-serif;
+    font-family: 'Geo', Verdana, Tahoma, sans-serif;
     color: #FFF;
     line-height: 1.4em;
     font-size: 18px;
@@ -50,7 +50,7 @@ ul {
 }
 
 ul li {
-  	margin-left: 0em;
+    margin-left: 0em;
 }
 
 strong {
@@ -58,8 +58,8 @@ strong {
 }
 
 em {
-  	text-decoration: underline;
-	font-style: normal;
+    text-decoration: underline;
+  font-style: normal;
 }
 
 a {
@@ -70,6 +70,7 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
 #h_feature {
   background: url(../images/h_feature.png) 30px 0 no-repeat no-repeat;
 }
@@ -82,109 +83,113 @@ a:hover {
   background: url(../images/h_faq.png) 30px 0 no-repeat no-repeat;
 }
 
+#h_credits {
+  background: url(../images/h_credits.png) 30px 0 no-repeat no-repeat;
+}
+
 #paper {
-	background: #eee url(../images/paper_repeat.png) top left repeat-y;
-	margin-top: 30px;
+  background: #eee url(../images/paper_repeat.png) top left repeat-y;
+  margin-top: 30px;
 }
 
 #header {
-	background: url(../images/paper_header.png) top left no-repeat;
+  background: url(../images/paper_header.png) top left no-repeat;
 }
 
 #footer {
-	background: url(../images/paper_footer.png) bottom left no-repeat;
-	padding-bottom: 30px;
+  background: url(../images/paper_footer.png) bottom left no-repeat;
+  padding-bottom: 30px;
 }
 
 #content {
-	padding: 60px 54px 0 56px;
+  padding: 60px 54px 0 56px;
 }
 
 #page_footer {
-	font-size: 14px;
-	color: #474747;
-	font-family: 'Lobster', arial, serif;
-	padding: 0px 70px 40px;
-	text-shadow: none;
-	text-align: right;
+  font-size: 14px;
+  color: #474747;
+  font-family: 'Lobster', arial, serif;
+  padding: 0px 70px 40px;
+  text-shadow: none;
+  text-align: right;
 }
 
 #page_footer a {
-  	color: #999;
+    color: #999;
 }
 
 #content > p, #content > ul, #content > ol, #content > div, #content > form {
-  	padding-left: 4em;
+    padding-left: 4em;
 }
 
 
 #logins {
-	display: block;    
-	position: relative;
-	height: 300px;
+  display: block;
+  position: relative;
+  height: 300px;
 }
 
 #logins div#sync {
-	position: absolute;
-	left: 365px;
-	top: 100px;
-	width: 70px;
-	height: 70px;
-	background-image: url(../images/sync.png);
-	opacity: 0.1;
+  position: absolute;
+  left: 365px;
+  top: 100px;
+  width: 70px;
+  height: 70px;
+  background-image: url(../images/sync.png);
+  opacity: 0.1;
 }
 
 #logins div#sync.enabled {
-	position: absolute;
-	left: 365px;
-	top: 100px;
-	width: 70px;
-	height: 70px;
-	background-image: url(../images/sync.png);
-	opacity: 0.8;
+  position: absolute;
+  left: 365px;
+  top: 100px;
+  width: 70px;
+  height: 70px;
+  background-image: url(../images/sync.png);
+  opacity: 0.8;
 }
 
 #logins div.button {
-	width: 200px;
-	height: 200px;
-	background-color: rgba(255, 255, 255, 0.5);
-	border-radius: 5px;
+  width: 200px;
+  height: 200px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
 }
 
 #logins .login div.button {
     -webkit-transition: opacity 0.3s ease-in-out;
-	-moz-transition: opacity 0.3s ease-in-out;
-	-o-transition: opacity 0.3s ease-in-out;
-	-ms-transition: opacity 0.3s ease-in-out;
-	transition: opacity 0.3s ease-in-out;
-	opacity: 0.2;
-	cursor: pointer;
+  -moz-transition: opacity 0.3s ease-in-out;
+  -o-transition: opacity 0.3s ease-in-out;
+  -ms-transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0.2;
+  cursor: pointer;
 }
 
 
 #logins .login div.button:hover {
-	opacity: 1.0;
-	-webkit-transition: opacity 0.3s ease-in-out;
-	-moz-transition: opacity 0.3s ease-in-out;
-	-o-transition: opacity 0.3s ease-in-out;
-	-ms-transition: opacity 0.3s ease-in-out;
-	transition: opacity 0.3s ease-in-out;
+  opacity: 1.0;
+  -webkit-transition: opacity 0.3s ease-in-out;
+  -moz-transition: opacity 0.3s ease-in-out;
+  -o-transition: opacity 0.3s ease-in-out;
+  -ms-transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
 }
 
 div#twitter_login {
-	position: absolute;
-	left: 110px;
-	top: 45px;
-	text-align: center;
-	line-height: 2em;
+  position: absolute;
+  left: 110px;
+  top: 45px;
+  text-align: center;
+  line-height: 2em;
 }
 
 div#weibo_login {
-	position: absolute;
-	left: 490px;
-	top: 45px;
-	text-align: center;
-	line-height: 2em;
+  position: absolute;
+  left: 490px;
+  top: 45px;
+  text-align: center;
+  line-height: 2em;
 }
 
 div#twitter_login > div {
@@ -215,8 +220,8 @@ div#message {
    -webkit-border-radius: 3px;
    border-radius: 3px;
    color: #333;
-   font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-   font-size: 11px;
+   font-family: 'Geo', Verdana, Tahoma, sans-serif;
+   font-size: 16px;
    font-weight: bold;
    line-height: 1;
    padding: 8px 0;
@@ -246,32 +251,35 @@ div#message {
 /* form
  *******************************************************************************/
 #content #id_search input[type=text] {
-    font-family: 'Geo', Helvetica, arial, sans-serif;
+  font-family      : 'Geo', Verdana, Tahoma, sans-serif;
+  font-size        : 16px;
 
-    padding: 2px 5px;
-	width: 240px;
-    border: 0;
-    color: #333;
-    height: 28px;
-    background-color: white;
+  padding          : 2px 5px;
+  width            : 240px;
+  border           : 0;
+  color            : #333;
+  height           : 28px;
+  background-color : white;
+  margin-right     : 10px;
+
+  border           : solid 1px #E5E5E5;
+  outline          : 0;
 
 
-    font-size: 16px;
-	border-radius: 5px;
-    border: solid 1px #E5E5E5;
-    outline: 0;
-    font: normal 13px/100% Verdana, Tahoma, sans-serif;
-    background: #FFFFFF url('bg_form.png') left top repeat-x;
-    background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));
-    background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px);
-    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
-    -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
-    -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;  
+  box-shadow            : rgba(0, 0, 0, 0.4) 0px 0px 4px;
+  -moz-box-shadow       : rgba(0, 0, 0, 0.4) 0px 0px 4px;
+  -webkit-box-shadow    : rgba(0, 0, 0, 0.4) 0px 0px 4px;
+
+  border-radius         : 5px;
+  -moz-border-radius    : 5px;
+  -webkit-border-radius : 5px;
+
 }
 
-input:hover, textarea:hover,
-input:focus, textarea:focus {
-	-webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 8px;
-	    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;  
-	}
+#content #id_search input[type=text]:hover,
+#content #id_search input[type=text]:focus {
+  box-shadow         : rgba(255, 255, 255, 0.8) 0px 0px 8px;
+  -moz-box-shadow    : rgba(255, 255, 255, 0.8) 0px 0px 8px;
+  -webkit-box-shadow : rgba(255, 255, 255, 0.8) 0px 0px 8px;
+  border             : solid 1px #fff;
+}

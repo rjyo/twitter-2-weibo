@@ -49,13 +49,13 @@ public class CallbackServlet extends HttpServlet {
                 AccessToken accessToken = weibo.getOAuthAccessToken(token, tokenSecret, oauthVerifier);
                 if (accessToken != null) {
                     T2WUser tid = T2WUser.findOneByUser(login_user);
+                    if (tid.getToken() == null) { // send for the first time
+                        weibo.updateStatus("Weibo, say hello to Twitter. From T2W Sync " + server + " #t2w_sync#");
+                    }
+
                     tid.setToken(accessToken.getToken());
                     tid.setTokenSecret(accessToken.getTokenSecret());
                     tid.save();
-
-                    if (!tid.ready()) { // send for the first time
-                        weibo.updateStatus("Weibo, say hello to Twitter. From T2W Sync " + server + " #t2w_sync#");
-                    }
                 } else {
                     log.error("Can't auth " + login_user + " for Weibo. " + request.getQueryString());
                 }
@@ -78,14 +78,14 @@ public class CallbackServlet extends HttpServlet {
                     login_user = user.getScreenName();
 
                     T2WUser tid = T2WUser.findOneByUser(login_user);
+                    if (tid.getTwitterToken() == null) { // send for the first time
+                        t.updateStatus("Twitter, say hello to Weibo. From T2W Sync " + server + " #t2w_sync");
+                    }
+
                     tid.setTwitterToken(accessToken.getToken());
                     tid.setTwitterTokenSecret(accessToken.getTokenSecret());
                     tid.save();
                     
-                    if (!tid.ready()) { // send for the first time
-                        t.updateStatus("Twitter, say hello to Weibo. From T2W Sync " + server + " #t2w_sync");
-                    }
-
                     session.setAttribute("login_user", login_user);
                 }
             } catch (TwitterException e) {
@@ -93,6 +93,13 @@ public class CallbackServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
         }
-        response.sendRedirect("/u/" + login_user);
+
+        String requestUrl = (String)session.getAttribute("request_url");
+        if (requestUrl != null) {
+            session.removeAttribute("request_url");
+            response.sendRedirect(requestUrl);
+        } else {
+            response.sendRedirect("/u/" + login_user);
+        }
     }
 }
