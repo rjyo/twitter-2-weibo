@@ -84,8 +84,10 @@ public class Twitter2Weibo {
                         GeoLocation location = status.getGeoLocation();
                         if (user.isWithGeo() && location != null) {
                             weibo.updateStatus(filtered, location.getLatitude(), location.getLongitude());
+                            log.info("@" + status.getUser().getScreenName() + " - " + status.getText() + " sent with geo locations.");
                         } else {
                             weibo.updateStatus(filtered);
+                            log.info("@" + status.getUser().getScreenName() + " - " + status.getText() + " sent.");
                         }
                     } catch (WeiboException e) {
                         if (e.getStatusCode() != 400) { // resending same tweet
