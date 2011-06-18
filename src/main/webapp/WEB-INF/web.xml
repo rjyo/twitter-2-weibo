@@ -78,6 +78,12 @@
         </init-param>
     </servlet>
 
+    <!-- Map *.vm files to Velocity -->
+    <servlet-mapping>
+        <servlet-name>velocity</servlet-name>
+        <url-pattern>*.vm</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>LoginFilter</filter-name>
         <filter-class>com.rakutec.weibo.LoginUserFilter</filter-class>
@@ -97,11 +103,6 @@
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/cmd/*</url-pattern>
     </filter-mapping>
-    <!-- Map *.vm files to Velocity -->
-    <servlet-mapping>
-        <servlet-name>velocity</servlet-name>
-        <url-pattern>*.vm</url-pattern>
-    </servlet-mapping>
 
     <context-param>
         <param-name>contextInitializerClasses</param-name>
@@ -116,6 +117,7 @@
         <error-code>404</error-code>
         <location>/404.vm</location>
     </error-page>
+    
     <error-page>
         <error-code>500</error-code>
         <location>/500.vm</location>

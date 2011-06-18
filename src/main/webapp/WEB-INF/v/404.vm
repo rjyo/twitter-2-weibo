@@ -1,5 +1,7 @@
-<div style="margin-top: 100px;"></div>
-<h1><a href="/">Home</a> » 404 - Page Not Found!</h1>
-
+#set ($page_title = "404 - Page Not Found!")
+<p>&nbsp;</p>
+<h1><a href="/">Home</a> » $page_title</h1>
+<p>&nbsp;</p>
 <div id="message" class="middle">The URL can't be found in the system.</div>
-<div style="margin-bottom: 200px;"></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

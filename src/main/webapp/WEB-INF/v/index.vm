@@ -1,4 +1,5 @@
-<h1>Twitter 2 Weibo</h1>
+#set ($page_title = "Twitter 2 Weibo")
+<h1>$page_title</h1>
 
 <p>Welcome! This app syncs what you tweet from Twitter to Sina Weibo.</p>
 
@@ -15,8 +16,15 @@
 <h2 id="h_usage">Usage</h2>
 
 <form id="id_search" method="get" action="/user">
-<div><input type="text" id="id_user" name="user" placeholder="Enter your twitter ID">
-    <button class="clean-gray" id="go_button">BOOM!</button>
+<div>
+    #if ($session.SESSION_LOGIN_USER)
+        #set ($user = $session.SESSION_LOGIN_USER)
+        Logged in as <a href="http://twitter.com/$user">@$user</a>. You can <a href="/u/$user">change your options for sync</a>.</li>
+
+    #else
+        <input type="text" id="id_user" name="user" placeholder="Enter your twitter ID">
+        <button class="clean-gray" id="go_button">BOOM!</button>
+    #end
 </div>
 </form>
 

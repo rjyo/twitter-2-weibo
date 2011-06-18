@@ -1,5 +1,7 @@
-<div style="margin-top: 100px;"></div>
-<h1><a href="/">Home</a> » 500 - Something Is Wrong!</h1>
-
+#set ($page_title = "500 - Something Is Wrong!")
+<p>&nbsp;</p>
+<h1><a href="/">Home</a> » $page_title</h1>
+<p>&nbsp;</p>
 <div id="message" class="middle">Something is wrong in the system. We'll take a look at it ASAP.</div>
-<div style="margin-bottom: 200px;"></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
