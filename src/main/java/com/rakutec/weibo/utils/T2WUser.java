@@ -3,7 +3,6 @@ package com.rakutec.weibo.utils;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
 
-import java.util.Arrays;
 import java.util.Set;
 
 /**
@@ -155,6 +154,7 @@ public class T2WUser {
             tid.twitterTokenSecret = j.get("id:" + tid.userId + ":twitter_tokenSecret");
             Set<String> options = j.smembers("id:" + tid.userId + ":options");
 
+            tid.options = options.toArray(new String[options.size()]);
             tid.dropRTAndReply = false;
             tid.dropMetions = false;
             tid.withGeo = false;
@@ -184,7 +184,9 @@ public class T2WUser {
                 ", tokenSecret='" + tokenSecret + '\'' +
                 ", twitterTokenSecret='" + twitterTokenSecret + '\'' +
                 ", twitterToken='" + twitterToken + '\'' +
-                ", options=" + (options == null ? null : Arrays.asList(options)) +
+                ", dropRTAndReply=" + dropRTAndReply +
+                ", dropMetions=" + dropMetions +
+                ", withGeo=" + withGeo +
                 '}';
     }
 

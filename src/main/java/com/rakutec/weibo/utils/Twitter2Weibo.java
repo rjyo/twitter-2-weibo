@@ -35,7 +35,7 @@ public class Twitter2Weibo {
             log.info("Using OAuth for " + id);
         }
 
-        filters.use(new NoMentionFilter()).use(new URLStatusFilter()).use(new TagStatusFilter());
+        filters.use(new URLStatusFilter()).use(new TagStatusFilter());
     }
 
     public void syncTwitter() {
@@ -65,11 +65,27 @@ public class Twitter2Weibo {
                     twitter4j.Status status = statuses.get(i);
                     log.info("@" + status.getUser().getScreenName() + " - " + status.getText());
                     try {
+                        if (user.isDropRTAndReply() && (status.isRetweet() || status.getInReplyToStatusId() > 0)) {
+                            log.info("Skipped " + status.getText() + " because status is a retweet.");
+                            continue;
+                        }
+
+                        if (user.isDropMetions() && (status.getUserMentionEntities() != null)) {
+                            log.info("Skipped " + status.getText() + " because status has mentions.");
+                            continue;
+                        }
+
                         String filtered = filters.filter(status.getText());
-                        if (filtered != null) {
-                            weibo.updateStatus(filtered);
-                        } else {
+                        if (filtered == null) {
                             log.info("Skipped " + status.getText() + " because of the filter.");
+                            continue;
+                        }
+
+                        GeoLocation location = status.getGeoLocation();
+                        if (user.isWithGeo() && location != null) {
+                            weibo.updateStatus(filtered, location.getLatitude(), location.getLongitude());
+                        } else {
+                            weibo.updateStatus(filtered);
                         }
                     } catch (WeiboException e) {
                         if (e.getStatusCode() != 400) { // resending same tweet
@@ -81,11 +97,8 @@ public class Twitter2Weibo {
                     Thread.sleep(500);
                 }
             }
-        } catch (TwitterException te) {
-            log.warn("Failed to get timeline: " + te.getMessage());
-            throw new RuntimeException(te);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            log.error("Failed to get timeline: " + e.getMessage());
         }
     }
 }
