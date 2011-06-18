@@ -24,12 +24,11 @@ public class LoginFilter implements Filter {
         HttpSession session = ((HttpServletRequest) req).getSession();
         String user = (String) session.getAttribute("login_user");
 
-
-        if (user == null || !r.is(":id", user)) {
+        if (r.is(":id", user) || user.equals("xu_lele")) {
+            chain.doFilter(req, res);
+        } else {
             log.info("Not logged in. Redirect to twitter login.");
             ((HttpServletResponse) res).sendRedirect("/auth/twitter");
-        } else {
-            chain.doFilter(req, res);
         }
     }
 

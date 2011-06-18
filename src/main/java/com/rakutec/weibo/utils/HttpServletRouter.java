@@ -36,6 +36,7 @@ public class HttpServletRouter {
     }
 
     public boolean is(String key, String value) {
+        if (value == null) return false;
         String s = maps.get(key);
         return value.equals(s);
     }
