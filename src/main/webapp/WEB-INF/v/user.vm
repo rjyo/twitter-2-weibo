@@ -4,7 +4,7 @@
 <p>Link your Twitter &amp; Weibo account here.</p>
 
 <div id="logins">
-    <div id="twitter_login"><div class="button"></div>
+    <div id="twitter_login" class="login"><div class="button"></div>
         #if ($twitter_login)
             @$twitter_user
         #else
@@ -12,7 +12,7 @@
         #end
     </div>
     <div id="sync" class="#if ($weibo_login && $twitter_login) enabled #end"></div>
-    <div id="weibo_login"><div class="button"></div>
+    <div id="weibo_login" class="login"><div class="button"></div>
         #if ($weibo_login)
             @$weibo_user
         #else
@@ -26,8 +26,8 @@
 <h2 id="h_options">Options</h2>
 <form method="post" action="/u/save">
 <ul>
-  <li><input type="checkbox" name="options" value="drop_rt" id="drop_rt" #if ($user.dropRTAndReply) checked #end><label for="drop_rt">Do not sync retweets and replies</label></li>
-  <li><input type="checkbox" name="options" value="drop_at" id="drop_at" #if ($user.dropMetions) checked #end><label for="drop_at">Do not sync any tweets with metions (@someone)</label></li>
+  <li><input type="checkbox" name="options" value="drop_rt" id="drop_rt" #if ($user.dropRTAndReply) checked #end><label for="drop_rt">Do not sync retweets</label></li>
+  <li><input type="checkbox" name="options" value="drop_at" id="drop_at" #if ($user.dropMetions) checked #end><label for="drop_at">Do not sync any tweets with mentions (@someone)</label></li>
   <li><input type="checkbox" name="options" value="with_geo" id="with_location" #if ($user.withGeo) checked #end><label for="with_location">Sync geo locations</label></li>
 </ul>
 
@@ -45,21 +45,23 @@
     #if ($message)
         setTimeout(function() {
           $('#message').slideUp(500);
-        }, 1000);
+        }, 2000);
     #end
 
     #if (!$twitter_login)
-        $('#twitter_login').addClass('login');
         $('#twitter_login').click(function(e) {
             window.location = "/auth/twitter";
         });
+    #else
+        $('#twitter_login').removeClass('login');
     #end
 
     #if (!$weibo_login)
-        $('#weibo_login').addClass('login');
         $('#weibo_login').click(function(e) {
             window.location = "/auth/weibo";
         });
+    #else
+        $('#weibo_login').removeClass('login');
     #end
 
     });

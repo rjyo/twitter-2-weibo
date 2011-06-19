@@ -218,6 +218,9 @@ div.middle {
   text-align: center !important;
 }
 
+#go_button {
+  margin: 0 5px;
+}
 
 /* clean gray
 *******************************************************************************/

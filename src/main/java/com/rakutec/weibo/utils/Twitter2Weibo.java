@@ -65,12 +65,12 @@ public class Twitter2Weibo {
                     twitter4j.Status status = statuses.get(i);
                     log.info("@" + status.getUser().getScreenName() + " - " + status.getText());
                     try {
-                        if (user.isDropRTAndReply() && (status.isRetweet() || status.getInReplyToStatusId() > 0)) {
+                        if (user.isDropRTAndReply() && status.isRetweet()) {
                             log.info("Skipped " + status.getText() + " because status is a retweet.");
                             continue;
                         }
 
-                        if (user.isDropMetions() && (status.getUserMentionEntities() != null)) {
+                        if (user.isDropMentions() && (status.getUserMentionEntities() != null)) {
                             log.info("Skipped " + status.getText() + " because status has mentions.");
                             continue;
                         }

@@ -21,7 +21,7 @@ public class T2WUser {
     private String twitterToken;
     private String[] options;
     private boolean dropRTAndReply;
-    private boolean dropMetions;
+    private boolean dropMentions;
     private boolean withGeo;
 
     public String getUserId() {
@@ -84,8 +84,8 @@ public class T2WUser {
         return dropRTAndReply;
     }
 
-    public boolean isDropMetions() {
-        return dropMetions;
+    public boolean isDropMentions() {
+        return dropMentions;
     }
 
     public boolean isWithGeo() {
@@ -156,11 +156,11 @@ public class T2WUser {
 
             tid.options = options.toArray(new String[options.size()]);
             tid.dropRTAndReply = false;
-            tid.dropMetions = false;
+            tid.dropMentions = false;
             tid.withGeo = false;
             for (String s : options) {
                 if ("drop_rt".equals(s)) tid.dropRTAndReply = true;
-                if ("drop_at".equals(s)) tid.dropMetions = true;
+                if ("drop_at".equals(s)) tid.dropMentions = true;
                 if ("with_geo".equals(s)) tid.withGeo = true;
             }
 
@@ -185,7 +185,7 @@ public class T2WUser {
                 ", twitterTokenSecret='" + twitterTokenSecret + '\'' +
                 ", twitterToken='" + twitterToken + '\'' +
                 ", dropRTAndReply=" + dropRTAndReply +
-                ", dropMetions=" + dropMetions +
+                ", dropMentions=" + dropMentions +
                 ", withGeo=" + withGeo +
                 '}';
     }
