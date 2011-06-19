@@ -36,6 +36,10 @@ public class Twitter2Weibo {
         }
 
         filters.use(new URLStatusFilter()).use(new TagStatusFilter());
+
+        if (user.isDropMentions()) {
+            filters.use(new NoMentionFilter());
+        }
     }
 
     public void syncTwitter() {
@@ -67,11 +71,6 @@ public class Twitter2Weibo {
                     try {
                         if (user.isDropRTAndReply() && status.isRetweet()) {
                             log.info("Skipped " + status.getText() + " because status is a retweet.");
-                            continue;
-                        }
-
-                        if (user.isDropMentions() && (status.getUserMentionEntities() != null)) {
-                            log.info("Skipped " + status.getText() + " because status has mentions.");
                             continue;
                         }
 
