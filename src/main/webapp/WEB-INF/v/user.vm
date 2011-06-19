@@ -27,7 +27,7 @@
 <form method="post" action="/u/save">
 <ul>
   <li><input type="checkbox" name="options" value="drop_rt" id="drop_rt" #if ($user.dropRTAndReply) checked #end><label for="drop_rt">Do not sync retweets</label></li>
-  <li><input type="checkbox" name="options" value="drop_at" id="drop_at" #if ($user.dropMetions) checked #end><label for="drop_at">Do not sync any tweets with mentions (@someone)</label></li>
+  <li><input type="checkbox" name="options" value="drop_at" id="drop_at" #if ($user.dropMentions) checked #end><label for="drop_at">Do not sync any tweets with mentions (@someone)</label></li>
   <li><input type="checkbox" name="options" value="with_geo" id="with_location" #if ($user.withGeo) checked #end><label for="with_location">Sync geo locations</label></li>
 </ul>
 
