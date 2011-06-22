@@ -21,7 +21,7 @@
         Logged in as <a href="http://twitter.com/$user">@$user</a>. You can <a href="/u/$user">change your options for sync</a>, or <a href="/u/logout">logout</a>.</li>
 
     #else
-        Just <button class="clean-gray" id="go_button">Login to twitter ...</button>, that's it!
+        Just <button class="clean-gray" id="go_button">Login with Twitter ...</button>, that's it!
     #end
 </div>
 
