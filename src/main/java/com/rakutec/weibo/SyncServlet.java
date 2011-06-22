@@ -64,8 +64,8 @@ public class SyncServlet extends HttpServlet {
         super.init(config);
 
         // Key for Weibo App
-        System.setProperty("weibo4j.oauth.consumerKey", "2917100994");
-        System.setProperty("weibo4j.oauth.consumerSecret", "331e188966be6384c6722b1d3944c89e");
+        System.setProperty("weibo4j.oauth.consumerKey", "2440858351");
+        System.setProperty("weibo4j.oauth.consumerSecret", "1faf4ed7b4af302907e25429a0b88dfc");
 
         // Key for Twitter App
         System.setProperty("twitter4j.oauth.consumerKey", "Scwn2HbdT7v3yOEjkAQrfQ");
