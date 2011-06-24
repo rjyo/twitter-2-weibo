@@ -2,6 +2,8 @@ package com.rakutec.weibo.utils;
 
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
+import twitter4j.internal.org.json.JSONArray;
+import twitter4j.internal.org.json.JSONObject;
 
 import java.util.Set;
 
@@ -19,10 +21,7 @@ public class T2WUser {
     private String tokenSecret;
     private String twitterTokenSecret;
     private String twitterToken;
-    private String[] options;
-    private boolean dropRTAndReply;
-    private boolean dropMentions;
-    private boolean withGeo;
+    private Set<String> options;
 
     public String getUserId() {
         return userId;
@@ -72,32 +71,28 @@ public class T2WUser {
         return twitterToken;
     }
 
-    public void setOptions(String[] values) {
-        this.options = values;
-    }
-
-    public String[] getOptions() {
-        return options;
-    }
-
     public boolean isDropRTAndReply() {
-        return dropRTAndReply;
+        return options.contains("drop_rt");
     }
 
     public boolean isDropMentions() {
-        return dropMentions;
+        return options.contains("drop_at");
     }
 
     public boolean isWithGeo() {
-        return withGeo;
+        return options.contains("with_geo");
+
+    }
+
+    public Set<String> getOptions() {
+        return options;
+    }
+
+    public void setOptions(Set<String> options) {
+        this.options = options;
     }
 
     private T2WUser() {
-    }
-
-    public void updateLatestId(Long latestId) {
-        this.latestId = latestId;
-        this.save();
     }
 
     public void save() {
@@ -113,11 +108,9 @@ public class T2WUser {
 
         String optionsKey = "id:" + this.userId + ":options";
         j.del(optionsKey);
-        if (this.options != null) {
-            for (String option : options) {
-                log.debug("Adding " + option + " to " + optionsKey);
-                j.sadd(optionsKey, option);
-            }
+        for (String option : options) {
+            log.debug("Adding " + option + " to " + optionsKey);
+            j.sadd(optionsKey, option);
         }
         j.sadd("twitter:ids", this.userId);
 
@@ -152,17 +145,7 @@ public class T2WUser {
             tid.tokenSecret = j.get("id:" + tid.userId + ":tokenSecret");
             tid.twitterToken = j.get("id:" + tid.userId + ":twitter_token");
             tid.twitterTokenSecret = j.get("id:" + tid.userId + ":twitter_tokenSecret");
-            Set<String> options = j.smembers("id:" + tid.userId + ":options");
-
-            tid.options = options.toArray(new String[options.size()]);
-            tid.dropRTAndReply = false;
-            tid.dropMentions = false;
-            tid.withGeo = false;
-            for (String s : options) {
-                if ("drop_rt".equals(s)) tid.dropRTAndReply = true;
-                if ("drop_at".equals(s)) tid.dropMentions = true;
-                if ("with_geo".equals(s)) tid.withGeo = true;
-            }
+            tid.options = j.smembers("id:" + tid.userId + ":options");
 
             log.info("Found data for @" + userId + " = " + tid.latestId);
         } else {
@@ -184,9 +167,7 @@ public class T2WUser {
                 ", tokenSecret='" + tokenSecret + '\'' +
                 ", twitterTokenSecret='" + twitterTokenSecret + '\'' +
                 ", twitterToken='" + twitterToken + '\'' +
-                ", dropRTAndReply=" + dropRTAndReply +
-                ", dropMentions=" + dropMentions +
-                ", withGeo=" + withGeo +
+                ", options=" + options +
                 '}';
     }
 

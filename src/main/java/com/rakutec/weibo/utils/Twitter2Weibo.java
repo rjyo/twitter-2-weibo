@@ -58,8 +58,9 @@ public class Twitter2Weibo {
         try {
             if (latestId == 0) {
                 List<Status> statuses = twitter.getUserTimeline(screenName);
-                if (statuses.size() > 0)
-                    user.updateLatestId(statuses.get(0).getId()); // Record latestId, and sync next time
+                if (statuses.size() > 0) {
+                    user.setLatestId(statuses.get(0).getId()); // Record latestId, and sync next time
+                }
                 log.info("Updating @" + screenName + "'s latestId to " + user.getLatestId());
             } else {
                 Paging paging = new Paging(latestId);
@@ -94,10 +95,11 @@ public class Twitter2Weibo {
                             throw new RuntimeException(e);
                         }
                     }
-                    user.updateLatestId(status.getId()); // still update the latestId to skip
+                    user.setLatestId(status.getId()); // still update the latestId to skip
                     Thread.sleep(500);
                 }
             }
+            user.save();
         } catch (Exception e) {
             log.error("Failed to get timeline: " + e.getMessage());
         }

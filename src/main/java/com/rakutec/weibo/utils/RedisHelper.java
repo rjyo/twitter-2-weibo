@@ -4,8 +4,9 @@ import org.apache.commons.pool.impl.GenericObjectPool;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import weibo4j.org.json.JSONException;
-import weibo4j.org.json.JSONObject;
+import twitter4j.internal.org.json.JSONException;
+import twitter4j.internal.org.json.JSONObject;
+import twitter4j.internal.org.json.JSONArray;
 
 import java.util.Set;
 
@@ -35,6 +36,21 @@ public class RedisHelper {
         Boolean ismember = jedis.sismember("twitter:ids", user);
         jedisPool.returnResource(jedis);
         return ismember;
+    }
+
+    public String dump() {
+        Jedis jedis = getJedis();
+
+        Set<String> users = getAuthorizedIds();
+        JSONArray list = new JSONArray();
+        for (String user : users) {
+            T2WUser u = T2WUser.findOneByUser(user);
+            JSONObject obj = new JSONObject(u);
+            list.put(obj);
+        }
+
+        jedisPool.returnResource(jedis);
+        return list.toString();
     }
 
     protected Jedis getJedis() {

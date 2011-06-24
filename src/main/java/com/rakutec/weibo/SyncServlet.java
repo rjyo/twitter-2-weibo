@@ -33,6 +33,9 @@ public class SyncServlet extends HttpServlet {
             SyncTask task = new SyncTask();
             task.run();
             response.sendRedirect("/");
+        } else if (router.is(":cmd", "dump")) {
+            String dump = RedisHelper.getInstance().dump();
+            writer.write(dump);
         } else if (router.is(":cmd", "users")) {
             Set ids = RedisHelper.getInstance().getAuthorizedIds();
             writer.println("Syncing user list:");
