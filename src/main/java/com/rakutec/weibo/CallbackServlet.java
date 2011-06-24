@@ -62,7 +62,7 @@ public class CallbackServlet extends HttpServlet {
                     log.error("Can't auth " + loginUser + " for Weibo. " + request.getQueryString());
                 }
             } catch (WeiboException e) {
-                log.error(e);
+                log.error("Weibo Exception", e);
                 throw new RuntimeException(e);
             }
         } else if (r.is(":type", "twitter")) {
@@ -91,7 +91,7 @@ public class CallbackServlet extends HttpServlet {
                     session.setAttribute(Keys.SESSION_LOGIN_USER, loginUser);
                 }
             } catch (TwitterException e) {
-                log.error(e);
+                log.error("Twitter Exception", e);
                 throw new RuntimeException(e);
             }
         }
