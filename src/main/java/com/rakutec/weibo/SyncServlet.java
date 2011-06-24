@@ -37,6 +37,8 @@ public class SyncServlet extends HttpServlet {
             S3BackupTask task = new S3BackupTask();
             task.run();
             response.sendRedirect("/");
+        } else if (router.is(":cmd", "ex")) {
+            throw new RuntimeException(new IOException());
         } else if (router.is(":cmd", "users")) {
             Set ids = RedisHelper.getInstance().getAuthorizedIds();
             writer.println("Syncing user list:");
@@ -84,7 +86,7 @@ public class SyncServlet extends HttpServlet {
         scheduler.schedule("*/5 * * * *", task);
 
         S3BackupTask task2 = new S3BackupTask();
-        scheduler.schedule("0 0 * * *", task2);
+        scheduler.schedule("0 */4 * * *", task2);
         scheduler.start();
 
         log.info("Cron scheduler started.");

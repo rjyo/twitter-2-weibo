@@ -25,7 +25,7 @@ public class S3BackupTask implements Runnable {
             S3Service s3Service = new RestS3Service(awsCredentials);
             S3Bucket backup = s3Service.getBucket("h2weibo.backup");
 
-            String dateString = DateFormatUtils.format(new Date(), "yyyy-MM-dd");
+            String dateString = DateFormatUtils.format(new Date(), "yyyy-MM-dd_HH");
             S3Object object = new S3Object(dateString + ".json", dump);
             object = s3Service.putObject(backup, object);
             System.out.println("S3Object after upload: " + object);
