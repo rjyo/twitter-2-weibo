@@ -71,14 +71,14 @@ public class Twitter2Weibo {
                     log.info("@" + status.getUser().getScreenName() + " - " + status.getText());
                     try {
                         if (user.isDropRTAndReply() && status.isRetweet()) {
-                            user.updateLatestId(status.getId());
+                            user.setLatestId(status.getId());
                             log.info("Skipped " + status.getText() + " because status is a retweet.");
                             continue;
                         }
 
                         String filtered = filters.filter(status.getText());
                         if (filtered == null) {
-                            user.updateLatestId(status.getId());
+                            user.setLatestId(status.getId());
                             log.info("Skipped " + status.getText() + " because of the filter.");
                             continue;
                         }
@@ -91,7 +91,7 @@ public class Twitter2Weibo {
                             weibo.updateStatus(filtered);
                             log.info("@" + status.getUser().getScreenName() + " - " + status.getText() + " sent.");
                         }
-                        user.updateLatestId(status.getId()); // still update the latestId to skip
+                        user.setLatestId(status.getId());
                     } catch (WeiboException e) {
                         if (e.getStatusCode() != 400) { // resending same tweet
                             log.warn("Failed to update Weibo");

@@ -2,8 +2,6 @@ package com.rakutec.weibo.utils;
 
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
-import twitter4j.internal.org.json.JSONArray;
-import twitter4j.internal.org.json.JSONObject;
 
 import java.util.Set;
 
@@ -108,9 +106,12 @@ public class T2WUser {
 
         String optionsKey = "id:" + this.userId + ":options";
         j.del(optionsKey);
-        for (String option : options) {
-            log.debug("Adding " + option + " to " + optionsKey);
-            j.sadd(optionsKey, option);
+
+        if (options != null) {
+            for (String option : options) {
+                log.debug("Adding " + option + " to " + optionsKey);
+                j.sadd(optionsKey, option);
+            }
         }
         j.sadd("twitter:ids", this.userId);
 
