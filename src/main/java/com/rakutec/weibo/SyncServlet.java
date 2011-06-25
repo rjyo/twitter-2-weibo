@@ -33,6 +33,12 @@ public class SyncServlet extends HttpServlet {
             SyncTask task = new SyncTask();
             task.run();
             response.sendRedirect("/");
+        } else if (router.is(":cmd", "dump")) {
+            S3BackupTask task = new S3BackupTask();
+            task.run();
+            response.sendRedirect("/");
+        } else if (router.is(":cmd", "ex")) {
+            throw new RuntimeException(new IOException());
         } else if (router.is(":cmd", "users")) {
             Set ids = RedisHelper.getInstance().getAuthorizedIds();
             writer.println("Syncing user list:");
@@ -74,9 +80,13 @@ public class SyncServlet extends HttpServlet {
         // Disable weibo4j Debug outputs
         System.setProperty("weibo4j.debug", "false");
 
-        SyncTask task = new SyncTask();
         Scheduler scheduler = new Scheduler();
+
+        SyncTask task = new SyncTask();
         scheduler.schedule("*/5 * * * *", task);
+
+        S3BackupTask task2 = new S3BackupTask();
+        scheduler.schedule("0 */4 * * *", task2);
         scheduler.start();
 
         log.info("Cron scheduler started.");

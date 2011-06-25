@@ -55,6 +55,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>ErrorServlet</servlet-name>
+        <servlet-class>com.rakutec.weibo.ErrorServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ErrorServlet</servlet-name>
+        <url-pattern>/err/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>velocity</servlet-name>
         <servlet-class>
             org.apache.velocity.tools.view.VelocityLayoutServlet
@@ -115,12 +125,11 @@
 
     <error-page>
         <error-code>404</error-code>
-        <location>/404.vm</location>
-    </error-page>
-    
-    <error-page>
-        <error-code>500</error-code>
-        <location>/500.vm</location>
+        <location>/err/404</location>
     </error-page>
 
+    <error-page>
+        <error-code>500</error-code>
+        <location>/err/500</location>
+    </error-page>
 </web-app>

@@ -2,6 +2,6 @@
 <p>&nbsp;</p>
 <h1><a href="/">Home</a> » $page_title</h1>
 <p>&nbsp;</p>
-<div id="message" class="middle">The URL can't be found in the system.</div>
+<div id="message" class="middle">The URL $url can't be found in the system.</div>
 <p>&nbsp;</p>
 <p>&nbsp;</p>

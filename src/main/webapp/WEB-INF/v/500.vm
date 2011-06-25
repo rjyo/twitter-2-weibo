@@ -1,7 +1,9 @@
-#set ($page_title = "500 - Something Is Wrong!")
+#set ($page_title = "500 - Oops, something Is Wrong!")
 <p>&nbsp;</p>
 <h1><a href="/">Home</a> » $page_title</h1>
 <p>&nbsp;</p>
-<div id="message" class="middle">Something is wrong in the system. We'll take a look at it ASAP.</div>
+<div id="message" class="middle">Something is wrong in the system. We'll take a look at it.
+    <br />
+    Poke <a href="http://twitter.com/xulele">@xu_lele</a> if you need help ASAP.</div>
 <p>&nbsp;</p>
 <p>&nbsp;</p>

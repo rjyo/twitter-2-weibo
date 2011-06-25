@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * @author Rakuraku Jyo
@@ -24,7 +27,13 @@ public class SaveOptionsServlet extends HttpServlet {
 
         T2WUser user = T2WUser.findOneByUser(loginUser);
         String[] values = request.getParameterValues("options");
-        user.setOptions(values);
+
+        if (values != null) {
+            List<String> list = Arrays.asList(values);
+            user.setOptions(new HashSet<String>(list));
+        } else {
+            user.setOptions(null);
+        }
         user.save();
 
         session.setAttribute(Keys.SESSION_MESSAGE, "User Options Saved.");
