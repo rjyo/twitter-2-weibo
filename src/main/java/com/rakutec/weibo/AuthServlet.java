@@ -32,7 +32,7 @@ public class AuthServlet extends HttpServlet {
         PrintWriter writer = response.getWriter();
         String serverPath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession();
 
         if (r.is(":type", "weibo")) {
             try {
