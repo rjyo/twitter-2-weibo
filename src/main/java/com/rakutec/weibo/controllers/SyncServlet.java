@@ -39,11 +39,10 @@ public class SyncServlet extends HttpServlet {
             S3BackupTask task = new S3BackupTask();
             task.run();
             response.sendRedirect("/");
-        } else if (router.is(":cmd", "ex")) {
-            throw new RuntimeException(new IOException());
         } else if (router.is(":cmd", "users")) {
             Set ids = RedisHelper.getInstance().getAuthorizedIds();
-            writer.println("Syncing user list:");
+
+            writer.println("Syncing user list: (" + ids.size() + " users)");
             for (Object id : ids) {
                 writer.println("  " + id);
             }
