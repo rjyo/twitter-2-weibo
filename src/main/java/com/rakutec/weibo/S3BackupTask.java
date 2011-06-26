@@ -1,6 +1,6 @@
 package com.rakutec.weibo;
 
-import com.rakutec.weibo.utils.RedisHelper;
+import com.rakutec.weibo.model.RedisHelper;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.log4j.Logger;
 import org.jets3t.service.S3Service;

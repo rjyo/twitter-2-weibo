@@ -1,9 +1,9 @@
-package com.rakutec.weibo;
+package com.rakutec.weibo.controllers;
 
+import com.rakutec.weibo.Keys;
+import com.rakutec.weibo.model.RedisHelper;
+import com.rakutec.weibo.model.T2WUser;
 import com.rakutec.weibo.utils.HttpServletRouter;
-import com.rakutec.weibo.utils.Keys;
-import com.rakutec.weibo.utils.RedisHelper;
-import com.rakutec.weibo.utils.T2WUser;
 import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.context.Context;

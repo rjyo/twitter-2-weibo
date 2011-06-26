@@ -1,4 +1,4 @@
-package com.rakutec.weibo.utils;
+package com.rakutec.weibo.model;
 
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;

@@ -1,8 +1,10 @@
-package com.rakutec.weibo;
+package com.rakutec.weibo.controllers;
 
+import com.rakutec.weibo.S3BackupTask;
+import com.rakutec.weibo.SyncTask;
+import com.rakutec.weibo.model.RedisHelper;
+import com.rakutec.weibo.model.T2WUser;
 import com.rakutec.weibo.utils.HttpServletRouter;
-import com.rakutec.weibo.utils.RedisHelper;
-import com.rakutec.weibo.utils.T2WUser;
 import it.sauronsoftware.cron4j.Scheduler;
 import org.apache.log4j.Logger;
 

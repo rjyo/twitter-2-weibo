@@ -5,7 +5,7 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
     <servlet>
         <servlet-name>SyncServlet</servlet-name>
-        <servlet-class>com.rakutec.weibo.SyncServlet</servlet-class>
+        <servlet-class>com.rakutec.weibo.controllers.SyncServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
@@ -16,7 +16,7 @@
 
     <servlet>
         <servlet-name>AuthServlet</servlet-name>
-        <servlet-class>com.rakutec.weibo.AuthServlet</servlet-class>
+        <servlet-class>com.rakutec.weibo.controllers.AuthServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -26,7 +26,7 @@
 
     <servlet>
         <servlet-name>UserServlet</servlet-name>
-        <servlet-class>com.rakutec.weibo.UserServlet</servlet-class>
+        <servlet-class>com.rakutec.weibo.controllers.UserServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -36,7 +36,7 @@
 
     <servlet>
         <servlet-name>SaveOptionsServlet</servlet-name>
-        <servlet-class>com.rakutec.weibo.SaveOptionsServlet</servlet-class>
+        <servlet-class>com.rakutec.weibo.controllers.SaveOptionsServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -46,7 +46,7 @@
 
     <servlet>
         <servlet-name>OAuthCallbackServlet</servlet-name>
-        <servlet-class>com.rakutec.weibo.CallbackServlet</servlet-class>
+        <servlet-class>com.rakutec.weibo.controllers.CallbackServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -56,7 +56,7 @@
 
     <servlet>
         <servlet-name>ErrorServlet</servlet-name>
-        <servlet-class>com.rakutec.weibo.ErrorServlet</servlet-class>
+        <servlet-class>com.rakutec.weibo.controllers.ErrorServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -96,7 +96,7 @@
 
     <filter>
         <filter-name>LoginFilter</filter-name>
-        <filter-class>com.rakutec.weibo.LoginUserFilter</filter-class>
+        <filter-class>com.rakutec.weibo.controllers.LoginUserFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -106,7 +106,7 @@
 
     <filter>
         <filter-name>AdminFilter</filter-name>
-        <filter-class>com.rakutec.weibo.AdminFilter</filter-class>
+        <filter-class>com.rakutec.weibo.controllers.AdminFilter</filter-class>
     </filter>
 
     <filter-mapping>

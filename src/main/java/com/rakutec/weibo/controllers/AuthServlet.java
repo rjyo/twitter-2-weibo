@@ -1,7 +1,7 @@
-package com.rakutec.weibo;
+package com.rakutec.weibo.controllers;
 
+import com.rakutec.weibo.Keys;
 import com.rakutec.weibo.utils.HttpServletRouter;
-import com.rakutec.weibo.utils.Keys;
 import org.apache.log4j.Logger;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;

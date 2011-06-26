@@ -1,7 +1,6 @@
 package com.rakutec.weibo;
 
-import com.rakutec.weibo.utils.RedisHelper;
-import com.rakutec.weibo.utils.Twitter2Weibo;
+import com.rakutec.weibo.model.RedisHelper;
 import org.apache.log4j.Logger;
 
 import java.util.Set;

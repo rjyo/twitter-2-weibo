@@ -1,4 +1,4 @@
-package com.rakutec.weibo.utils;
+package com.rakutec.weibo;
 
 public class Keys {
     public final static String SESSION_LOGIN_USER = "SESSION_LOGIN_USER";

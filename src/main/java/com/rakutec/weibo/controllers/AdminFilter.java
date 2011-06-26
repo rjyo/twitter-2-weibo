@@ -1,6 +1,6 @@
-package com.rakutec.weibo;
+package com.rakutec.weibo.controllers;
 
-import com.rakutec.weibo.utils.Keys;
+import com.rakutec.weibo.Keys;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;

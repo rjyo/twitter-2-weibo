@@ -1,4 +1,4 @@
-package com.rakutec.weibo;
+package com.rakutec.weibo.controllers;
 
 import com.rakutec.weibo.utils.HttpServletRouter;
 import org.apache.log4j.Logger;

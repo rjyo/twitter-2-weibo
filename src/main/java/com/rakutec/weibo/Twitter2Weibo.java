@@ -1,5 +1,6 @@
-package com.rakutec.weibo.utils;
+package com.rakutec.weibo;
 
+import com.rakutec.weibo.model.T2WUser;
 import com.rakutec.weibo.utils.filters.NoMentionFilter;
 import com.rakutec.weibo.utils.filters.StatusFilters;
 import com.rakutec.weibo.utils.filters.TagStatusFilter;
