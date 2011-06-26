@@ -1,15 +1,18 @@
 package com.rakutec.weibo;
 
 import com.rakutec.weibo.model.T2WUser;
+import com.rakutec.weibo.utils.StatusImageExtractor;
 import com.rakutec.weibo.utils.filters.NoMentionFilter;
 import com.rakutec.weibo.utils.filters.StatusFilters;
 import com.rakutec.weibo.utils.filters.TagStatusFilter;
 import com.rakutec.weibo.utils.filters.URLStatusFilter;
 import org.apache.log4j.Logger;
 import twitter4j.*;
+import twitter4j.Paging;
+import twitter4j.Status;
 import twitter4j.auth.AccessToken;
-import weibo4j.Weibo;
-import weibo4j.WeiboException;
+import weibo4j.*;
+import weibo4j.http.ImageItem;
 
 import java.util.List;
 
@@ -84,6 +87,17 @@ public class Twitter2Weibo {
                             continue;
                         }
 
+
+                        if (!user.isNoImage()) {
+                            StatusImageExtractor ex = new StatusImageExtractor();
+                            byte[] image = ex.extract(status.getText());
+                            if (image != null) {
+                                user.setLatestId(status.getId());
+                                weibo.uploadStatus(status.getText(), new ImageItem(image));
+                                continue;
+                            }
+                        }
+
                         GeoLocation location = status.getGeoLocation();
                         if (user.isWithGeo() && location != null) {
                             weibo.updateStatus(filtered, location.getLatitude(), location.getLongitude());
@@ -92,6 +106,7 @@ public class Twitter2Weibo {
                             weibo.updateStatus(filtered);
                             log.info("@" + status.getUser().getScreenName() + " - " + status.getText() + " sent.");
                         }
+
                         user.setLatestId(status.getId());
                     } catch (WeiboException e) {
                         if (e.getStatusCode() != 400) { // resending same tweet

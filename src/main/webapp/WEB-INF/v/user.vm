@@ -24,23 +24,30 @@
 #if ($message) <div id="message" class="middle">$message</div> #end
 
 <h2 id="h_options">Options</h2>
-<form method="post" action="/u/save">
+<form id="save_form" method="post" action="/u/save">
 <ul>
   <li><input type="checkbox" name="options" value="drop_rt" id="drop_rt" #if ($user.dropRTAndReply) checked #end><label for="drop_rt">Do not sync retweets</label></li>
   <li><input type="checkbox" name="options" value="drop_at" id="drop_at" #if ($user.dropMentions) checked #end><label for="drop_at">Do not sync any tweets with mentions (@someone)</label></li>
+  <li><input type="checkbox" name="options" value="no_image" id="no_image" #if ($user.noImage) checked #end><label for="no_image">Do not upload images</label></li>
   <li><input type="checkbox" name="options" value="with_geo" id="with_location" #if ($user.withGeo) checked #end><label for="with_location">Sync geo locations</label></li>
 </ul>
 
 <br/>
 
 <div class="middle">
-  <button class="clean-gray" id="save_button">Save</button>
+  <button class="clean-gray" name="submit" value="save" id="save_button">Save my settings</button>
+    &nbsp;&nbsp;
+  <button class="clean-gray" name="submit" value="delete" id="delete_button">Delete account ...</button>
 </div>
 </form>
 <br/>
 
 <script type="text/javascript">
     $(document).ready(function() {
+
+    $('#delete_button').bind('click', function(e) {
+        return confirm('Do you really want to delete your account and stop syncing?');
+    });
 
     #if ($message)
         setTimeout(function() {

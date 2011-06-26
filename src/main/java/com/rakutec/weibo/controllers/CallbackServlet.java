@@ -9,6 +9,7 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.auth.RequestToken;
+import weibo4j.Status;
 import weibo4j.Weibo;
 import weibo4j.WeiboException;
 import weibo4j.http.AccessToken;
@@ -50,8 +51,10 @@ public class CallbackServlet extends HttpServlet {
                 AccessToken accessToken = weibo.getOAuthAccessToken(token, tokenSecret, oauthVerifier);
                 if (accessToken != null) {
                     T2WUser tid = T2WUser.findOneByUser(loginUser);
+
                     if (tid.getToken() == null) { // send for the first time
-                        weibo.updateStatus("Weibo, say hello to Twitter. From T2W Sync " + server + " #t2w_sync#");
+                        Status status = weibo.updateStatus("Weibo, say hello to Twitter. From T2W Sync " + server + " #t2w_sync#");
+                        tid.setLatestId(status.getId());
                         session.setAttribute(Keys.SESSION_MESSAGE, "You are ready to go!");
                     }
 

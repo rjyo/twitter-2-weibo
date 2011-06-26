@@ -26,18 +26,25 @@ public class SaveOptionsServlet extends HttpServlet {
         log.info("Saving options for @" + loginUser);
 
         T2WUser user = T2WUser.findOneByUser(loginUser);
-        String[] values = request.getParameterValues("options");
+        String actionType = request.getParameter("submit");
 
-        if (values != null) {
-            List<String> list = Arrays.asList(values);
-            user.setOptions(new HashSet<String>(list));
+        if ("delete".equals(actionType)) {
+            user.delete();
+            session.invalidate();
+            response.sendRedirect("/");
         } else {
-            user.setOptions(null);
+            String[] values = request.getParameterValues("options");
+
+            if (values != null) {
+                List<String> list = Arrays.asList(values);
+                user.setOptions(new HashSet<String>(list));
+            } else {
+                user.setOptions(null);
+            }
+            user.save();
+
+            session.setAttribute(Keys.SESSION_MESSAGE, "User Options Saved.");
+            response.sendRedirect("/u/" + loginUser);
         }
-        user.save();
-
-        session.setAttribute(Keys.SESSION_MESSAGE, "User Options Saved.");
-
-        response.sendRedirect("/u/" + loginUser);
     }
 }

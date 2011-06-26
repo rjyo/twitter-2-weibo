@@ -79,7 +79,10 @@ public class T2WUser {
 
     public boolean isWithGeo() {
         return options.contains("with_geo");
+    }
 
+    public boolean isNoImage() {
+        return options.contains("no_image");
     }
 
     public Set<String> getOptions() {
