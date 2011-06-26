@@ -94,6 +94,7 @@ public class Twitter2Weibo {
                             if (image != null) {
                                 user.setLatestId(status.getId());
                                 weibo.uploadStatus(status.getText(), new ImageItem(image));
+                                log.info("@" + status.getUser().getScreenName() + " - " + status.getText() + " sent with image.");
                                 continue;
                             }
                         }
