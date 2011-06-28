@@ -1,13 +1,17 @@
 package h2weibo.model;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import twitter4j.internal.org.json.JSONException;
 import twitter4j.internal.org.json.JSONObject;
-import twitter4j.internal.org.json.JSONArray;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 
@@ -42,15 +46,31 @@ public class RedisHelper {
         Jedis jedis = getJedis();
 
         Set<String> users = getAuthorizedIds();
-        JSONArray list = new JSONArray();
+
+        Gson gson = new Gson();
+        ArrayList<T2WUser> list = new ArrayList<T2WUser>(users.size());
+
         for (String user : users) {
-            T2WUser u = T2WUser.findOneByUser(user);
-            JSONObject obj = new JSONObject(u);
-            list.put(obj);
+            list.add(T2WUser.findOneByUser(user));
         }
 
         jedisPool.returnResource(jedis);
-        return list.toString();
+        return gson.toJson(list);
+    }
+
+    public void restore(String data) {
+        Gson gson = new Gson();
+        Type listType = new TypeToken<Collection<T2WUser>>() {
+        }.getType();
+        ArrayList<T2WUser> list = gson.fromJson(data, listType);
+
+        for (T2WUser user : list) {
+            T2WUser u = T2WUser.findOneByUser(user.getUserId());
+            if (!u.ready()) { // not existed
+                user.save();
+                log.info("Restoring " + user.getUserId() + " ...");
+            }
+        }
     }
 
     protected Jedis getJedis() {
@@ -92,4 +112,5 @@ public class RedisHelper {
             e.printStackTrace();
         }
     }
+
 }

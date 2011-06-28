@@ -9,7 +9,20 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: h2weibo:core:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="module" module-name="core" />
+    <orderEntry type="library" name="Maven: net.java.dev.jets3t:jets3t:0.8.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.5" level="project" />
+    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-httpclient:commons-httpclient:3.1" level="project" />
+    <orderEntry type="library" name="Maven: com.jamesmurty.utils:java-xmlbuilder:0.4" level="project" />
+    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.4" level="project" />
+    <orderEntry type="library" name="Maven: cron4j:cron4j:2.2.3" level="project" />
+    <orderEntry type="library" name="Maven: org.twitter4j:twitter4j-core:2.2.3" level="project" />
+    <orderEntry type="library" name="Maven: com.rosaloves:bitlyj:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: redis.clients:jedis:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.5.5" level="project" />
+    <orderEntry type="library" name="Maven: log4j:log4j:1.2.16" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:1.7.1" level="project" />
   </component>
 </module>
 

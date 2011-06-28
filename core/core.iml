@@ -23,6 +23,7 @@
     <orderEntry type="library" name="Maven: redis.clients:jedis:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.5.5" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.16" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:1.7.1" level="project" />
   </component>
 </module>
 

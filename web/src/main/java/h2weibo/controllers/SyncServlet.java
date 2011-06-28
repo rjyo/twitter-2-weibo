@@ -39,6 +39,12 @@ public class SyncServlet extends HttpServlet {
             S3BackupTask task = new S3BackupTask();
             task.run();
             response.sendRedirect("/");
+        } else if (router.is(":cmd", "restore")) {
+            S3BackupTask task = new S3BackupTask();
+            if (router.has(":id")) {
+                task.restore(router.get(":id"));
+            }
+            // response.sendRedirect("/");
         } else if (router.is(":cmd", "users")) {
             Set ids = RedisHelper.getInstance().getAuthorizedIds();
 

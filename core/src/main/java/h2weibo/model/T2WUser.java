@@ -93,7 +93,7 @@ public class T2WUser {
         this.options = options;
     }
 
-    private T2WUser() {
+    public T2WUser() {
     }
 
     public void save() {

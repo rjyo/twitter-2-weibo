@@ -1,4 +1,4 @@
-TARGET_DIR = ./target/h2weibo
+TARGET_DIR = ./web/target/h2weibo
 MVN_INSTALL_FLAGS = install:install-file -Dfile=./lib/cron4j-2.2.3.jar -DgroupId=cron4j -DartifactId=cron4j -Dversion=2.2.3 -Dpackaging=jar
 
 compile: clean
@@ -18,9 +18,6 @@ update: compile
 
 logs:
 	@vmc logs h2weibo
-
-clear:
-	@rm -rf target/tomcat/work
 
 stats:
 	@vmc stats h2weibo

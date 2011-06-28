@@ -8,7 +8,12 @@ import org.jets3t.service.impl.rest.httpclient.RestS3Service;
 import org.jets3t.service.model.S3Bucket;
 import org.jets3t.service.model.S3Object;
 import org.jets3t.service.security.AWSCredentials;
+import twitter4j.internal.org.json.JSONArray;
+import twitter4j.internal.org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Date;
 
 /**
@@ -31,6 +36,29 @@ public class S3BackupTask implements Runnable {
             System.out.println("S3Object after upload: " + object);
         } catch (Exception e) {
             log.error("Failed to upload to S3.");
+            log.error(e);
+        }
+    }
+
+    public void restore(String from) {
+        try {
+            AWSCredentials awsCredentials = new AWSCredentials("07FDF4N8HAEG3G3W1WG2", "wjeo/z5LrRyWpXCpOPs0lLpn49R1gq/85QbtbW9k");
+            S3Service s3Service = new RestS3Service(awsCredentials);
+
+            S3Object object = s3Service.getObject("h2weibo.backup", from + ".json");
+            InputStream inputStream = object.getDataInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+            String data = "";
+            while ((line = reader.readLine()) != null) {
+                data += line;
+            }
+            reader.close();
+
+            RedisHelper.getInstance().restore(data);
+        } catch (Exception e) {
+            log.error("Failed to restore from S3.");
             log.error(e);
         }
     }
