@@ -8,7 +8,7 @@
         <groupId>h2weibo</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>h2weibo.worker</groupId>
+    <groupId>h2weibo</groupId>
     <artifactId>worker</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>worker</name>
