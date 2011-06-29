@@ -94,7 +94,7 @@ public class SyncServlet extends HttpServlet {
         scheduler.schedule("*/2 * * * *", task);
 
         S3BackupTask task2 = new S3BackupTask();
-        scheduler.schedule("0 */1 * * *", task2);
+        scheduler.schedule("0 * * * *", task2);
         scheduler.start();
 
         log.info("Cron scheduler started.");
