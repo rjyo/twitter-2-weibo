@@ -43,7 +43,7 @@ public class WorkerServlet extends HttpServlet {
                         String userId = user.getUserId();
                         Twitter2Weibo weibo = new Twitter2Weibo(user);
                         weibo.syncTwitter();
-                        log.info("Start syncing task for " + userId);
+                        log.info("Syncing for " + userId);
                     } else {
                         try {
                             log.info("No task found, sleeping");

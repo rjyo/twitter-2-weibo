@@ -5,7 +5,8 @@
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -17,7 +18,6 @@
     <orderEntry type="library" name="Maven: commons-httpclient:commons-httpclient:3.1" level="project" />
     <orderEntry type="library" name="Maven: com.jamesmurty.utils:java-xmlbuilder:0.4" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.4" level="project" />
-    <orderEntry type="library" name="Maven: cron4j:cron4j:2.2.3" level="project" />
     <orderEntry type="library" name="Maven: org.twitter4j:twitter4j-core:2.2.3" level="project" />
     <orderEntry type="library" name="Maven: com.rosaloves:bitlyj:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: redis.clients:jedis:2.0.0" level="project" />

@@ -18,6 +18,7 @@ public class StatusImageExtractor {
         simplePatterns.put("http://instagr.am/p/(\\w+)/", "http://instagr.am/p/_KEY_/media/");
         simplePatterns.put("http://twitpic.com/(\\w+)", "http://twitpic.com/show/large/_KEY_");
         simplePatterns.put("http://img.ly/(\\w+)", "http://img.ly/show/large/_KEY_");
+        simplePatterns.put("http://yfrog.com/(\\w+)", "http://yfrog.com/_KEY_:iphone");
     }
 
     public byte[] extract(String input) {
@@ -50,23 +51,5 @@ public class StatusImageExtractor {
         }
 
         return null;
-    }
-
-    public static void main(String[] args) {
-        StatusImageExtractor extractor = new StatusImageExtractor();
-        byte[] extract = extractor.extract("hello http://instagr.am/p/Ga_kl/ nice");
-        if (extract != null) {
-            log.info("nice!");
-        }
-
-        extract = extractor.extract("hello http://twitpic.com/5h7gkh testing!");
-        if (extract != null) {
-            log.info("nice x2!");
-        }
-
-        extract = extractor.extract("hello http://img.ly/5wsQ testing!");
-        if (extract != null) {
-            log.info("nice x3!");
-        }
     }
 }
