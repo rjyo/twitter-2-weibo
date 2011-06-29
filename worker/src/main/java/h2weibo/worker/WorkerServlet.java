@@ -32,12 +32,11 @@ public class WorkerServlet extends HttpServlet {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                RedisHelper helper = RedisHelper.getInstance();
+                long size = helper.getQueueSize();
+                log.info("Start running, queue size = " + size + ", user count = " + helper.getUserCount());
+
                 while (true) {
-                    RedisHelper helper = RedisHelper.getInstance();
-                    long size = helper.getQueueSize();
-
-                    log.info("Start running, queue size = " + size + ", user count = " + helper.getUserCount());
-
                     T2WUser user = helper.pop();
                     if (user != null) {
                         String userId = user.getUserId();
