@@ -29,14 +29,22 @@ public class Twitter2Weibo {
 
     public Twitter2Weibo(String id) {
         user = T2WUser.findOneByUser(id);
+        init();
+    }
 
+    public Twitter2Weibo(T2WUser user) {
+        this.user = user;
+        init();
+    }
+
+    private void init() {
         weibo = new Weibo();
         weibo.setToken(user.getToken(), user.getTokenSecret());
 
         twitter = new TwitterFactory().getInstance();
         if (user.getTwitterToken() != null) {
             twitter.setOAuthAccessToken(new AccessToken(user.getTwitterToken(), user.getTwitterTokenSecret()));
-            log.info("Using OAuth for " + id);
+            log.info("Using OAuth for " + user.getUserId());
         }
 
         filters.use(new URLStatusFilter()).use(new TagStatusFilter());
@@ -107,14 +115,14 @@ public class Twitter2Weibo {
                             weibo.updateStatus(filtered);
                             log.info("@" + status.getUser().getScreenName() + " - " + status.getText() + " sent.");
                         }
-
-                        user.setLatestId(status.getId());
                     } catch (WeiboException e) {
                         if (e.getStatusCode() != 400) { // resending same tweet
                             log.warn("Failed to update Weibo");
                             throw new RuntimeException(e);
                         }
                     }
+                    user.setLatestId(status.getId());
+
                 }
             }
             user.save();

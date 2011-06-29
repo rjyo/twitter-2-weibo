@@ -17,27 +17,29 @@ import java.util.Set;
 
 public class RedisHelper {
     private static final Logger log = Logger.getLogger(RedisHelper.class.getName());
-    private static RedisHelper ourInstance = new RedisHelper();
+    private static final String USER_SET_KEY = "twitter:ids";
+    private static final String QUEUE_KEY = "t2w:queue";
 
+    private static RedisHelper ourInstance = new RedisHelper();
     private JedisPool jedisPool;
 
     public Set<String> getAuthorizedIds() {
         Jedis jedis = getJedis();
-        Set<String> set = jedis.smembers("twitter:ids");
+        Set<String> set = jedis.smembers(USER_SET_KEY);
         jedisPool.returnResource(jedis);
         return set;
     }
 
     public Long getUserCount() {
         Jedis jedis = getJedis();
-        Long scard = jedis.scard("twitter:ids");
+        Long scard = jedis.scard(USER_SET_KEY);
         jedisPool.returnResource(jedis);
         return scard;
     }
 
     public boolean isUser(String user) {
         Jedis jedis = getJedis();
-        Boolean ismember = jedis.sismember("twitter:ids", user);
+        Boolean ismember = jedis.sismember(USER_SET_KEY, user);
         jedisPool.returnResource(jedis);
         return ismember;
     }
@@ -71,6 +73,33 @@ public class RedisHelper {
                 log.info("Restoring " + user.getUserId() + " ...");
             }
         }
+    }
+
+    public void queue(T2WUser user) {
+        Jedis jedis = getJedis();
+        String userId = user.getUserId();
+        log.info("Queue " + userId + " to sync.");
+        jedis.lpush(QUEUE_KEY, userId);
+
+        jedisPool.returnResource(jedis);
+    }
+
+    public T2WUser pop() {
+        Jedis jedis = getJedis();
+        String userId = jedis.rpop(QUEUE_KEY);
+
+        log.info("Poped " + userId + " from queue.");
+
+        T2WUser user = userId != null ? T2WUser.findOneByUser(userId) : null;
+        jedisPool.returnResource(jedis);
+        return user;
+    }
+
+    public long getQueueSize() {
+        Jedis jedis = getJedis();
+        Long llen = jedis.llen(QUEUE_KEY);
+        jedisPool.returnResource(jedis);
+        return llen;
     }
 
     protected Jedis getJedis() {
@@ -111,6 +140,13 @@ public class RedisHelper {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static void main(String[] args) {
+        RedisHelper instance = RedisHelper.getInstance();
+        T2WUser pop = instance.pop();
+        System.out.println(pop);
     }
 
 }

@@ -151,11 +151,11 @@ public class T2WUser {
             tid.twitterTokenSecret = j.get("id:" + tid.userId + ":twitter_tokenSecret");
             tid.options = j.smembers("id:" + tid.userId + ":options");
 
-            log.info("Found data for @" + userId + " = " + tid.latestId);
+            log.debug("Found data for @" + userId + " = " + tid.latestId);
         } else {
             tid.latestId = (long) 0;
 
-            log.info("Data not found for @" + userId);
+            log.error("Data not found for @" + userId);
         }
         instance.releaseJedis(j);
 

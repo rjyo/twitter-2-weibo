@@ -1,6 +1,7 @@
 package h2weibo.controllers;
 
 import h2weibo.HttpServletRouter;
+import h2weibo.QueueTask;
 import h2weibo.S3BackupTask;
 import h2weibo.SyncTask;
 import h2weibo.model.RedisHelper;
@@ -89,11 +90,11 @@ public class SyncServlet extends HttpServlet {
 
         Scheduler scheduler = new Scheduler();
 
-        SyncTask task = new SyncTask();
-        scheduler.schedule("*/5 * * * *", task);
+        QueueTask task = new QueueTask();
+        scheduler.schedule("*/2 * * * *", task);
 
         S3BackupTask task2 = new S3BackupTask();
-        scheduler.schedule("0 */4 * * *", task2);
+        scheduler.schedule("0 */1 * * *", task2);
         scheduler.start();
 
         log.info("Cron scheduler started.");

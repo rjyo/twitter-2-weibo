@@ -1,5 +1,9 @@
-TARGET_DIR = ./web/target/h2weibo
 MVN_INSTALL_FLAGS = install:install-file -Dfile=./lib/cron4j-2.2.3.jar -DgroupId=cron4j -DartifactId=cron4j -Dversion=2.2.3 -Dpackaging=jar
+
+WEB_TARGET_DIR = ./web/target/h2weibo
+WORKER_TARGET_DIR = ./worker/target/h2weibo-worker
+WEB_NAME = h2weibo
+WORKER_NAME = h2weibo-w1
 
 compile: clean
 	@mvn package
@@ -14,16 +18,25 @@ run:
 	@mvn tomcat:run
 
 update: compile
-	@vmc update h2weibo --path $(TARGET_DIR)
+	@vmc update ${WEB_NAME} --path $(WEB_TARGET_DIR)
+
+update_worker: compile
+	@vmc update ${WORKER_NAME} --path $(WORKER_TARGET_DIR)
 
 logs:
-	@vmc logs h2weibo
+	@vmc logs ${WEB_NAME}
+
+logs_worker:
+	@vmc logs ${WORKER_NAME}
 
 stats:
-	@vmc stats h2weibo
+	@echo stats for ${WEB_NAME}
+	@vmc stats ${WEB_NAME}
+	@echo stats for ${WORKER_NAME}
+	@vmc stats ${WORKER_NAME}
 
 restart:
-	@vmc stop h2weibo
-	@vmc start h2weibo
+	@vmc stop ${WEB_NAME}
+	@vmc start ${WEB_NAME}
 
 .PHONY: compile
