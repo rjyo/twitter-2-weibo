@@ -88,9 +88,14 @@ public class RedisHelper {
         Jedis jedis = getJedis();
         String userId = jedis.rpop(QUEUE_KEY);
 
-        log.info("Poped " + userId + " from queue.");
-
-        T2WUser user = userId != null ? T2WUser.findOneByUser(userId) : null;
+        T2WUser user;
+        if (userId != null) {
+            log.info("Poped " + userId + " from queue.");
+            user = T2WUser.findOneByUser(userId);
+        } else {
+            user = null;
+        }
+        
         jedisPool.returnResource(jedis);
         return user;
     }

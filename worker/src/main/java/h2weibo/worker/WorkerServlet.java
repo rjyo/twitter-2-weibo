@@ -47,7 +47,7 @@ public class WorkerServlet extends HttpServlet {
                     } else {
                         try {
                             log.info("No task found, sleeping");
-                            Thread.sleep(1000);
+                            Thread.sleep(5000);
                         } catch (InterruptedException e) {
                             log.error("Error when try to sleep thread.", e);
                         }
