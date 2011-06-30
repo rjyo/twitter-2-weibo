@@ -7,8 +7,10 @@
 
 <ul>
     <li># Use oauth to connect to Weibo, no need for user/password</li>
-    <li># Sync in less than 5 minutes</li>
-    <li># Auto drop tweets with @somebody style metions</li>
+    <li># Sync in less than 2 minutes</li>
+    <li># Drop tweets with @somebody style metions</li>
+    <li># Sync geolocation information</li>
+    <li># Auto post photos to Weibo, with supports for yfrom, twitpic, instagram and img.ly</li>
     <li># Auto expand bit.ly URL</li>
     <li># Auto translate twitter style #tag to weibo style #tag#</li>
 </ul>

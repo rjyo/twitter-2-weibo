@@ -126,6 +126,7 @@ a:hover {
 
 #content > p, #content > ul, #content > ol, #content > div, #content > form > div {
   padding-left: 4em;
+  padding-right: 2em;
 }
 
 

@@ -1,7 +1,7 @@
 #set ($page_title = "User Options")
 <h1><a href="/">Home</a> » $page_title » $user_id</h1>
 
-<p>Link your Twitter &amp; Weibo account here.</p>
+<p>Link your Twitter &amp; Weibo account here. Follow <a href="http://twitter.com/xu_lele">@xu_lele</a> to get updates about this service.</p>
 
 <div id="logins">
     <div id="twitter_login" class="login"><div class="button"></div>
