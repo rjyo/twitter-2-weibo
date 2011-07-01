@@ -10,7 +10,7 @@
     <li># Sync in less than 2 minutes</li>
     <li># Drop tweets with @somebody style metions</li>
     <li># Sync geolocation information</li>
-    <li># Auto post photos to Weibo, with supports for yfrom, twitpic, instagram and img.ly</li>
+    <li># Auto upload photos to Weibo, with supports for yfrog, twitpic, instagram camera+ and img.ly</li>
     <li># Auto expand bit.ly URL</li>
     <li># Auto translate twitter style #tag to weibo style #tag#</li>
 </ul>
