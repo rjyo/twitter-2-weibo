@@ -2,13 +2,6 @@ package h2weibo.utils;
 
 import junit.framework.TestCase;
 
-/**
- * Created by IntelliJ IDEA.
- * User: jyo
- * Date: 11/06/29
- * Time: 22:39
- * To change this template use File | Settings | File Templates.
- */
 public class StatusImageExtractorTest extends TestCase {
     StatusImageExtractor extractor;
     private byte[] extract;
@@ -36,6 +29,11 @@ public class StatusImageExtractorTest extends TestCase {
 
     public void testYfrog() throws Exception {
         extract = extractor.extract("hello http://yfrog.com/kl9w0yj testing!");
+        assertNotNull(extract);
+    }
+
+    public void testCameraPlus() throws Exception {
+        extract = extractor.extract("hello http://campl.us/b6Fi testing!");
         assertNotNull(extract);
     }
 }

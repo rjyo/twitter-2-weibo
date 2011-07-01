@@ -19,6 +19,7 @@ public class StatusImageExtractor {
         simplePatterns.put("http://twitpic.com/(\\w+)", "http://twitpic.com/show/large/_KEY_");
         simplePatterns.put("http://img.ly/(\\w+)", "http://img.ly/show/large/_KEY_");
         simplePatterns.put("http://yfrog.com/(\\w+)", "http://yfrog.com/_KEY_:iphone");
+        simplePatterns.put("http://campl.us/(\\w+)", "http://campl.us/_KEY_:iphone");
     }
 
     public byte[] extract(String input) {
