@@ -70,19 +70,19 @@ public class T2WUser {
     }
 
     public boolean isDropRTAndReply() {
-        return options.contains("drop_rt");
+        return options == null ? false : options.contains("drop_rt");
     }
 
     public boolean isDropMentions() {
-        return options.contains("drop_at");
+        return options == null ? false : options.contains("drop_at");
     }
 
     public boolean isWithGeo() {
-        return options.contains("with_geo");
+        return options == null ? false : options.contains("with_geo");
     }
 
     public boolean isNoImage() {
-        return options.contains("no_image");
+        return options == null ? false : options.contains("no_image");
     }
 
     public Set<String> getOptions() {

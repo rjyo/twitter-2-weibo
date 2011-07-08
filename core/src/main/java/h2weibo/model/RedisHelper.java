@@ -78,7 +78,7 @@ public class RedisHelper {
     public void queue(T2WUser user) {
         Jedis jedis = getJedis();
         String userId = user.getUserId();
-        log.info("Queue " + userId + " to sync.");
+        log.debug("Queue " + userId + " to sync.");
         jedis.lpush(QUEUE_KEY, userId);
 
         jedisPool.returnResource(jedis);
@@ -90,7 +90,7 @@ public class RedisHelper {
 
         T2WUser user;
         if (userId != null) {
-            log.info("Poped " + userId + " from queue.");
+            log.debug("Poped " + userId + " from queue.");
             user = T2WUser.findOneByUser(userId);
         } else {
             user = null;
