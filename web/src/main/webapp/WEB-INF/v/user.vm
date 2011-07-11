@@ -21,8 +21,6 @@
     </div>
 </div>
 
-#if ($message) <div id="message" class="middle">$message</div> #end
-
 <h2 id="h_options">Options</h2>
 <form id="save_form" method="post" action="/u/save">
 <ul>
@@ -33,11 +31,11 @@
 </ul>
 
 <br/>
-
+<input type="hidden" id="action_type" name="actionType" value="save">
 <div class="middle">
-  <button class="clean-gray" name="submit" value="save" id="save_button">Save my settings</button>
+  <button class="clean-gray" value="save" id="save_button">Save my settings</button>
     &nbsp;&nbsp;
-  <button class="clean-gray" name="submit" value="delete" id="delete_button">Delete account ...</button>
+  <button class="clean-gray" value="delete" id="delete_button">Delete account ...</button>
 </div>
 </form>
 <br/>
@@ -45,14 +43,22 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
-    $('#delete_button').bind('click', function(e) {
-        return confirm('Do you really want to delete your account and stop syncing?');
+    $('#delete_button').click(function(e) {
+        smoke.confirm('Do you really want to delete your account and stop syncing?', function(c){
+            if (c) {
+                $('#save_form #action_type').val('delete');
+                $('#save_form').submit();
+            }
+		});
+
+        return false;
     });
 
     #if ($message)
-        setTimeout(function() {
-          $('#message').slideUp(500);
-        }, 2000);
+    setTimeout(function() {
+    smoke.signal('$message');
+    }, 1000);
+
     #end
 
     #if (!$twitter_login)

@@ -26,7 +26,7 @@ public class SaveOptionsServlet extends HttpServlet {
         log.info("Saving options for @" + loginUser);
 
         T2WUser user = T2WUser.findOneByUser(loginUser);
-        String actionType = request.getParameter("submit");
+        String actionType = request.getParameter("actionType");
 
         if ("delete".equals(actionType)) {
             user.delete();

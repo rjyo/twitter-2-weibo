@@ -228,6 +228,7 @@ div.middle {
 
 /* clean gray
 *******************************************************************************/
+.dialog.smoke .dialog-buttons button,
 button.clean-gray {
   background: #eee;
   background: -moz-linear-gradient(top, #eee 0%, #ccc 100%);
@@ -240,6 +241,7 @@ button.clean-gray {
   color: #333;
   font-family: 'Geo', Verdana, Tahoma, sans-serif;
   font-size: 16px;
+  font-weight: normal;
   line-height: 1.5em;
   padding: 4px 14px;
   text-align: center;
@@ -249,6 +251,7 @@ button.clean-gray {
   -webkit-box-shadow : rgba(0, 0, 0, 0.4) 0px 0px 4px;
 }
 
+.dialog.smoke .dialog-buttons button:hover, 
 button.clean-gray:hover {
   background: #ddd;
   background: -moz-linear-gradient(top, #ddd 0%, #bbb 100%);
@@ -259,6 +262,7 @@ button.clean-gray:hover {
   text-shadow: 0 1px 0 #ddd;
 }
 
+.dialog.smoke .dialog-buttons button:active,
 button.clean-gray:active {
   border: 1px solid #aaa;
   border-bottom: 1px solid #888;
