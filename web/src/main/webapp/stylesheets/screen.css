@@ -129,6 +129,9 @@ a:hover {
   padding-right: 2em;
 }
 
+#content li span.new {
+  color: #f44;
+}
 
 #logins {
   display: block;

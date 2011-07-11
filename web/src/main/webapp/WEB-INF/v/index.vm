@@ -6,6 +6,7 @@
 <h2 id="h_feature">Features</h2>
 
 <ul>
+    <li><span class="new">*NEW*</span> Auto rename user ID, for example, change <a href="http://twitter.com/xuzhe">@xuzhe</a> in Twitter to <a href="http://weibo.com/n/xu_zhe">@xu_zhe</a> in Weibo</li>
     <li># Use oauth to connect to Weibo, no need for user/password</li>
     <li># Sync in less than 2 minutes</li>
     <li># Drop tweets with @somebody style metions</li>
@@ -20,7 +21,7 @@
 <div>
     #if ($session.SESSION_LOGIN_USER)
         #set ($user = $session.SESSION_LOGIN_USER)
-        Logged in as <a href="http://twitter.com/$user">@$user</a>. You can <a href="/u/$user">change your options for sync</a>, or <a href="/u/logout">logout</a>.</li>
+        Logged in as <a href="http://twitter.com/$user">@$user</a>. You can <a href="/u/$user">change your options for sync</a>, or <a href="/u/logout">logout</a>.
 
     #else
         Just <button class="clean-gray" id="go_button">Login with Twitter ...</button>, that's it!
