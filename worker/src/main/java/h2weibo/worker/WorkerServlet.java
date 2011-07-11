@@ -23,6 +23,8 @@ public class WorkerServlet extends HttpServlet {
         System.setProperty("weibo4j.oauth.consumerKey", "2440858351");
         System.setProperty("weibo4j.oauth.consumerSecret", "1faf4ed7b4af302907e25429a0b88dfc");
 
+        System.setProperty("weibo4j.debug", "false");
+
         // Key for Twitter App
         System.setProperty("twitter4j.oauth.consumerKey", "Scwn2HbdT7v3yOEjkAQrfQ");
         System.setProperty("twitter4j.oauth.consumerSecret", "QIz4dbgb5ABzNMjfP1Sb0YdwKTY2oKQwhLoehk0ug");

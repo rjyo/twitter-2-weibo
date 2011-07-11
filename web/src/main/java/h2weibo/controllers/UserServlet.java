@@ -60,6 +60,9 @@ public class UserServlet extends VelocityLayoutServlet {
                 ctx.put("weibo_user", user.getScreenName());
                 ctx.put("weibo_user_image", user.getProfileImageURL().toString());
                 ctx.put("weibo_login", 1);
+
+                // save user ID mapping
+                t2wUser.setWeiboId(user.getScreenName());
             } catch (Exception e) {
                 // 401 = not logged in
                 if (e instanceof WeiboException && ((WeiboException) e).getStatusCode() != 401) {

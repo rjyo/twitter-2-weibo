@@ -8,17 +8,18 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import twitter4j.internal.org.json.JSONException;
 import twitter4j.internal.org.json.JSONObject;
+import weibo4j.User;
+import weibo4j.Weibo;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 
 
 public class RedisHelper {
     private static final Logger log = Logger.getLogger(RedisHelper.class.getName());
     private static final String USER_SET_KEY = "twitter:ids";
     private static final String QUEUE_KEY = "t2w:queue";
+    private static final String USER_MAP_KEY = "t2w:id_map";
 
     private static RedisHelper ourInstance = new RedisHelper();
     private JedisPool jedisPool;
@@ -42,6 +43,51 @@ public class RedisHelper {
         Boolean ismember = jedis.sismember(USER_SET_KEY, user);
         jedisPool.returnResource(jedis);
         return ismember;
+    }
+
+    public Map<String, String> getUserMap() {
+        Jedis jedis = getJedis();
+
+        Map<String, String> map = jedis.hgetAll(USER_MAP_KEY);
+        if (map == null) {
+            map = new HashMap<String, String>(0);
+        }
+
+        jedisPool.returnResource(jedis);
+
+        return map;
+    }
+
+    public void createUserMap() {
+        Set<String> userIds = getAuthorizedIds();
+
+        Weibo w = new Weibo();
+        for (String userId : userIds) {
+            T2WUser user = T2WUser.findOneByUser(userId);
+
+            log.info("Get Weibo credentials for @" + userId + " ...");
+            w.setToken(user.getToken(), user.getTokenSecret());
+
+            try {
+                User weiboUser = w.verifyCredentials();
+                this.setWeiboId(user.getUserId(), weiboUser.getScreenName());
+            } catch (Exception e) {
+                log.error("Failed to find Weibo ID for @" + user.getUserId(), e);
+            }
+        }
+    }
+
+    public void setWeiboId(String twitterId, String weiboId) {
+        Jedis jedis = getJedis();
+        jedis.hset(USER_MAP_KEY, twitterId, weiboId);
+        jedisPool.returnResource(jedis);
+    }
+
+    public String getWeiboId(String twitterId) {
+        Jedis jedis = getJedis();
+        String weiboId = jedis.hget(USER_MAP_KEY, twitterId);
+        jedisPool.returnResource(jedis);
+        return weiboId;
     }
 
     public String dump() {
@@ -95,7 +141,7 @@ public class RedisHelper {
         } else {
             user = null;
         }
-        
+
         jedisPool.returnResource(jedis);
         return user;
     }

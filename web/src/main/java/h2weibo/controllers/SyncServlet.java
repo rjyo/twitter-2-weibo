@@ -53,6 +53,16 @@ public class SyncServlet extends HttpServlet {
             for (Object id : ids) {
                 writer.println("  " + id);
             }
+        } else if (router.is(":cmd", "mapping")) {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    RedisHelper helper = RedisHelper.getInstance();
+                    helper.createUserMap();
+                }
+            });
+            t.start();
+            response.sendRedirect("/");
         } else if (router.is(":cmd", "del")) {
             if (router.has(":id")) {
                 String user = router.get(":id");
@@ -62,8 +72,9 @@ public class SyncServlet extends HttpServlet {
             }
         } else if (router.is(":cmd", "u")) {
             if (router.has(":id")) {
-                T2WUser f = T2WUser.findOneByUser(router.get("id"));
-                writer.println("Latest tweet ID is " + f.getLatestId());
+                T2WUser u = T2WUser.findOneByUser(router.get("id"));
+                writer.println("Latest tweet ID is " + u.getLatestId());
+                writer.println("Weibo ID is " + u.getWeiboId());
             } else {
                 response.sendRedirect(request.getContextPath());
             }

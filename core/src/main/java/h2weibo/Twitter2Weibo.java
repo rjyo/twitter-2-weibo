@@ -2,16 +2,12 @@ package h2weibo;
 
 import h2weibo.model.T2WUser;
 import h2weibo.utils.StatusImageExtractor;
-import h2weibo.utils.filters.NoMentionFilter;
-import h2weibo.utils.filters.StatusFilters;
-import h2weibo.utils.filters.TagStatusFilter;
-import h2weibo.utils.filters.URLStatusFilter;
+import h2weibo.utils.filters.*;
 import org.apache.log4j.Logger;
 import twitter4j.*;
-import twitter4j.Paging;
-import twitter4j.Status;
 import twitter4j.auth.AccessToken;
-import weibo4j.*;
+import weibo4j.Weibo;
+import weibo4j.WeiboException;
 import weibo4j.http.ImageItem;
 
 import java.util.List;
@@ -51,6 +47,8 @@ public class Twitter2Weibo {
 
         if (user.isDropMentions()) {
             filters.use(new NoMentionFilter());
+        } else {
+            filters.use(new UserMappingFilter());
         }
     }
 

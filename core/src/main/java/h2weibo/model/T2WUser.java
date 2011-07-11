@@ -20,7 +20,13 @@ public class T2WUser {
     private String twitterTokenSecret;
     private String twitterToken;
     private Set<String> options;
+    private String weiboId;
 
+    /**
+     * Twitter user ID
+     *
+     * @return User ID in Twitter
+     */
     public String getUserId() {
         return userId;
     }
@@ -70,19 +76,19 @@ public class T2WUser {
     }
 
     public boolean isDropRTAndReply() {
-        return options == null ? false : options.contains("drop_rt");
+        return options != null && options.contains("drop_rt");
     }
 
     public boolean isDropMentions() {
-        return options == null ? false : options.contains("drop_at");
+        return options != null && options.contains("drop_at");
     }
 
     public boolean isWithGeo() {
-        return options == null ? false : options.contains("with_geo");
+        return options != null && options.contains("with_geo");
     }
 
     public boolean isNoImage() {
-        return options == null ? false : options.contains("no_image");
+        return options != null && options.contains("no_image");
     }
 
     public Set<String> getOptions() {
@@ -91,6 +97,17 @@ public class T2WUser {
 
     public void setOptions(Set<String> options) {
         this.options = options;
+    }
+
+    public String getWeiboId() {
+        RedisHelper instance = RedisHelper.getInstance();
+        this.weiboId = instance.getWeiboId(userId);
+        return this.weiboId;
+    }
+
+    public void setWeiboId(String weiboId) {
+        RedisHelper instance = RedisHelper.getInstance();
+        instance.setWeiboId(this.userId, this.weiboId);
     }
 
     public T2WUser() {
