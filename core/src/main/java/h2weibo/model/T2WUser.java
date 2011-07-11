@@ -20,8 +20,7 @@ public class T2WUser {
     private String twitterTokenSecret;
     private String twitterToken;
     private Set<String> options;
-    private String weiboId;
-
+    
     /**
      * Twitter user ID
      *
@@ -101,13 +100,12 @@ public class T2WUser {
 
     public String getWeiboId() {
         RedisHelper instance = RedisHelper.getInstance();
-        this.weiboId = instance.getWeiboId(userId);
-        return this.weiboId;
+        return instance.getWeiboId(this.userId);
     }
 
     public void setWeiboId(String weiboId) {
         RedisHelper instance = RedisHelper.getInstance();
-        instance.setWeiboId(this.userId, this.weiboId);
+        instance.setWeiboId(this.userId, weiboId);
     }
 
     public T2WUser() {

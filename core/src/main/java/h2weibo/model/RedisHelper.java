@@ -10,6 +10,7 @@ import twitter4j.internal.org.json.JSONException;
 import twitter4j.internal.org.json.JSONObject;
 import weibo4j.User;
 import weibo4j.Weibo;
+import weibo4j.WeiboException;
 
 import java.lang.reflect.Type;
 import java.util.*;
@@ -65,15 +66,24 @@ public class RedisHelper {
         for (String userId : userIds) {
             T2WUser user = T2WUser.findOneByUser(userId);
 
-            w.setToken(user.getToken(), user.getTokenSecret());
+            if (user.ready()) {
+                w.setToken(user.getToken(), user.getTokenSecret());
 
-            try {
-                User weiboUser = w.verifyCredentials();
-                this.setWeiboId(user.getUserId(), weiboUser.getName());
-                log.info("Get Weibo credentials for @" + userId + " is @" + weiboUser.getName());
-            } catch (Exception e) {
-                log.error("Failed to find Weibo ID for @" + user.getUserId(), e);
+                try {
+                    User weiboUser = w.verifyCredentials();
+                    this.setWeiboId(user.getUserId(), weiboUser.getName());
+                    log.info("Get Weibo credentials for @" + userId + " is @" + weiboUser.getName());
+                } catch (WeiboException e) {
+                    if (e.getStatusCode() == 401) {
+                        user.setToken(null);
+                        user.setTokenSecret(null);
+                    }
+                    log.error("Failed to find Weibo ID for @" + user.getUserId() + ", removing weibo tokens.");
+                } catch (Exception e) {
+                    log.error("Failed to find Weibo ID for @" + user.getUserId(), e);
+                }
             }
+
         }
     }
 

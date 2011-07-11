@@ -72,11 +72,10 @@ public class SyncServlet extends HttpServlet {
             }
         } else if (router.is(":cmd", "u")) {
             if (router.has(":id")) {
-                T2WUser u = T2WUser.findOneByUser(router.get("id"));
+                T2WUser u = T2WUser.findOneByUser(router.get(":id"));
                 writer.println("Latest tweet ID is " + u.getLatestId());
+                writer.println("Twitter ID is " + router.get(":id"));
                 writer.println("Weibo ID is " + u.getWeiboId());
-            } else {
-                response.sendRedirect(request.getContextPath());
             }
         } else {
             response.sendRedirect("/");

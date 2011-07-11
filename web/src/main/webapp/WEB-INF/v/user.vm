@@ -55,10 +55,9 @@
     });
 
     #if ($message)
-    setTimeout(function() {
-    smoke.signal('$message');
-    }, 1000);
-
+        setTimeout(function() {
+            smoke.signal('$message');
+        }, 500);
     #end
 
     #if (!$twitter_login)
