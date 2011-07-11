@@ -65,12 +65,12 @@ public class RedisHelper {
         for (String userId : userIds) {
             T2WUser user = T2WUser.findOneByUser(userId);
 
-            log.info("Get Weibo credentials for @" + userId + " ...");
             w.setToken(user.getToken(), user.getTokenSecret());
 
             try {
                 User weiboUser = w.verifyCredentials();
-                this.setWeiboId(user.getUserId(), weiboUser.getScreenName());
+                this.setWeiboId(user.getUserId(), weiboUser.getName());
+                log.info("Get Weibo credentials for @" + userId + " is @" + weiboUser.getName());
             } catch (Exception e) {
                 log.error("Failed to find Weibo ID for @" + user.getUserId(), e);
             }
