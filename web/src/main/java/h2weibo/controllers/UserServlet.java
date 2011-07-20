@@ -98,6 +98,12 @@ public class UserServlet extends VelocityLayoutServlet {
             session.removeAttribute(Keys.SESSION_MESSAGE);
         }
 
+        Object prompt = session.getAttribute(Keys.SESSION_PROMPT_TWEET);
+        if (prompt!= null) {
+            ctx.put("prompt", prompt);
+            session.removeAttribute(Keys.SESSION_PROMPT_TWEET);
+        }
+
         return getTemplate("user.vm");
     }
 }

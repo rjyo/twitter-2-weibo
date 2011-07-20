@@ -60,6 +60,19 @@
         }, 500);
     #end
 
+    #if ($prompt)
+        setTimeout(function() {
+            smoke.confirm('$prompt', function(c) {
+                if (c) {
+                    // do retweets
+                    $.get("/tweet", function(data) {
+                        smoke.signal('Thank you!');
+                    });
+                }
+            });
+        }, 500);
+    #end
+
     #if (!$twitter_login)
         $('#twitter_login').click(function(e) {
             window.location = "/auth/twitter";

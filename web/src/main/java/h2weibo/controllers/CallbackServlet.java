@@ -4,10 +4,7 @@ import h2weibo.HttpServletRouter;
 import h2weibo.Keys;
 import h2weibo.model.T2WUser;
 import org.apache.log4j.Logger;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.User;
+import twitter4j.*;
 import twitter4j.auth.RequestToken;
 import weibo4j.Weibo;
 import weibo4j.WeiboException;
@@ -41,8 +38,6 @@ public class CallbackServlet extends HttpServlet {
         String tokenSecret = (String) session.getAttribute(Keys.SESSION_TOKEN_SECRET);
         String oauthVerifier = request.getParameter("oauth_verifier");
 
-        String server = "http://" + request.getServerName();
-
         if (r.is(":type", "weibo")) {
             try {
                 Weibo weibo = new Weibo();
@@ -50,6 +45,10 @@ public class CallbackServlet extends HttpServlet {
                 AccessToken accessToken = weibo.getOAuthAccessToken(token, tokenSecret, oauthVerifier);
                 if (accessToken != null) {
                     T2WUser tid = T2WUser.findOneByUser(loginUser);
+
+                    if (tid.getToken() == null) { // send for the first time
+                        session.setAttribute(Keys.SESSION_PROMPT_TWEET, "You are ready to go! Do you want to tweet about this service and share it with your friends?");
+                    }
 
                     tid.setToken(accessToken.getToken());
                     tid.setTokenSecret(accessToken.getTokenSecret());
@@ -76,6 +75,15 @@ public class CallbackServlet extends HttpServlet {
                     loginUser = user.getScreenName();
 
                     T2WUser tid = T2WUser.findOneByUser(loginUser);
+
+                    if (tid.getTwitterToken() == null) {
+                        // save latest id for the first time. sync from that tweet
+                        ResponseList<Status> tl = t.getUserTimeline();
+                        if (tl.size() > 0) {
+                            Status s = tl.get(0);
+                            tid.setLatestId(s.getId());
+                        }
+                    }
 
                     tid.setTwitterToken(accessToken.getToken());
                     tid.setTwitterTokenSecret(accessToken.getTokenSecret());

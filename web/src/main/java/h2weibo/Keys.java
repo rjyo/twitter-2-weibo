@@ -7,6 +7,7 @@ public class Keys {
     public final static String SESSION_REQUEST_TOKEN = "SESSION_REQUEST_TOKEN";
     public final static String SESSION_REQUEST_URL = "SESSION_REQUEST_URL";
     public final static String SESSION_MESSAGE = "SESSION_MESSAGE";
+    public final static String SESSION_PROMPT_TWEET = "SESSION_PROMPT_TWEET";
     public final static String SESSION_TWITTER_USER = "SESSION_TWITTER_USER";
     public final static String SESSION_WEIBO_USER = "SESSION_WEIBO_USER";
 }
