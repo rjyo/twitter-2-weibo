@@ -51,11 +51,6 @@ public class CallbackServlet extends HttpServlet {
                 if (accessToken != null) {
                     T2WUser tid = T2WUser.findOneByUser(loginUser);
 
-                    if (tid.getToken() == null) { // send for the first time
-                        weibo.updateStatus("Weibo, say hello to Twitter. From T2W Sync " + server + " #t2w_sync#");
-                        session.setAttribute(Keys.SESSION_MESSAGE, "You are ready to go!");
-                    }
-
                     tid.setToken(accessToken.getToken());
                     tid.setTokenSecret(accessToken.getTokenSecret());
                     tid.save();
@@ -81,10 +76,6 @@ public class CallbackServlet extends HttpServlet {
                     loginUser = user.getScreenName();
 
                     T2WUser tid = T2WUser.findOneByUser(loginUser);
-                    if (tid.getTwitterToken() == null) { // send for the first time
-                        twitter4j.Status status = t.updateStatus("Twitter, say hello to Weibo. From T2W Sync " + server + " #t2w_sync");
-                        tid.setLatestId(status.getId());
-                    }
 
                     tid.setTwitterToken(accessToken.getToken());
                     tid.setTwitterTokenSecret(accessToken.getTokenSecret());
