@@ -76,8 +76,7 @@ public class Twitter2Weibo {
                 Paging paging = new Paging(latestId);
                 List<Status> statuses = twitter.getUserTimeline(screenName, paging);
 
-                for (int i = statuses.size() - 1; i >= 0; i--) {
-                    twitter4j.Status status = statuses.get(i);
+                for (Status status : statuses) {
                     log.info("@" + status.getUser().getScreenName() + " - " + status.getText());
                     try {
                         if (user.isDropRTAndReply() && status.isRetweet()) {
