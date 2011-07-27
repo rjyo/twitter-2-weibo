@@ -100,6 +100,13 @@ public class RedisHelper {
         return weiboId;
     }
 
+    public Map<String, String> getMappings() {
+        Jedis jedis = getJedis();
+        Map<String, String> map = jedis.hgetAll(USER_MAP_KEY);
+        jedisPool.returnResource(jedis);
+        return map;
+    }
+
     public String dump() {
         Jedis jedis = getJedis();
 

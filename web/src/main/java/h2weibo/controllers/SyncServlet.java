@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -52,6 +53,12 @@ public class SyncServlet extends HttpServlet {
             writer.println("Syncing user list: (" + ids.size() + " users)");
             for (Object id : ids) {
                 writer.println("  " + id);
+            }
+        } else if (router.is(":cmd", "show_mapping")) {
+            RedisHelper helper = RedisHelper.getInstance();
+            Map<String,String> mappings = helper.getMappings();
+            for (String key : mappings.keySet()) {
+                writer.printf("%s = %s \n", key, mappings.get(key));
             }
         } else if (router.is(":cmd", "mapping")) {
             Thread t = new Thread(new Runnable() {
