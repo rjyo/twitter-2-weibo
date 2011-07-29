@@ -107,6 +107,10 @@ public class SyncServlet extends HttpServlet {
 
         Scheduler scheduler = new Scheduler();
 
+        // clear the queue
+        RedisHelper helper = RedisHelper.getInstance();
+        helper.clearQueue();
+
         QueueTask task = new QueueTask();
         scheduler.schedule("*/2 * * * *", task);
 

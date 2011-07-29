@@ -138,6 +138,14 @@ public class RedisHelper {
         }
     }
 
+    public void clearQueue() {
+        Jedis jedis = getJedis();
+
+        jedis.del(QUEUE_KEY);
+
+        jedisPool.returnResource(jedis);
+    }
+
     public void queue(T2WUser user) {
         Jedis jedis = getJedis();
         String userId = user.getUserId();
