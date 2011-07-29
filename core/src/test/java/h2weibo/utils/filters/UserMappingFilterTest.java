@@ -9,8 +9,8 @@ import junit.framework.TestCase;
 public class UserMappingFilterTest extends TestCase {
     public void setUp() throws Exception {
         RedisHelper helper = RedisHelper.getInstance();
-        helper.setWeiboId("xuzhe", "xu_zhe");
-        helper.setWeiboId("eatdami", "大米大仙");
+        helper.setWeiboId("Xuzhe", "xu_zhe");
+        helper.setWeiboId("EatDami", "大米大仙");
     }
 
     public void testFilter() throws Exception {
