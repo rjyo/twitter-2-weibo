@@ -77,7 +77,7 @@ public class Twitter2Weibo {
                 List<Status> statuses = twitter.getUserTimeline(screenName, paging);
 
                 // sync from the oldest one
-                for (int i = statuses.size() - 1; i > 0; i--) {
+                for (int i = statuses.size() - 1; i >= 0; i--) {
                     Status status = statuses.get(i);
 
                     if (status.getId() < user.getLatestId()) continue; // safe keeper
