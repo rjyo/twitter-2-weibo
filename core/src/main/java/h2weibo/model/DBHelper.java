@@ -175,45 +175,4 @@ public class DBHelper {
     public DBHelper(Jedis jedis) {
         this.jedis = jedis;
     }
-
-    //
-//    protected Jedis getJedis() {
-//        return jedisPool.getResource();
-//    }
-//
-//    protected void releaseJedis(Jedis j) {
-//        jedisPool.returnResource(j);
-//    }
-//
-//    public static DBHelper getInstance() {
-//        return ourInstance;
-//    }
-////
-//    public DBHelper() {
-//        GenericObjectPool.Config config = new GenericObjectPool.Config();
-//        config.testOnBorrow = true;
-//        config.maxActive = 20;
-//        config.maxIdle = 5;
-//        config.minIdle = 1;
-//
-//        try {
-//            String services = System.getenv("VCAP_SERVICES");
-//
-//            if (services != null) {
-//                JSONObject obj = new JSONObject(services);
-//                obj = obj.getJSONArray("redis-2.2").getJSONObject(0).getJSONObject("credentials");
-//
-//                String hostname = obj.getString("hostname");
-//                int port = obj.getInt("port");
-//                String password = obj.getString("password");
-//
-//                jedisPool = new JedisPool(config, hostname, port, 0, password);
-//            } else {
-//                jedisPool = new JedisPool(config, "localhost");
-//                log.info("Using localhost Redis server");
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

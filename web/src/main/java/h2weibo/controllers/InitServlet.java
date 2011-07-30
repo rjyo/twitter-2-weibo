@@ -22,7 +22,7 @@ public class InitServlet extends HttpServlet {
 
         GenericObjectPool.Config config = new GenericObjectPool.Config();
         config.testOnBorrow = true;
-        config.maxActive = 5;
+        config.maxActive = 25;
         config.maxIdle = 5;
         config.minIdle = 1;
 
