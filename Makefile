@@ -40,4 +40,8 @@ restart:
 	@vmc stop ${WEB_NAME}
 	@vmc start ${WEB_NAME}
 
+restart_worker:
+	@vmc stop ${WORKER_NAME}
+	@vmc start ${WORKER_NAME}
+
 .PHONY: compile

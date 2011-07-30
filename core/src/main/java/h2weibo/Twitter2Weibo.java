@@ -20,36 +20,26 @@ import java.util.List;
 public class Twitter2Weibo {
     private static final Logger log = Logger.getLogger(Twitter2Weibo.class.getName());
     private Weibo weibo;
-    private Twitter twitter;
-
-    private StatusFilters filters = new StatusFilters();
-    private T2WUser user;
-
     private DBHelper helper;
 
-    public DBHelper getHelper() {
-        return helper;
-    }
 
-    public void setHelper(DBHelper helper) {
+    public Twitter2Weibo(DBHelper helper) {
         this.helper = helper;
-    }
-
-    public Twitter2Weibo(String userId) {
-        this.user = helper.findOneByUser(userId);
-        init();
-    }
-
-    private void init() {
         weibo = new Weibo();
+    }
+
+    public void syncTwitter(String userId) {
+        T2WUser user = helper.findOneByUser(userId);
+        
         weibo.setToken(user.getToken(), user.getTokenSecret());
 
-        twitter = new TwitterFactory().getInstance();
+        Twitter twitter = new TwitterFactory().getInstance();
         if (user.getTwitterToken() != null) {
             twitter.setOAuthAccessToken(new AccessToken(user.getTwitterToken(), user.getTwitterTokenSecret()));
-            log.info("Using OAuth for " + user.getUserId());
+            log.debug("Using OAuth for " + user.getUserId());
         }
 
+        StatusFilters filters = new StatusFilters();
         filters.use(new URLStatusFilter()).use(new TagStatusFilter());
 
         if (user.isDropMentions()) {
@@ -57,20 +47,17 @@ public class Twitter2Weibo {
         } else {
             filters.use(new UserMappingFilter(helper));
         }
-    }
 
-    public void syncTwitter() {
         if (!user.ready()) {
-            log.info("Skipping @" + user.getUserId() + " ...");
+            log.debug("Skipping @" + user.getUserId() + " ...");
             return;
         }
 
         // gets Twitter instance with default credentials
         String screenName = user.getUserId();
         long latestId = user.getLatestId();
-        log.info("= TID: " + latestId + " = ");
 
-        log.info("Checking @" + screenName + "'s userId timeline.");
+        log.info(String.format("Checking @%s's timeline, latest ID = %d.", userId, latestId));
 
         try {
             if (latestId == 0) {
@@ -78,7 +65,7 @@ public class Twitter2Weibo {
                 if (statuses.size() > 0) {
                     user.setLatestId(statuses.get(0).getId()); // Record latestId, and sync next time
                 }
-                log.info("Updating @" + screenName + "'s latestId to " + user.getLatestId());
+                log.info(String.format("First time use for @%s. Set latest ID to %d.", userId, latestId));
             } else {
                 Paging paging = new Paging(latestId);
                 List<Status> statuses = twitter.getUserTimeline(screenName, paging);

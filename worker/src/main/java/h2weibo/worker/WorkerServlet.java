@@ -46,8 +46,8 @@ public class WorkerServlet extends InitServlet {
                 T2WUser user = helper.pop();
                 if (user != null) {
                     String userId = user.getUserId();
-                    Twitter2Weibo weibo = new Twitter2Weibo(userId);
-                    weibo.syncTwitter();
+                    Twitter2Weibo weibo = new Twitter2Weibo(helper);
+                    weibo.syncTwitter(userId);
                     log.debug("Syncing for " + userId);
                 } else {
                     try {
