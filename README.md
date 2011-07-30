@@ -2,6 +2,8 @@
 
 Welcome! This app syncs what you tweet from Twitter to Sina Weibo.
 
+I'm hosting an instance on CloudFoundry.com. Access http://h2weibo.cloudfoundry.com/ and sync right now.
+
 ## Features:
   * Use oauth to connect to Weibo, no need for user/password
   * Sync in less than 5 minutes
@@ -9,27 +11,28 @@ Welcome! This app syncs what you tweet from Twitter to Sina Weibo.
   * Auto expand bit.ly URL
   * Auto translate twitter style #tag to weibo style #tag#
 
-## Usage:
-  1. Access http://h2weibo.cloudfoundry.com/auth?u=your\_twitter\_id in browser
-  2. Boom!
-
-## FAQ:
-
-  *Q1:* What if I get error message from Sina API
-  *A1:* Refresh your browser.
-
-  *Q2:* Why my tweet like "I support 32 * 2 ..." is missing
-  *A2:* Weibo made the decision.
-
-## Contact:
-  * Poke me, [@xu\_lele](http://twitter.com/xu_lele) on twitter
-  * Comment me on [http://jyorr.com](http://jyorr.com)
-  * Write an email to jyo.rakuraku on gmail.com
-
 ## Build
 
-    $ make setup # for the first time
+This project is using maven2 to build and managing its artifects. 2 web apps will be built, the web app and the background worker app.
+
+Redis is used as the backend storage. Download and install it from http://redis.io
+
+### Initialize
+
+```bash
+    $ brew install redis # for mac
+    $ make setup # create maven 2 repo
+```
+
+### Compile & build WARs
+
     $ make
+
+### Run
+
+    $ make run # starts the local tomcat server
+
+Access http://localhost:3000 for web app. To starts the worker, drop h2weibo-w1.war to some web container (like tomcat)
 
 ### Get Docs
 
@@ -40,6 +43,7 @@ Welcome! This app syncs what you tweet from Twitter to Sina Weibo.
 
     $ make update
 
-## TODO
-
-1. Upload images directly to Weibo
+## Contact:
+  * Poke me, [@xu\_lele](http://twitter.com/xu_lele) on twitter
+  * Comment me on [http://jyorr.com](http://jyorr.com)
+  * Write an email to jyo.rakuraku on gmail.com
