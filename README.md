@@ -30,6 +30,7 @@ I use [IntelliJ IDEA Community Edition](http://www.jetbrains.com/idea/free_java_
 
 ```bash
     $ make
+```
 
 ### Run
 
