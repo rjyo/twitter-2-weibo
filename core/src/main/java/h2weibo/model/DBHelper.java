@@ -105,7 +105,7 @@ public class DBHelper {
     }
 
     public void setWeiboId(String twitterId, String weiboId) {
-        jedis.hset(USER_MAP_KEY, twitterId, weiboId);
+        jedis.hset(USER_MAP_KEY, twitterId.toLowerCase(), weiboId);
     }
 
     public String getWeiboId(String twitterId) {

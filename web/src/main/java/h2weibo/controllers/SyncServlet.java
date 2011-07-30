@@ -96,13 +96,11 @@ public class SyncServlet extends InitServlet {
         log.info("Web started.");
 
         JedisPool jedisPool = getPool(config);
-
         DBHelper helper = new DBHelper(jedisPool.getResource());
-
-        Scheduler scheduler = new Scheduler();
-
         // clear the queue
         helper.clearQueue();
+
+        Scheduler scheduler = new Scheduler();
 
         QueueTask task = new QueueTask();
         task.setHelper(new DBHelper(jedisPool.getResource()));

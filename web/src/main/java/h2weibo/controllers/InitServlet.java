@@ -22,9 +22,11 @@ public class InitServlet extends HttpServlet {
 
         GenericObjectPool.Config config = new GenericObjectPool.Config();
         config.testOnBorrow = true;
-        config.maxActive = 20;
+        config.maxActive = 5;
         config.maxIdle = 5;
         config.minIdle = 1;
+
+        log.debug("Jedis pool created.");
 
         try {
             String services = System.getenv("VCAP_SERVICES");
