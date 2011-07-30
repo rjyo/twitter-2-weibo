@@ -60,7 +60,7 @@ Access http://localhost:3000 for web app. To starts the worker, drop h2weibo-w1.
 ## Contact:
   * Poke me, [@xu\_lele](http://twitter.com/xu_lele) on twitter
   * Comment me on [http://jyorr.com](http://jyorr.com)
-  * Write an email to jyo.rakuraku on gmail.com
+  * Write an email to jyo.rakuraku@gmail.com
 
 
 ## License
