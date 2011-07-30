@@ -1,5 +1,7 @@
 package h2weibo;
 
+import com.sun.tools.corba.se.idl.toJavaPortable.Helper;
+import h2weibo.model.DBHelper;
 import h2weibo.model.T2WUser;
 import h2weibo.utils.StatusImageExtractor;
 import h2weibo.utils.filters.*;
@@ -23,8 +25,18 @@ public class Twitter2Weibo {
     private StatusFilters filters = new StatusFilters();
     private T2WUser user;
 
-    public Twitter2Weibo(T2WUser user) {
-        this.user = user;
+    private DBHelper helper;
+
+    public DBHelper getHelper() {
+        return helper;
+    }
+
+    public void setHelper(DBHelper helper) {
+        this.helper = helper;
+    }
+
+    public Twitter2Weibo(String userId) {
+        this.user = helper.findOneByUser(userId);
         init();
     }
 
@@ -43,7 +55,7 @@ public class Twitter2Weibo {
         if (user.isDropMentions()) {
             filters.use(new NoMentionFilter());
         } else {
-            filters.use(new UserMappingFilter());
+            filters.use(new UserMappingFilter(helper));
         }
     }
 
@@ -124,7 +136,7 @@ public class Twitter2Weibo {
             }
             user.save();
         } catch (Exception e) {
-            log.error("Failed to get timeline: " + e.getMessage());
+            log.error("Failed to update.", e);
         }
     }
 }

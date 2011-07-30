@@ -23,9 +23,11 @@ public class WorkerServlet extends InitServlet {
         log.info("Worker started.");
 
         JedisPool jedisPool = getPool(config);
-        final DBHelper helper = new DBHelper(jedisPool.getResource());
 
-        new Thread(new SyncWorkerRunnable(helper)).start();
+        // 3 Threads to handle the sync job
+        new Thread(new SyncWorkerRunnable(new DBHelper(jedisPool.getResource()))).start();
+        new Thread(new SyncWorkerRunnable(new DBHelper(jedisPool.getResource()))).start();
+        new Thread(new SyncWorkerRunnable(new DBHelper(jedisPool.getResource()))).start();
     }
 
     private static class SyncWorkerRunnable implements Runnable {
@@ -44,7 +46,7 @@ public class WorkerServlet extends InitServlet {
                 T2WUser user = helper.pop();
                 if (user != null) {
                     String userId = user.getUserId();
-                    Twitter2Weibo weibo = new Twitter2Weibo(user);
+                    Twitter2Weibo weibo = new Twitter2Weibo(userId);
                     weibo.syncTwitter();
                     log.debug("Syncing for " + userId);
                 } else {
