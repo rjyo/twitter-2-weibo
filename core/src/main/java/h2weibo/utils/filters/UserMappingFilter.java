@@ -1,18 +1,15 @@
 package h2weibo.utils.filters;
 
-import h2weibo.model.RedisHelper;
-
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UserMappingFilter implements StatusFilter {
+public class UserMappingFilter extends DBStatusFilter {
     public String filter(String input) {
         Pattern p = Pattern.compile("@(\\w+)");
         Matcher m = p.matcher(input);
 
-        RedisHelper helper = RedisHelper.getInstance();
-        Map<String, String> userMap = helper.getUserMap();
+        Map<String, String> userMap = getHelper().getUserMap();
 
         while (m.find()) {
             String userId = m.group(1);

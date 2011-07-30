@@ -23,11 +23,6 @@ public class Twitter2Weibo {
     private StatusFilters filters = new StatusFilters();
     private T2WUser user;
 
-    public Twitter2Weibo(String id) {
-        user = T2WUser.findOneByUser(id);
-        init();
-    }
-
     public Twitter2Weibo(T2WUser user) {
         this.user = user;
         init();

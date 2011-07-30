@@ -2,6 +2,7 @@ package h2weibo.controllers;
 
 import h2weibo.HttpServletRouter;
 import h2weibo.Keys;
+import h2weibo.model.DBHelper;
 import h2weibo.model.T2WUser;
 import org.apache.log4j.Logger;
 import twitter4j.*;
@@ -38,13 +39,15 @@ public class CallbackServlet extends HttpServlet {
         String tokenSecret = (String) session.getAttribute(Keys.SESSION_TOKEN_SECRET);
         String oauthVerifier = request.getParameter("oauth_verifier");
 
+        DBHelper helper = (DBHelper) request.getAttribute(Keys.REQUEST_DB_HELPER);
+
         if (r.is(":type", "weibo")) {
             try {
                 Weibo weibo = new Weibo();
 
                 AccessToken accessToken = weibo.getOAuthAccessToken(token, tokenSecret, oauthVerifier);
                 if (accessToken != null) {
-                    T2WUser tid = T2WUser.findOneByUser(loginUser);
+                    T2WUser tid = helper.findOneByUser(loginUser);
 
                     if (tid.getToken() == null) { // send for the first time
                         session.setAttribute(Keys.SESSION_PROMPT_TWEET, "You are ready to go! Do you want to tweet about this service and share it with your friends?");
@@ -74,7 +77,7 @@ public class CallbackServlet extends HttpServlet {
                     User user = t.verifyCredentials();
                     loginUser = user.getScreenName();
 
-                    T2WUser tid = T2WUser.findOneByUser(loginUser);
+                    T2WUser tid = helper.findOneByUser(loginUser);
 
                     if (tid.getTwitterToken() == null) {
                         // save latest id for the first time. sync from that tweet

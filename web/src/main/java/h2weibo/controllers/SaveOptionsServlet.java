@@ -1,6 +1,7 @@
 package h2weibo.controllers;
 
 import h2weibo.Keys;
+import h2weibo.model.DBHelper;
 import h2weibo.model.T2WUser;
 import org.apache.log4j.Logger;
 
@@ -25,7 +26,8 @@ public class SaveOptionsServlet extends HttpServlet {
         String loginUser = (String) session.getAttribute(Keys.SESSION_LOGIN_USER);
         log.info("Saving options for @" + loginUser);
 
-        T2WUser user = T2WUser.findOneByUser(loginUser);
+        DBHelper helper = (DBHelper) request.getAttribute(Keys.REQUEST_DB_HELPER);
+        T2WUser user = helper.findOneByUser(loginUser);
         String actionType = request.getParameter("actionType");
 
         if ("delete".equals(actionType)) {

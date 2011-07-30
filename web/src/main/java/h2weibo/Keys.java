@@ -10,4 +10,6 @@ public class Keys {
     public final static String SESSION_PROMPT_TWEET = "SESSION_PROMPT_TWEET";
     public final static String SESSION_TWITTER_USER = "SESSION_TWITTER_USER";
     public final static String SESSION_WEIBO_USER = "SESSION_WEIBO_USER";
+    public final static String REQUEST_DB_HELPER = "REQUEST_DB_HELPER";
+    public static final String CONTEXT_JEDIS_POOL = "JEDIS_POOL";
 }

@@ -1,6 +1,7 @@
 package h2weibo.controllers;
 
 import h2weibo.Keys;
+import h2weibo.model.DBHelper;
 import h2weibo.model.T2WUser;
 import org.apache.log4j.Logger;
 import twitter4j.*;
@@ -24,7 +25,8 @@ public class TweetServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         String loginUser = (String) session.getAttribute(Keys.SESSION_LOGIN_USER);
 
-        T2WUser t2wUser = T2WUser.findOneByUser(loginUser);
+        DBHelper helper = (DBHelper) request.getAttribute(Keys.REQUEST_DB_HELPER);
+        T2WUser t2wUser = helper.findOneByUser(loginUser);
 
         TwitterFactory factory = new TwitterFactory();
         Twitter t = factory.getInstance();

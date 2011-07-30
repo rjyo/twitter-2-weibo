@@ -20,7 +20,17 @@ public class T2WUser {
     private String twitterTokenSecret;
     private String twitterToken;
     private Set<String> options;
-    
+
+    private DBHelper helper;
+
+    public DBHelper getHelper() {
+        return helper;
+    }
+
+    public void setHelper(DBHelper helper) {
+        this.helper = helper;
+    }
+
     /**
      * Twitter user ID
      *
@@ -99,21 +109,18 @@ public class T2WUser {
     }
 
     public String getWeiboId() {
-        RedisHelper instance = RedisHelper.getInstance();
-        return instance.getWeiboId(this.userId);
+        return helper.getWeiboId(this.userId);
     }
 
     public void setWeiboId(String weiboId) {
-        RedisHelper instance = RedisHelper.getInstance();
-        instance.setWeiboId(this.userId, weiboId);
+        helper.setWeiboId(this.userId, weiboId);
     }
 
     public T2WUser() {
     }
 
     public void save() {
-        RedisHelper instance = RedisHelper.getInstance();
-        Jedis j = instance.getJedis();
+        Jedis j = helper.getJedis();
 
         j.set("id:" + this.userId + ":latestId", String.valueOf(this.latestId));
         if (this.token != null) j.set("id:" + this.userId + ":token", this.token);
@@ -132,13 +139,10 @@ public class T2WUser {
             }
         }
         j.sadd("twitter:ids", this.userId);
-
-        instance.releaseJedis(j);
     }
 
     public void delete() {
-        RedisHelper instance = RedisHelper.getInstance();
-        Jedis j = instance.getJedis();
+        Jedis j = helper.getJedis();
 
         j.del("id:" + this.userId + ":latestId");
         j.del("id:" + this.userId + ":token");
@@ -147,34 +151,6 @@ public class T2WUser {
         j.del("id:" + this.userId + ":twitter_tokenSecret");
         j.del("id:" + this.userId + ":options");
         j.srem("twitter:ids", this.userId);
-
-        instance.releaseJedis(j);
-    }
-
-    public static T2WUser findOneByUser(String userId) {
-        RedisHelper instance = RedisHelper.getInstance();
-        Jedis j = instance.getJedis();
-
-        T2WUser tid = new T2WUser();
-        tid.userId = userId;
-        String latest = j.get("id:" + tid.userId + ":latestId");
-        if (latest != null) {
-            tid.latestId = Long.valueOf(latest);
-            tid.token = j.get("id:" + tid.userId + ":token");
-            tid.tokenSecret = j.get("id:" + tid.userId + ":tokenSecret");
-            tid.twitterToken = j.get("id:" + tid.userId + ":twitter_token");
-            tid.twitterTokenSecret = j.get("id:" + tid.userId + ":twitter_tokenSecret");
-            tid.options = j.smembers("id:" + tid.userId + ":options");
-
-            log.debug("Found data for @" + userId + " = " + tid.latestId);
-        } else {
-            tid.latestId = (long) 0;
-
-            log.error("Data not found for @" + userId);
-        }
-        instance.releaseJedis(j);
-
-        return tid;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package h2weibo.controllers;
+package h2weibo.filters;
 
 import h2weibo.HttpServletRouter;
 import h2weibo.Keys;

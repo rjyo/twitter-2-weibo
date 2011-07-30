@@ -1,6 +1,5 @@
 package h2weibo;
 
-import h2weibo.model.RedisHelper;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.log4j.Logger;
 import org.jets3t.service.S3Service;
@@ -8,8 +7,6 @@ import org.jets3t.service.impl.rest.httpclient.RestS3Service;
 import org.jets3t.service.model.S3Bucket;
 import org.jets3t.service.model.S3Object;
 import org.jets3t.service.security.AWSCredentials;
-import twitter4j.internal.org.json.JSONArray;
-import twitter4j.internal.org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -19,11 +16,11 @@ import java.util.Date;
 /**
  * @author Rakuraku Jyo
  */
-public class S3BackupTask implements Runnable {
+public class S3BackupTask extends DBTask {
     private static final Logger log = Logger.getLogger(S3BackupTask.class.getName());
 
     public void run() {
-        String dump = RedisHelper.getInstance().dump();
+        String dump = getHelper().dump();
 
         try {
             AWSCredentials awsCredentials = new AWSCredentials("07FDF4N8HAEG3G3W1WG2", "wjeo/z5LrRyWpXCpOPs0lLpn49R1gq/85QbtbW9k");
@@ -56,7 +53,7 @@ public class S3BackupTask implements Runnable {
             }
             reader.close();
 
-            RedisHelper.getInstance().restore(data);
+            getHelper().restore(data);
         } catch (Exception e) {
             log.error("Failed to restore from S3.");
             log.error(e);

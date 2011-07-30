@@ -1,17 +1,18 @@
 package h2weibo.controllers;
 
 import h2weibo.HttpServletRouter;
+import h2weibo.Keys;
 import h2weibo.QueueTask;
 import h2weibo.S3BackupTask;
-import h2weibo.SyncTask;
-import h2weibo.model.RedisHelper;
+import h2weibo.model.DBHelper;
 import h2weibo.model.T2WUser;
 import it.sauronsoftware.cron4j.Scheduler;
 import org.apache.log4j.Logger;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -22,7 +23,7 @@ import java.util.Set;
 /**
  * @author Rakuraku Jyo
  */
-public class SyncServlet extends HttpServlet {
+public class SyncServlet extends InitServlet {
     private static final Logger log = Logger.getLogger(SyncServlet.class.getName());
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,12 +33,10 @@ public class SyncServlet extends HttpServlet {
         response.setContentType("text/plain");
         response.setStatus(200);
         PrintWriter writer = response.getWriter();
+        
+        final DBHelper helper = (DBHelper) request.getAttribute(Keys.REQUEST_DB_HELPER);
 
-        if (router.is(":cmd", "sync")) {
-            SyncTask task = new SyncTask();
-            task.run();
-            response.sendRedirect("/");
-        } else if (router.is(":cmd", "dump")) {
+        if (router.is(":cmd", "dump")) {
             S3BackupTask task = new S3BackupTask();
             task.run();
             response.sendRedirect("/");
@@ -47,45 +46,45 @@ public class SyncServlet extends HttpServlet {
                 task.restore(router.get(":id"));
             }
             // response.sendRedirect("/");
-        } else if (router.is(":cmd", "users")) {
-            Set ids = RedisHelper.getInstance().getAuthorizedIds();
-
-            writer.println("Syncing user list: (" + ids.size() + " users)");
-            for (Object id : ids) {
-                writer.println("  " + id);
-            }
-        } else if (router.is(":cmd", "show_mapping")) {
-            RedisHelper helper = RedisHelper.getInstance();
-            Map<String,String> mappings = helper.getMappings();
-            for (String key : mappings.keySet()) {
-                writer.printf("%s = %s \n", key, mappings.get(key));
-            }
-        } else if (router.is(":cmd", "mapping")) {
-            Thread t = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    RedisHelper helper = RedisHelper.getInstance();
-                    helper.createUserMap();
-                }
-            });
-            t.start();
-            response.sendRedirect("/");
-        } else if (router.is(":cmd", "del")) {
-            if (router.has(":id")) {
-                String user = router.get(":id");
-                T2WUser id = T2WUser.findOneByUser(user);
-                id.delete();
-                response.sendRedirect("/u/" + user);
-            }
-        } else if (router.is(":cmd", "u")) {
-            if (router.has(":id")) {
-                T2WUser u = T2WUser.findOneByUser(router.get(":id"));
-                writer.println("Latest tweet ID is " + u.getLatestId());
-                writer.println("Twitter ID is " + router.get(":id"));
-                writer.println("Weibo ID is " + u.getWeiboId());
-            }
         } else {
-            response.sendRedirect("/");
+            if (router.is(":cmd", "users")) {
+                Set ids = helper.getAuthorizedIds();
+
+                writer.println("Syncing user list: (" + ids.size() + " users)");
+                for (Object id : ids) {
+                    writer.println("  " + id);
+                }
+            } else if (router.is(":cmd", "show_mapping")) {
+                Map<String,String> mappings = helper.getMappings();
+                for (String key : mappings.keySet()) {
+                    writer.printf("%s = %s \n", key, mappings.get(key));
+                }
+            } else if (router.is(":cmd", "mapping")) {
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        helper.createUserMap();
+                    }
+                });
+                t.start();
+                response.sendRedirect("/");
+            } else if (router.is(":cmd", "del")) {
+                if (router.has(":id")) {
+                    String user = router.get(":id");
+                    T2WUser id = helper.findOneByUser(user);
+                    id.delete();
+                    response.sendRedirect("/u/" + user);
+                }
+            } else if (router.is(":cmd", "u")) {
+                if (router.has(":id")) {
+                    T2WUser u = helper.findOneByUser(router.get(":id"));
+                    writer.println("Latest tweet ID is " + u.getLatestId());
+                    writer.println("Twitter ID is " + router.get(":id"));
+                    writer.println("Weibo ID is " + u.getWeiboId());
+                }
+            } else {
+                response.sendRedirect("/");
+            }
         }
         writer.close();
     }
@@ -94,30 +93,29 @@ public class SyncServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
-        // Key for Weibo App
-        System.setProperty("weibo4j.oauth.consumerKey", "2440858351");
-        System.setProperty("weibo4j.oauth.consumerSecret", "1faf4ed7b4af302907e25429a0b88dfc");
+        log.info("Web started.");
 
-        // Key for Twitter App
-        System.setProperty("twitter4j.oauth.consumerKey", "Scwn2HbdT7v3yOEjkAQrfQ");
-        System.setProperty("twitter4j.oauth.consumerSecret", "QIz4dbgb5ABzNMjfP1Sb0YdwKTY2oKQwhLoehk0ug");
+        JedisPool jedisPool = getPool(config);
 
-        // Disable weibo4j Debug outputs
-        System.setProperty("weibo4j.debug", "false");
+        DBHelper helper = new DBHelper(jedisPool.getResource());
 
         Scheduler scheduler = new Scheduler();
 
         // clear the queue
-        RedisHelper helper = RedisHelper.getInstance();
         helper.clearQueue();
 
         QueueTask task = new QueueTask();
+        task.setHelper(new DBHelper(jedisPool.getResource()));
         scheduler.schedule("*/2 * * * *", task);
 
         S3BackupTask task2 = new S3BackupTask();
+        task2.setHelper(new DBHelper(jedisPool.getResource()));
         scheduler.schedule("0 * * * *", task2);
+        
         scheduler.start();
 
         log.info("Cron scheduler started.");
+
+        jedisPool.returnResource(helper.getJedis());
     }
 }

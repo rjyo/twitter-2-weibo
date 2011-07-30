@@ -1,6 +1,6 @@
 package h2weibo.utils.filters;
 
-import h2weibo.model.RedisHelper;
+import h2weibo.model.DBHelper;
 import junit.framework.TestCase;
 
 /**
@@ -8,7 +8,7 @@ import junit.framework.TestCase;
  */
 public class UserMappingFilterTest extends TestCase {
     public void setUp() throws Exception {
-        RedisHelper helper = RedisHelper.getInstance();
+        DBHelper helper = new DBHelper();
         helper.setWeiboId("Xuzhe", "xu_zhe");
         helper.setWeiboId("EatDami", "大米大仙");
     }

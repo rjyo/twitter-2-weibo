@@ -2,7 +2,7 @@ package h2weibo.controllers;
 
 import h2weibo.HttpServletRouter;
 import h2weibo.Keys;
-import h2weibo.model.RedisHelper;
+import h2weibo.model.DBHelper;
 import h2weibo.model.T2WUser;
 import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
@@ -33,19 +33,20 @@ public class UserServlet extends VelocityLayoutServlet {
 
         HttpSession session = request.getSession(false);
 
+        DBHelper helper = (DBHelper) request.getAttribute(Keys.REQUEST_DB_HELPER);
+
         // Service limit
-        RedisHelper helper = RedisHelper.getInstance();
         String uId = r.get(":id");
         if (!helper.isUser(uId) && helper.getUserCount() > 50) {
             return getTemplate("full.vm");
         }
 
-        T2WUser t2wUser = T2WUser.findOneByUser(uId);
+        T2WUser t2wUser = helper.findOneByUser(uId);
         if (r.has(":id")) {
             log.info("Displaying user info for @" + uId);
 
             ctx.put("user_id", uId);
-            ctx.put("user", T2WUser.findOneByUser(uId));
+            ctx.put("user", helper.findOneByUser(uId));
 
             try {
                 weibo4j.User user = (weibo4j.User) session.getAttribute(Keys.SESSION_WEIBO_USER);
@@ -99,7 +100,7 @@ public class UserServlet extends VelocityLayoutServlet {
         }
 
         Object prompt = session.getAttribute(Keys.SESSION_PROMPT_TWEET);
-        if (prompt!= null) {
+        if (prompt != null) {
             ctx.put("prompt", prompt);
             session.removeAttribute(Keys.SESSION_PROMPT_TWEET);
         }
