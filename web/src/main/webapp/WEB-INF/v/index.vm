@@ -6,7 +6,7 @@
 <h2 id="h_feature">Features</h2>
 
 <ul>
-    <li># Use oauth to connect to Weibo, no need for user/password</li>
+    <li># Use OAuth to connect to Weibo and Twitter, no user/password saved by this app</li>
     <li># Sync in less than 2 minutes</li>
     <li># Drop tweets with @somebody style metions</li>
     <li># Sync geolocation information</li>

@@ -5,11 +5,15 @@ Welcome! This app syncs what you tweet from Twitter to Sina Weibo.
 I'm hosting an instance on CloudFoundry.com. Access http://h2weibo.cloudfoundry.com/ and sync right now.
 
 ## Features:
-  * Use oauth to connect to Weibo, no need for user/password
-  * Sync in less than 5 minutes
-  * Auto drop tweets with @somebody style metions
-  * Auto expand bit.ly URL
-  * Auto translate twitter style #tag to weibo style #tag#
+  * Use OAuth to connect to Weibo and Twitter, no user/password saved by this app
+  * Sync in less than 2 minutes
+  * Various options to control the behavior
+    * Drop tweets with @somebody style metions
+    * Sync geolocation information
+    * Auto upload photos to Weibo, with supports for yfrog, twitpic, instagram, camera+ and img.ly
+    * Auto expand bit.ly URL
+    * Auto translate twitter style #tag to weibo style #tag#
+    * Auto rename user ID, for example, change @xuzhe in Twitter to @xu_zhe in Weibo
 
 ## Build
 
