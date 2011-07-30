@@ -13,6 +13,7 @@ setup:
 
 clean:
 	@mvn clean
+	@find . -name "*.log" |xargs rm
 
 run:
 	@mvn tomcat:run

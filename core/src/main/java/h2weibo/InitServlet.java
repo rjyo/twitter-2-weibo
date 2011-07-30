@@ -1,6 +1,5 @@
-package h2weibo.controllers;
+package h2weibo;
 
-import h2weibo.Keys;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.JedisPool;
@@ -16,6 +15,7 @@ import javax.servlet.http.HttpServlet;
  */
 public class InitServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(InitServlet.class.getName());
+    public static final String CONTEXT_JEDIS_POOL = "JEDIS_POOL";
 
     public JedisPool createJedisPool() {
         JedisPool jedisPool;
@@ -52,7 +52,7 @@ public class InitServlet extends HttpServlet {
     }
 
     public JedisPool getPool(ServletConfig config) {
-        return (JedisPool) config.getServletContext().getAttribute(Keys.CONTEXT_JEDIS_POOL);
+        return (JedisPool) config.getServletContext().getAttribute(CONTEXT_JEDIS_POOL);
     }
 
     @Override
@@ -71,6 +71,6 @@ public class InitServlet extends HttpServlet {
 
         log.info("System initialized.");
 
-        config.getServletContext().setAttribute(Keys.CONTEXT_JEDIS_POOL, createJedisPool());
+        config.getServletContext().setAttribute(CONTEXT_JEDIS_POOL, createJedisPool());
     }
 }

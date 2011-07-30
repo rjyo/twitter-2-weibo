@@ -6,7 +6,6 @@
 <h2 id="h_feature">Features</h2>
 
 <ul>
-    <li><span class="new">*NEW*</span> Auto rename user ID, for example, change <a href="http://twitter.com/xuzhe">@xuzhe</a> in Twitter to <a href="http://weibo.com/n/xu_zhe">@xu_zhe</a> in Weibo</li>
     <li># Use oauth to connect to Weibo, no need for user/password</li>
     <li># Sync in less than 2 minutes</li>
     <li># Drop tweets with @somebody style metions</li>
@@ -14,6 +13,7 @@
     <li># Auto upload photos to Weibo, with supports for yfrog, twitpic, instagram, camera+ and img.ly</li>
     <li># Auto expand bit.ly URL</li>
     <li># Auto translate twitter style #tag to weibo style #tag#</li>
+    <li># Auto rename user ID, for example, change <a href="http://twitter.com/xuzhe">@xuzhe</a> in Twitter to <a href="http://weibo.com/n/xu_zhe">@xu_zhe</a> in Weibo</li>
 </ul>
 
 <h2 id="h_usage">Usage</h2>

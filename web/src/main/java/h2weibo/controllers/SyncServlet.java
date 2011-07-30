@@ -1,14 +1,10 @@
 package h2weibo.controllers;
 
-import h2weibo.HttpServletRouter;
-import h2weibo.Keys;
-import h2weibo.QueueTask;
-import h2weibo.S3BackupTask;
+import h2weibo.*;
 import h2weibo.model.DBHelper;
 import h2weibo.model.T2WUser;
 import it.sauronsoftware.cron4j.Scheduler;
 import org.apache.log4j.Logger;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import javax.servlet.ServletConfig;
@@ -68,6 +64,9 @@ public class SyncServlet extends InitServlet {
                 });
                 t.start();
                 response.sendRedirect("/");
+            } else if (router.is(":cmd", "info")) {
+                String info = helper.getJedis().info();
+                writer.println(info);
             } else if (router.is(":cmd", "del")) {
                 if (router.has(":id")) {
                     String user = router.get(":id");

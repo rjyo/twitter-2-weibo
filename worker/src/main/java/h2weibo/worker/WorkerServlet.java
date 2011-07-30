@@ -1,16 +1,14 @@
 package h2weibo.worker;
 
+import h2weibo.InitServlet;
 import h2weibo.Twitter2Weibo;
-import h2weibo.controllers.InitServlet;
 import h2weibo.model.DBHelper;
 import h2weibo.model.T2WUser;
 import org.apache.log4j.Logger;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 
 /**
  * @author Rakuraku Jyo
