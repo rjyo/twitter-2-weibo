@@ -22,7 +22,7 @@ public class WorkerServlet extends InitServlet {
 
         log.info("Worker started.");
 
-        JedisPool jedisPool = getPool(config);
+        JedisPool jedisPool = getPool(getServletContext());
 
         // 3 Threads to handle the sync job
         new Thread(new SyncWorkerRunnable(new DBHelper(jedisPool.getResource()))).start();

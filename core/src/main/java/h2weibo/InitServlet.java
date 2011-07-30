@@ -7,6 +7,7 @@ import weibo4j.org.json.JSONException;
 import weibo4j.org.json.JSONObject;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
@@ -51,8 +52,8 @@ public class InitServlet extends HttpServlet {
         }
     }
 
-    public JedisPool getPool(ServletConfig config) {
-        return (JedisPool) config.getServletContext().getAttribute(CONTEXT_JEDIS_POOL);
+    public JedisPool getPool(ServletContext context) {
+        return (JedisPool) context.getAttribute(CONTEXT_JEDIS_POOL);
     }
 
     @Override
@@ -71,6 +72,12 @@ public class InitServlet extends HttpServlet {
 
         log.info("System initialized.");
 
-        config.getServletContext().setAttribute(CONTEXT_JEDIS_POOL, createJedisPool());
+        getServletContext().setAttribute(CONTEXT_JEDIS_POOL, createJedisPool());
+    }
+
+    @Override
+    public void destroy() {
+        JedisPool pool = getPool(getServletContext());
+        pool.destroy();
     }
 }

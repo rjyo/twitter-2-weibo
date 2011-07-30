@@ -26,7 +26,7 @@ public class SyncServlet extends InitServlet {
         HttpServletRouter router = new HttpServletRouter(request);
         router.setPattern("/:cmd/:id");
 
-        response.setContentType("text/plain");
+        response.setContentType("text/plain; charset=UTF-8");
         response.setStatus(200);
         PrintWriter writer = response.getWriter();
         
@@ -40,8 +40,10 @@ public class SyncServlet extends InitServlet {
             S3BackupTask task = new S3BackupTask();
             if (router.has(":id")) {
                 task.restore(router.get(":id"));
+                response.sendRedirect("/");
+            } else {
+                writer.println("Parameter error");
             }
-            // response.sendRedirect("/");
         } else {
             if (router.is(":cmd", "users")) {
                 Set ids = helper.getAuthorizedIds();
@@ -94,7 +96,7 @@ public class SyncServlet extends InitServlet {
 
         log.info("Web started.");
 
-        JedisPool jedisPool = getPool(config);
+        JedisPool jedisPool = getPool(getServletContext());
         DBHelper helper = new DBHelper(jedisPool.getResource());
         // clear the queue
         helper.clearQueue();
