@@ -4,7 +4,7 @@ Welcome! This app syncs what you tweet from Twitter to Sina Weibo.
 
 I'm hosting an instance on CloudFoundry.com. Access http://h2weibo.cloudfoundry.com/ and sync right now.
 
-## Features:
+## Features
   * Use OAuth to connect to Weibo and Twitter, no user/password saved by this app
   * Sync in less than 2 minutes
   * Various options to control the behavior
@@ -44,7 +44,7 @@ I use [IntelliJ IDEA Community Edition](http://www.jetbrains.com/idea/free_java_
 
 Access http://localhost:3000 for web app. To starts the worker, drop h2weibo-w1.war to some web container (like tomcat)
 
-### Get Docs
+### Get JavaDoc
 
 ```bash
     $ mvn dependency:resolve -Dclassifier=javadoc
@@ -57,7 +57,7 @@ Access http://localhost:3000 for web app. To starts the worker, drop h2weibo-w1.
     $ make update
 ```
 
-## Contact:
+## Contact
   * Poke me, [@xu\_lele](http://twitter.com/xu_lele) on twitter
   * Comment me on [http://jyorr.com](http://jyorr.com)
   * Write an email to jyo.rakuraku@gmail.com
