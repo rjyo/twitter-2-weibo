@@ -39,9 +39,10 @@ public class InitServlet extends HttpServlet {
 
         GenericObjectPool.Config config = new GenericObjectPool.Config();
         config.testOnBorrow = true;
+        config.testWhileIdle = true;
         config.maxActive = 25;
-        config.maxIdle = 5;
-        config.minIdle = 1;
+        config.maxIdle = 0;
+        config.minIdle = 0;
 
         log.debug("Jedis pool created.");
 
