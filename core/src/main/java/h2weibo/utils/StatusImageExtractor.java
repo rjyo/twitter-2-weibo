@@ -43,6 +43,7 @@ public class StatusImageExtractor {
         simplePatterns.put("http://(.+\\.(png|jpg|jpeg))", "http://_KEY_");
 
         jsonPatterns.put("http://dribbble.com/shots/(\\w+)", new String[]{"http://api.dribbble.com/shots/_KEY_", "image_url"});
+        jsonPatterns.put("http://drbl.in/(\\w+)", new String[]{"http://api.dribbble.com/shots/_KEY_", "image_url"});
     }
 
     public byte[] extract(String input) {

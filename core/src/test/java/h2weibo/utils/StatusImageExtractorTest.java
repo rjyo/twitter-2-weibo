@@ -58,6 +58,11 @@ public class StatusImageExtractorTest extends TestCase {
         assertNotNull(extract);
     }
 
+    public void testDribbbleShort() throws Exception {
+        extract = extractor.extract("hello http://drbl.in/bFDV testing!");
+        assertNotNull(extract);
+    }
+
     public void testPlainImage() throws Exception {
         extract = extractor.extract("hello http://dribbble.com/system/users/17619/screenshots/176448/teelicht-icon.png?1310159107 testing!");
         assertNotNull(extract);
