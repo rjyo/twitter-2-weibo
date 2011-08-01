@@ -52,4 +52,14 @@ public class StatusImageExtractorTest extends TestCase {
         extract = extractor.extract("hello http://campl.us/b6Fi testing!");
         assertNotNull(extract);
     }
+
+    public void testDribbble() throws Exception {
+        extract = extractor.extract("hello http://dribbble.com/shots/226476-Boat-on-Ocean-2 testing!");
+        assertNotNull(extract);
+    }
+
+    public void testPlainImage() throws Exception {
+        extract = extractor.extract("hello http://dribbble.com/system/users/17619/screenshots/176448/teelicht-icon.png?1310159107 testing!");
+        assertNotNull(extract);
+    }
 }
