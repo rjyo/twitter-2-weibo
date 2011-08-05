@@ -45,7 +45,7 @@ public class SyncServlet extends InitServlet {
         response.setContentType("text/plain; charset=UTF-8");
         response.setStatus(200);
         PrintWriter writer = response.getWriter();
-        
+
         final DBHelper helper = (DBHelper) request.getAttribute(Keys.REQUEST_DB_HELPER);
 
         if (router.is(":cmd", "dump")) {
@@ -62,16 +62,12 @@ public class SyncServlet extends InitServlet {
             }
         } else {
             if (router.is(":cmd", "users")) {
-                Set ids = helper.getAuthorizedIds();
+                Set<String> ids = helper.getAuthorizedIds();
+                Map<String, String> mappings = helper.getMappings();
 
-                writer.println("Syncing user list: (" + ids.size() + " users)");
-                for (Object id : ids) {
-                    writer.println("  " + id);
-                }
-            } else if (router.is(":cmd", "show_mapping")) {
-                Map<String,String> mappings = helper.getMappings();
-                for (String key : mappings.keySet()) {
-                    writer.printf("%s = %s \n", key, mappings.get(key));
+                writer.println(String.format("Syncing user list: (%d users)", ids.size()));
+                for (String id : ids) {
+                    writer.println(String.format("  %s => %s", id, mappings.get(id)));
                 }
             } else if (router.is(":cmd", "mapping")) {
                 Thread t = new Thread(new Runnable() {
@@ -95,9 +91,9 @@ public class SyncServlet extends InitServlet {
             } else if (router.is(":cmd", "u")) {
                 if (router.has(":id")) {
                     T2WUser u = helper.findOneByUser(router.get(":id"));
-                    writer.println("Latest tweet ID is " + u.getLatestId());
-                    writer.println("Twitter ID is " + router.get(":id"));
-                    writer.println("Weibo ID is " + u.getWeiboId());
+                    writer.println(String.format("Latest tweet ID is %d", u.getLatestId()));
+                    writer.println(String.format("Twitter ID is %s", router.get(":id")));
+                    writer.println(String.format("Weibo ID is %s", u.getWeiboId()));
                 }
             } else {
                 response.sendRedirect("/");
@@ -126,7 +122,7 @@ public class SyncServlet extends InitServlet {
         S3BackupTask task2 = new S3BackupTask();
         task2.setHelper(new DBHelper(jedisPool.getResource()));
         scheduler.schedule("0 * * * *", task2);
-        
+
         scheduler.start();
 
         log.info("Cron scheduler started.");
