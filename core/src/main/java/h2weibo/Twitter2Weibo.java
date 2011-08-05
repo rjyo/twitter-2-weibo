@@ -52,7 +52,7 @@ public class Twitter2Weibo {
         Twitter twitter = new TwitterFactory().getInstance();
         if (user.getTwitterToken() != null) {
             twitter.setOAuthAccessToken(new AccessToken(user.getTwitterToken(), user.getTwitterTokenSecret()));
-            log.debug("Using OAuth for " + user.getUserId());
+            log.debug(String.format("Using OAuth for %s", user.getUserId()));
         }
 
         StatusFilters filters = new StatusFilters();
@@ -65,7 +65,7 @@ public class Twitter2Weibo {
         }
 
         if (!user.ready()) {
-            log.debug("Skipping @" + user.getUserId() + " ...");
+            log.debug(String.format("Skipping @%s ...", user.getUserId()));
             return;
         }
 
@@ -92,18 +92,19 @@ public class Twitter2Weibo {
 
                     if (status.getId() < user.getLatestId()) continue; // safe keeper
 
-                    log.info("@" + status.getUser().getScreenName() + " - " + status.getText());
+                    String name = status.getUser().getScreenName();
+                    log.debug(String.format("@%s - %s", name, status.getText()));
                     try {
                         if (user.isDropRTAndReply() && status.isRetweet()) {
                             user.setLatestId(status.getId());
-                            log.info("Skipped " + status.getText() + " because status is a retweet.");
+                            log.debug("Skipped " + status.getText() + " because status is a retweet.");
                             continue;
                         }
 
                         String filtered = filters.filter(status.getText());
                         if (filtered == null) {
                             user.setLatestId(status.getId());
-                            log.info("Skipped " + status.getText() + " because of the filter.");
+                            log.debug(String.format("Skipped %s because of the filter.", status.getText()));
                             continue;
                         }
 
@@ -114,7 +115,7 @@ public class Twitter2Weibo {
                             if (image != null) {
                                 user.setLatestId(status.getId());
                                 weibo.uploadStatus(status.getText(), new ImageItem(image));
-                                log.info("@" + status.getUser().getScreenName() + " - " + status.getText() + " sent with image.");
+                                log.info(String.format("@%s - %s sent with image.", name, status.getText()));
                                 continue;
                             }
                         }
@@ -122,10 +123,10 @@ public class Twitter2Weibo {
                         GeoLocation location = status.getGeoLocation();
                         if (user.isWithGeo() && location != null) {
                             weibo.updateStatus(filtered, location.getLatitude(), location.getLongitude());
-                            log.info("@" + status.getUser().getScreenName() + " - " + status.getText() + " sent with geo locations.");
+                            log.info(String.format("@%s - %s sent with geo locations.", name, status.getText()));
                         } else {
                             weibo.updateStatus(filtered);
-                            log.info("@" + status.getUser().getScreenName() + " - " + status.getText() + " sent.");
+                            log.info(String.format("@%s - %s sent.", name, status.getText()));
                         }
                     } catch (WeiboException e) {
                         if (e.getStatusCode() != 400) { // resending same tweet
