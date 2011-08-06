@@ -43,8 +43,8 @@
 <h2 id="h_credits">Credits</h2>
 
 <ul class="qa">
-    <li># Thank <a href="http://twitter.com/baotuo">@baotuo</a> for helping me out with JedisPool.</li>
-    <li># Thank VMWare and CloudFoundry for this great PaaS platform.</li>
+    <li># <a href="http://twitter.com/baotuo">@baotuo</a> for helping me out with JedisPool.</li>
+    <li># Great PaaS platform from <a href="http://cloudfoundry.com/">CloudFoundry</a>.</li>
 </ul>
 <script type="text/javascript">
     $(document).ready(function() {
