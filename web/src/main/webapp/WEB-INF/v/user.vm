@@ -32,10 +32,10 @@
 
 <br/>
 <input type="hidden" id="action_type" name="actionType" value="save">
-<div class="middle">
-  <button class="clean-gray" value="save" id="save_button">Save my settings</button>
+<div class="middle" id="user_buttons">
+  <button class="clean-gray" value="save" id="save_button">Save</button>
     &nbsp;&nbsp;
-  <button class="clean-gray" value="delete" id="delete_button">Delete account ...</button>
+  <button class="clean-gray" value="delete" id="delete_button">Delete Account ...</button>
 </div>
 </form>
 <br/>

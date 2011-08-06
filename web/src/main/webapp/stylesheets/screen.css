@@ -104,7 +104,7 @@ a:hover {
 
 #footer {
   background: url(../images/paper_footer.png) bottom left no-repeat;
-  padding-bottom: 55px;
+  padding-bottom: 125px;
 }
 
 #content {
@@ -224,6 +224,10 @@ div.middle {
 
 #go_button {
   margin: 0 5px;
+}
+
+div#user_buttons {
+  width: 450px;
 }
 
 /* clean gray
