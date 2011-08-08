@@ -35,7 +35,7 @@ public class UserMappingFilter extends DBStatusFilter {
 
         while (m.find()) {
             String userId = m.group(1);
-            String weiboId = userMap.get(userId);
+            String weiboId = userMap.get(userId.toLowerCase());
 
             if (weiboId != null) {
                 input = input.replaceAll("@" + userId, "@" + weiboId);

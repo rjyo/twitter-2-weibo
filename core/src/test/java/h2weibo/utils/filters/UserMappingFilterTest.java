@@ -37,6 +37,6 @@ public class UserMappingFilterTest extends TestCase {
         String input = "@xuzhe Let's eat dinner with @Eatdami tonight. /cc @xu_lele.";
         UserMappingFilter filter = new UserMappingFilter(helper);
         String s = filter.filter(input);
-        assertEquals(s, "@xu_zhe Let's eat dinner with @大米大仙 tonight. /cc @xu_lele.");
+        assertEquals("@xu_zhe Let's eat dinner with @大米大仙 tonight. /cc @xu_lele.", s);
     }
 }
