@@ -37,7 +37,7 @@ public class T2WUser {
     private String twitterToken;
     private Set<String> options;
 
-    private DBHelper helper;
+    private transient DBHelper helper;
 
     public DBHelper getHelper() {
         return helper;

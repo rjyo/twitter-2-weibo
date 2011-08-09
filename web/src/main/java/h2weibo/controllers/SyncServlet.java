@@ -50,6 +50,7 @@ public class SyncServlet extends InitServlet {
 
         if (router.is(":cmd", "dump")) {
             S3BackupTask task = new S3BackupTask();
+            task.setHelper(helper);
             task.run();
             response.sendRedirect("/");
         } else if (router.is(":cmd", "restore")) {
@@ -118,6 +119,9 @@ public class SyncServlet extends InitServlet {
         QueueTask task = new QueueTask();
         task.setHelper(new DBHelper(jedisPool.getResource()));
         scheduler.schedule("*/2 * * * *", task);
+
+        System.setProperty("h2weibo.awsAccessKey", config.getInitParameter("accessKey"));
+        System.setProperty("h2weibo.awsSecretAccessKey", config.getInitParameter("secretAccessKey"));
 
         S3BackupTask task2 = new S3BackupTask();
         task2.setHelper(new DBHelper(jedisPool.getResource()));
