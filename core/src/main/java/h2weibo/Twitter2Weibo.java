@@ -97,14 +97,14 @@ public class Twitter2Weibo {
                     try {
                         if (user.isDropRTAndReply() && status.isRetweet()) {
                             user.setLatestId(status.getId());
-                            log.info("Skipped " + statusText + " because status is a retweet.");
+                            log.debug("Skipped " + statusText + " because status is a retweet.");
                             continue;
                         }
 
                         statusText = filters.filter(statusText);
                         if (statusText == null) {
                             user.setLatestId(status.getId());
-                            log.info(String.format("Skipped %s because of the filter.", statusText));
+                            log.debug(String.format("Skipped %s because of the filter.", statusText));
                             continue;
                         }
 
