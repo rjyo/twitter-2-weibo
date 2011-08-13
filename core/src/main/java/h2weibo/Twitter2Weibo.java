@@ -16,7 +16,6 @@
 
 package h2weibo;
 
-import com.sun.tools.corba.se.idl.toJavaPortable.Helper;
 import h2weibo.model.DBHelper;
 import h2weibo.model.T2WUser;
 import h2weibo.utils.StatusImageExtractor;
@@ -46,7 +45,7 @@ public class Twitter2Weibo {
 
     public void syncTwitter(String userId) {
         T2WUser user = helper.findOneByUser(userId);
-        
+
         weibo.setToken(user.getToken(), user.getTokenSecret());
 
         Twitter twitter = new TwitterFactory().getInstance();
@@ -56,7 +55,7 @@ public class Twitter2Weibo {
         }
 
         StatusFilters filters = new StatusFilters();
-        filters.use(new URLStatusFilter()).use(new TagStatusFilter());
+        filters.use(new TcoStatusFilter()).use(new URLStatusFilter()).use(new TagStatusFilter());
 
         if (user.isDropMentions()) {
             filters.use(new NoMentionFilter());
@@ -93,40 +92,40 @@ public class Twitter2Weibo {
                     if (status.getId() < user.getLatestId()) continue; // safe keeper
 
                     String name = status.getUser().getScreenName();
-                    log.debug(String.format("@%s - %s", name, status.getText()));
+                    String statusText = status.getText();
+                    log.debug(String.format("@%s - %s", name, statusText));
                     try {
                         if (user.isDropRTAndReply() && status.isRetweet()) {
                             user.setLatestId(status.getId());
-                            log.debug("Skipped " + status.getText() + " because status is a retweet.");
+                            log.debug("Skipped " + statusText + " because status is a retweet.");
                             continue;
                         }
 
-                        String filtered = filters.filter(status.getText());
-                        if (filtered == null) {
+                        statusText = filters.filter(statusText);
+                        if (statusText == null) {
                             user.setLatestId(status.getId());
-                            log.debug(String.format("Skipped %s because of the filter.", status.getText()));
+                            log.debug(String.format("Skipped %s because of the filter.", statusText));
                             continue;
                         }
-
 
                         if (!user.isNoImage()) {
                             StatusImageExtractor ex = new StatusImageExtractor();
-                            byte[] image = ex.extract(status.getText());
+                            byte[] image = ex.extract(statusText);
                             if (image != null) {
                                 user.setLatestId(status.getId());
-                                weibo.uploadStatus(status.getText(), new ImageItem(image));
-                                log.info(String.format("@%s - %s sent with image.", name, status.getText()));
+                                weibo.uploadStatus(statusText, new ImageItem(image));
+                                log.info(String.format("@%s - %s sent with image.", name, statusText));
                                 continue;
                             }
                         }
 
                         GeoLocation location = status.getGeoLocation();
                         if (user.isWithGeo() && location != null) {
-                            weibo.updateStatus(filtered, location.getLatitude(), location.getLongitude());
-                            log.info(String.format("@%s - %s sent with geo locations.", name, status.getText()));
+                            weibo.updateStatus(statusText, location.getLatitude(), location.getLongitude());
+                            log.info(String.format("@%s - %s sent with geo locations.", name, statusText));
                         } else {
-                            weibo.updateStatus(filtered);
-                            log.info(String.format("@%s - %s sent.", name, status.getText()));
+                            weibo.updateStatus(statusText);
+                            log.info(String.format("@%s - %s sent.", name, statusText));
                         }
                     } catch (WeiboException e) {
                         if (e.getStatusCode() != 400) { // resending same tweet
@@ -135,7 +134,6 @@ public class Twitter2Weibo {
                         }
                     }
                     user.setLatestId(status.getId());
-
                 }
             }
             user.save();
