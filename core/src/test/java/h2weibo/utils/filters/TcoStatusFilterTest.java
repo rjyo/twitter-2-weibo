@@ -16,27 +16,13 @@
 
 package h2weibo.utils.filters;
 
-import java.util.ArrayList;
-import java.util.List;
+import junit.framework.TestCase;
 
-public class StatusFilters {
-    List<StatusFilter> filters = new ArrayList<StatusFilter>();
+public class TcoStatusFilterTest extends TestCase {
 
-    public StatusFilters use(StatusFilter filter) {
-        filters.add(filter);
-        return this;
-    }
-
-    public StatusFilters remove(StatusFilter filter) {
-        filters.remove(filter);
-        return this;
-    }
-
-    public String filter(String input) {
-        String output = input;
-        for (StatusFilter filter : filters) {
-            output = filter.filter(output);
-        }
-        return output;
+    public void testFilter() throws Exception {
+        TcoStatusFilter tcoStatusFilter = new TcoStatusFilter();
+        String result = tcoStatusFilter.filter("http://t.co/cjUHlXF");
+        assertEquals("http://twitpic.com/659uz4", result);
     }
 }

@@ -6,7 +6,7 @@ WEB_NAME = h2weibo
 WORKER_NAME = h2weibo-w1
 
 compile: clean
-	@mvn package
+	@mvn -Dmaven.test.skip=true package
 
 setup:
 	@mvn $(MVN_INSTALL_FLAGS)
