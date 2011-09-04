@@ -113,8 +113,12 @@ public class Twitter2Weibo {
                             byte[] image = ex.extract(statusText);
                             if (image != null) {
                                 user.setLatestId(status.getId());
-                                weibo.uploadStatus(statusText, new ImageItem(image));
-                                log.info(String.format("@%s - %s sent with image.", name, statusText));
+                                try {
+                                    weibo.uploadStatus(statusText, new ImageItem(image));
+                                    log.info(String.format("@%s - %s sent with image.", name, statusText));
+                                } catch (WeiboException e) {
+                                    log.error("Faile to update image.", e);
+                                }
                                 continue;
                             }
                         }
