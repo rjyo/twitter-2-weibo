@@ -16,10 +16,12 @@
 
 package h2weibo.utils.filters;
 
-public class TagStatusFilter implements StatusFilter {
+import junit.framework.TestCase;
 
-    public String filter(String input) {
-        if (input == null) return input;
-        return input.replaceAll("(#\\p{IsL}+)", "$1#");
+public class TagStatusFilterTest extends TestCase {
+    public void testFilter() throws Exception {
+        TagStatusFilter tagStatusFilter = new TagStatusFilter();
+        String result = tagStatusFilter.filter("http://t.co/cjUHlXF #abc #日本語");
+        assertEquals("http://t.co/cjUHlXF #abc# #日本語#", result);
     }
 }
