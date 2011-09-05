@@ -21,7 +21,7 @@ import junit.framework.TestCase;
 public class TagStatusFilterTest extends TestCase {
     public void testFilter() throws Exception {
         TagStatusFilter tagStatusFilter = new TagStatusFilter();
-        String result = tagStatusFilter.filter("http://t.co/cjUHlXF #abc #日本語");
-        assertEquals("http://t.co/cjUHlXF #abc# #日本語#", result);
+        String result = tagStatusFilter.filter("http://t.co/cjUHlXF #a2bc #t2w_日本語");
+        assertEquals("http://t.co/cjUHlXF #a2bc# #t2w_日本語#", result);
     }
 }

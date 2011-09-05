@@ -20,6 +20,6 @@ public class TagStatusFilter implements StatusFilter {
 
     public String filter(String input) {
         if (input == null) return input;
-        return input.replaceAll("(#\\p{IsL}+)", "$1#");
+        return input.replaceAll("(#[\\p{IsLD}_]+)", "$1#");
     }
 }
