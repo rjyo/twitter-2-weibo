@@ -5,8 +5,16 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
     <servlet>
         <servlet-name>SyncServlet</servlet-name>
-        <servlet-class>h2weibo.controllers.SyncServlet</servlet-class>
+        <servlet-class>h2weibo.controllers.CommandServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>accessKey</param-name>
+            <param-value>${s3.access}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>secretAccessKey</param-name>
+            <param-value>${s3.secret}</param-value>
+        </init-param>
     </servlet>
 
     <servlet-mapping>

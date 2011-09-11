@@ -47,6 +47,17 @@
                     <port>3000</port>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <filters>
+                        <filter>default.properties</filter>
+                    </filters>
+                    <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>                     
+                </configuration>
+            </plugin>
         </plugins>
         <finalName>h2weibo</finalName>
     </build>

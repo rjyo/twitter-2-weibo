@@ -35,8 +35,8 @@ import java.util.Set;
 /**
  * @author Rakuraku Jyo
  */
-public class SyncServlet extends InitServlet {
-    private static final Logger log = Logger.getLogger(SyncServlet.class.getName());
+public class CommandServlet extends InitServlet {
+    private static final Logger log = Logger.getLogger(CommandServlet.class.getName());
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpServletRouter router = new HttpServletRouter(request);
@@ -95,6 +95,10 @@ public class SyncServlet extends InitServlet {
                     writer.println(String.format("Latest tweet ID is %d", u.getLatestId()));
                     writer.println(String.format("Twitter ID is %s", router.get(":id")));
                     writer.println(String.format("Weibo ID is %s", u.getWeiboId()));
+                    writer.println(String.format("Twitter Token %s", u.getTwitterToken()));
+                    writer.println(String.format("Twitter Secret %s", u.getTwitterTokenSecret()));
+                    writer.println(String.format("Weibo Token %s", u.getToken()));
+                    writer.println(String.format("Weibo Secret %s", u.getTokenSecret()));
                 }
             } else {
                 response.sendRedirect("/");
