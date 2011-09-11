@@ -27,8 +27,6 @@ import java.util.regex.Pattern;
 public class TcoStatusFilter implements StatusFilter {
 
     public String filter(String input) {
-        if (input == null) return input;
-
         // Create a pattern to match cat
         Pattern p = Pattern.compile("http://t.co/\\w+");
         // Create a matcher with an input string

@@ -105,7 +105,7 @@ public class Twitter2Weibo {
                         statusText = filters.filter(statusText);
                         if (statusText == null) {
                             user.setLatestId(status.getId());
-                            log.debug(String.format("Skipped %s because of the filter.", statusText));
+                            log.info(String.format("Skipped %s because of the filter.", statusText));
                             continue;
                         }
 
@@ -135,7 +135,7 @@ public class Twitter2Weibo {
                     } catch (WeiboException e) {
                         if (e.getStatusCode() != 400) { // resending same tweet
                             log.warn("Failed to update Weibo");
-                            throw new RuntimeException(e);
+                            break;
                         }
                     }
                     user.setLatestId(status.getId());

@@ -19,8 +19,6 @@ package h2weibo.utils.filters;
 public class NoSyncFilter implements StatusFilter {
 
     public String filter(String input) {
-        if (input == null) return input;
-
         if (input.contains("#no!")) {
             return null;
         } else {

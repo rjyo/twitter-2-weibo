@@ -36,6 +36,7 @@ public class StatusFilters {
         String output = input;
         for (StatusFilter filter : filters) {
             output = filter.filter(output);
+            if (output == null) break;
         }
         return output;
     }
