@@ -37,7 +37,8 @@ public class TcoStatusFilter implements StatusFilter {
         while (result) {
             String tcoUrl = m.group();
             try {
-                m.appendReplacement(sb, getRedirectUrl(tcoUrl));
+                String redirectUrl = getRedirectUrl(tcoUrl);
+                if (redirectUrl != null) m.appendReplacement(sb, redirectUrl);
             } catch (IOException e) {
                 // do nothing, skip
             }
