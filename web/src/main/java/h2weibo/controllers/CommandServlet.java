@@ -114,27 +114,25 @@ public class CommandServlet extends InitServlet {
         log.info("Web started.");
 
         JedisPool jedisPool = getPool(getServletContext());
-        DBHelper helper = new DBHelper(jedisPool.getResource());
+        DBHelper helper = new DBHelper(jedisPool);
         // clear the queue
         helper.clearQueue();
 
         Scheduler scheduler = new Scheduler();
 
         QueueTask task = new QueueTask();
-        task.setHelper(new DBHelper(jedisPool.getResource()));
+        task.setHelper(new DBHelper(jedisPool));
         scheduler.schedule("*/2 * * * *", task);
 
         System.setProperty("h2weibo.awsAccessKey", config.getInitParameter("accessKey"));
         System.setProperty("h2weibo.awsSecretAccessKey", config.getInitParameter("secretAccessKey"));
 
         S3BackupTask task2 = new S3BackupTask();
-        task2.setHelper(new DBHelper(jedisPool.getResource()));
+        task2.setHelper(new DBHelper(jedisPool));
         scheduler.schedule("0 * * * *", task2);
 
         scheduler.start();
 
         log.info("Cron scheduler started.");
-
-        jedisPool.returnResource(helper.getJedis());
     }
 }

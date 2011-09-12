@@ -41,9 +41,9 @@ public class WorkerServlet extends InitServlet {
         JedisPool jedisPool = getPool(getServletContext());
 
         // 3 Threads to handle the sync job
-        new Thread(new SyncWorkerRunnable(new DBHelper(jedisPool.getResource()))).start();
-        new Thread(new SyncWorkerRunnable(new DBHelper(jedisPool.getResource()))).start();
-        new Thread(new SyncWorkerRunnable(new DBHelper(jedisPool.getResource()))).start();
+        new Thread(new SyncWorkerRunnable(new DBHelper(jedisPool))).start();
+        new Thread(new SyncWorkerRunnable(new DBHelper(jedisPool))).start();
+        new Thread(new SyncWorkerRunnable(new DBHelper(jedisPool))).start();
     }
 
     private static class SyncWorkerRunnable implements Runnable {

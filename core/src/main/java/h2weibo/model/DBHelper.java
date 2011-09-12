@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 import weibo4j.User;
 import weibo4j.Weibo;
 import weibo4j.WeiboException;
@@ -33,41 +34,43 @@ public class DBHelper {
     private static final String QUEUE_KEY = "t2w:queue";
     private static final String USER_MAP_KEY = "t2w:id_map";
 
-    private Jedis jedis;
-//    private JedisPool jedisPool;
+    private Jedis jedis1;
+    private JedisPool pool;
 
-
-    public Jedis getJedis() {
-        return jedis;
+    public DBHelper(JedisPool jedisPool) {
+        this.pool = jedisPool;
     }
 
-    public void setJedis(Jedis jedis) {
-        this.jedis = jedis;
+    public Jedis getJedis() {
+        if (jedis1 == null) {
+            jedis1 = pool.getResource();
+        }
+        return jedis1;
     }
 
     public Set<String> getAuthorizedIds() {
-        return jedis.smembers(USER_SET_KEY);
+        return getJedis().smembers(USER_SET_KEY);
     }
 
     public Long getUserCount() {
-        return jedis.scard(USER_SET_KEY);
+        return getJedis().scard(USER_SET_KEY);
     }
 
     public boolean isUser(String userId) {
-        return jedis.sismember(USER_SET_KEY, userId);
+        return getJedis().sismember(USER_SET_KEY, userId);
     }
 
     public T2WUser findOneByUser(String userId) {
         T2WUser tid = new T2WUser();
         tid.setUserId(userId);
-        String latest = jedis.get("id:" + tid.getUserId() + ":latestId");
+        String latest = getJedis().get("id:" + tid.getUserId() + ":latestId");
         if (latest != null) {
             tid.setLatestId(Long.valueOf(latest));
-            tid.setToken(jedis.get("id:" + tid.getUserId() + ":token"));
-            tid.setTokenSecret(jedis.get("id:" + tid.getUserId() + ":tokenSecret"));
-            tid.setTwitterToken(jedis.get("id:" + tid.getUserId() + ":twitter_token"));
-            tid.setTwitterTokenSecret(jedis.get("id:" + tid.getUserId() + ":twitter_tokenSecret"));
-            tid.setOptions(jedis.smembers("id:" + tid.getUserId() + ":options"));
+            tid.setToken(getJedis().get("id:" + tid.getUserId() + ":token"));
+            tid.setTokenSecret(getJedis().get("id:" + tid.getUserId() + ":tokenSecret"));
+            tid.setTwitterToken(getJedis().get("id:" + tid.getUserId() + ":twitter_token"));
+            tid.setTwitterTokenSecret(getJedis().get("id:" + tid.getUserId() + ":twitter_tokenSecret"));
+            tid.setOptions(getJedis().smembers("id:" + tid.getUserId() + ":options"));
 
             log.debug("Found data for @" + userId + " = " + tid.getLatestId());
         } else {
@@ -83,7 +86,7 @@ public class DBHelper {
 
 
     public Map<String, String> getUserMap() {
-        Map<String, String> map = jedis.hgetAll(USER_MAP_KEY);
+        Map<String, String> map = getJedis().hgetAll(USER_MAP_KEY);
         if (map == null) {
             map = new HashMap<String, String>(0);
         }
@@ -120,15 +123,15 @@ public class DBHelper {
     }
 
     public void setWeiboId(String twitterId, String weiboId) {
-        jedis.hset(USER_MAP_KEY, twitterId.toLowerCase(), weiboId);
+        getJedis().hset(USER_MAP_KEY, twitterId.toLowerCase(), weiboId);
     }
 
     public String getWeiboId(String twitterId) {
-        return jedis.hget(USER_MAP_KEY, twitterId);
+        return getJedis().hget(USER_MAP_KEY, twitterId);
     }
 
     public Map<String, String> getMappings() {
-        return jedis.hgetAll(USER_MAP_KEY);
+        return getJedis().hgetAll(USER_MAP_KEY);
     }
 
     public String dump() {
@@ -160,17 +163,17 @@ public class DBHelper {
     }
 
     public void clearQueue() {
-        jedis.del(QUEUE_KEY);
+        getJedis().del(QUEUE_KEY);
     }
 
     public void queue(T2WUser user) {
         String userId = user.getUserId();
         log.debug("Queue " + userId + " to sync.");
-        jedis.lpush(QUEUE_KEY, userId);
+        getJedis().lpush(QUEUE_KEY, userId);
     }
 
     public T2WUser pop() {
-        String userId = jedis.rpop(QUEUE_KEY);
+        String userId = getJedis().rpop(QUEUE_KEY);
 
         T2WUser user;
         if (userId != null) {
@@ -184,10 +187,6 @@ public class DBHelper {
     }
 
     public long getQueueSize() {
-        return jedis.llen(QUEUE_KEY);
-    }
-
-    public DBHelper(Jedis jedis) {
-        this.jedis = jedis;
+        return getJedis().llen(QUEUE_KEY);
     }
 }

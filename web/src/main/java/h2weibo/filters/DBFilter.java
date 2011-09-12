@@ -41,7 +41,7 @@ public class DBFilter implements Filter {
         log.debug("In DBFilter");
 
         JedisPool jedisPool = (JedisPool) context.getAttribute(Keys.CONTEXT_JEDIS_POOL);
-        DBHelper helper = new DBHelper(jedisPool.getResource());
+        DBHelper helper = new DBHelper(jedisPool);
         request.setAttribute(Keys.REQUEST_DB_HELPER, helper);
 
         chain.doFilter(req, res);
