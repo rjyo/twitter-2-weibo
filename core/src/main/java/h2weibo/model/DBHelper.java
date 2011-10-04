@@ -34,7 +34,7 @@ public class DBHelper {
     private static final String QUEUE_KEY = "t2w:queue";
     private static final String USER_MAP_KEY = "t2w:id_map";
 
-    private Jedis jedis1;
+    private Jedis jedis;
     private JedisPool pool;
 
     public DBHelper(JedisPool jedisPool) {
@@ -42,10 +42,10 @@ public class DBHelper {
     }
 
     public Jedis getJedis() {
-        if (jedis1 == null) {
-            jedis1 = pool.getResource();
+        if (jedis == null || !jedis.isConnected()) {
+            jedis = pool.getResource();
         }
-        return jedis1;
+        return jedis;
     }
 
     public Set<String> getAuthorizedIds() {
