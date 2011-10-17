@@ -41,6 +41,6 @@ public class URLStatusFilter implements StatusFilter {
         // Add the last segment of input to the new String
         m.appendTail(sb);
 
-        return sb.toString();
+        return sb.toString().replaceAll(" http://(\\w+.)?twitter.com/([^ ]+)?", "");
     }
 }

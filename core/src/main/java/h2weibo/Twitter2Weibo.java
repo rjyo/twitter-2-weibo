@@ -110,11 +110,22 @@ public class Twitter2Weibo {
                         }
 
                         if (!user.isNoImage()) {
+                            // add twitter images to status text
+                            MediaEntity[] mediaEntities = status.getMediaEntities();
+                            if (mediaEntities != null) {
+                                for (MediaEntity entity : mediaEntities) {
+                                    statusText += " " + entity.getMediaURL();
+                                }
+                                log.info("with media url: " + statusText);
+                            }
+
                             StatusImageExtractor ex = new StatusImageExtractor();
-                            byte[] image = ex.extract(statusText);
+                            StringBuffer buf = new StringBuffer(statusText);
+                            byte[] image = ex.extract(buf);
                             if (image != null) {
                                 user.setLatestId(status.getId());
                                 try {
+                                    statusText = buf.toString(); // with image urls removed
                                     weibo.uploadStatus(statusText, new ImageItem(image));
                                     log.info(String.format("@%s - %s sent with image.", name, statusText));
                                 } catch (WeiboException e) {

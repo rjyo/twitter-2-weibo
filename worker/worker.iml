@@ -17,7 +17,7 @@
     <orderEntry type="library" name="Maven: commons-httpclient:commons-httpclient:3.1" level="project" />
     <orderEntry type="library" name="Maven: com.jamesmurty.utils:java-xmlbuilder:0.4" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.4" level="project" />
-    <orderEntry type="library" name="Maven: org.twitter4j:twitter4j-core:2.2.3" level="project" />
+    <orderEntry type="library" name="Maven: org.twitter4j:twitter4j-core:2.2.4" level="project" />
     <orderEntry type="library" name="Maven: com.rosaloves:bitlyj:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: redis.clients:jedis:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.5.5" level="project" />

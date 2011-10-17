@@ -40,13 +40,13 @@ public class StatusImageExtractor {
         simplePatterns.put("http://img.ly/(\\w+)", "http://img.ly/show/large/_KEY_");
         simplePatterns.put("http://yfrog.com/(\\w+)", "http://yfrog.com/_KEY_:iphone");
         simplePatterns.put("http://campl.us/(\\w+)", "http://campl.us/_KEY_:iphone");
-        simplePatterns.put("http://(.+\\.(png|jpg|jpeg))", "http://_KEY_");
+        simplePatterns.put("http://([^ ]+\\.(png|jpg|jpeg))", "http://_KEY_");
 
         jsonPatterns.put("http://dribbble.com/shots/(\\w+)", new String[]{"http://api.dribbble.com/shots/_KEY_", "image_url"});
         jsonPatterns.put("http://drbl.in/(\\w+)", new String[]{"http://api.dribbble.com/shots/_KEY_", "image_url"});
     }
 
-    public byte[] extract(String input) {
+    public byte[] extract(StringBuffer input) {
         if (input == null) return null;
 
         for (String key : simplePatterns.keySet()) {
@@ -58,7 +58,9 @@ public class StatusImageExtractor {
                 mediaUrl = mediaUrl.replaceAll("_KEY_", m.group(1));
 
                 try {
-                    return downloadUrl(mediaUrl);
+                    byte[] bytes = downloadUrl(mediaUrl);
+                    input.delete(m.start() - 1, m.end()); // -1 for the space before
+                    return bytes;
                 } catch (IOException e) {
                     log.error("Not able to download image", e);
                 }
