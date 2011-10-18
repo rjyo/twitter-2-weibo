@@ -56,7 +56,7 @@ public class Twitter2Weibo {
 
         StatusFilters filters = new StatusFilters();
         filters.use(new NoSyncFilter()); // should be used first
-        filters.use(new TcoStatusFilter()).use(new URLStatusFilter()).use(new TagStatusFilter());
+        filters.use(new TcoStatusFilter()).use(new URLStatusFilter()).use(new TagStatusFilter()).use(new FlickrImageFilter());
 
         if (user.isDropMentions()) {
             filters.use(new NoMentionFilter());
