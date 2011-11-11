@@ -58,11 +58,8 @@ public class Twitter2Weibo {
         filters.use(new NoSyncFilter()); // should be used first
         filters.use(new TcoStatusFilter()).use(new URLStatusFilter()).use(new TagStatusFilter()).use(new FlickrImageFilter());
 
-        if (user.isDropMentions()) {
-            filters.use(new NoMentionFilter());
-        } else {
-            filters.use(new UserMappingFilter(helper));
-        }
+        NoMentionFilter mentionFilter = new NoMentionFilter();
+        UserMappingFilter mappingFilter = new UserMappingFilter(helper);
 
         if (!user.ready()) {
             log.debug(String.format("Skipping @%s ...", user.getUserId()));
@@ -73,7 +70,7 @@ public class Twitter2Weibo {
         String screenName = user.getUserId();
         long latestId = user.getLatestId();
 
-        log.info(String.format("Checking @%s's timeline, latest ID = %d.", userId, latestId));
+        log.debug(String.format("Checking @%s's timeline, latest ID = %d.", userId, latestId));
 
         try {
             if (latestId == 0) {
@@ -96,10 +93,23 @@ public class Twitter2Weibo {
                     String statusText = status.getText();
                     log.info(String.format("@%s - %s", name, statusText));
                     try {
-                        if (user.isDropRTAndReply() && status.isRetweet()) {
-                            user.setLatestId(status.getId());
-                            log.debug("Skipped " + statusText + " because status is a retweet.");
-                            continue;
+                        if (status.isRetweet()) {
+                            if (user.isDropRetweets()) {
+                                user.setLatestId(status.getId());
+                                log.debug("Skipped " + statusText + " because status is a retweet.");
+                                continue;
+                            } else {
+                                filters.remove(mentionFilter);
+                                filters.use(mappingFilter);
+                            }
+                        } else {
+                            if (user.isDropMentions()) {
+                                filters.remove(mappingFilter);
+                                filters.use(mentionFilter);
+                            } else {
+                                filters.remove(mentionFilter);
+                                filters.use(mappingFilter);
+                            }
                         }
 
                         statusText = filters.filter(statusText);
@@ -154,12 +164,7 @@ public class Twitter2Weibo {
             }
             user.save();
         } catch (Exception e) {
-            if (e instanceof TwitterException) {
-                TwitterException te = (TwitterException) e;
-                if (te.getStatusCode() != 400 && te.getStatusCode() != 404) {
-                    log.error(te.getMessage());
-                }
-            } else {
+            if (!(e instanceof TwitterException)) {
                 log.error("Failed to update.", e);
             }
         }

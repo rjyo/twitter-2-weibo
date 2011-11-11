@@ -100,7 +100,7 @@ public class T2WUser {
         return twitterToken;
     }
 
-    public boolean isDropRTAndReply() {
+    public boolean isDropRetweets() {
         return options != null && options.contains("drop_rt");
     }
 

@@ -23,7 +23,7 @@ public class StatusFilters {
     List<StatusFilter> filters = new ArrayList<StatusFilter>();
 
     public StatusFilters use(StatusFilter filter) {
-        filters.add(filter);
+        if (!filters.contains(filter)) filters.add(filter);
         return this;
     }
 
