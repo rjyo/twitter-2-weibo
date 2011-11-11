@@ -58,9 +58,11 @@ public class WorkerServlet extends InitServlet {
             long size = helper.getQueueSize();
             log.info("Start running, queue size = " + size + ", user count = " + helper.getUserCount());
 
+            int multiper = 1;
             while (true) {
                 T2WUser user = helper.pop();
                 if (user != null) {
+                    multiper = 1;
                     String userId = user.getUserId();
                     Twitter2Weibo weibo = new Twitter2Weibo(helper);
                     weibo.syncTwitter(userId);
@@ -68,7 +70,8 @@ public class WorkerServlet extends InitServlet {
                 } else {
                     try {
                         log.info("No task found, sleeping");
-                        Thread.sleep(5000);
+                        Thread.sleep(4000 * multiper);
+                        multiper *= 2;
                     } catch (InterruptedException e) {
                         log.error("Error when try to sleep thread.", e);
                     }
