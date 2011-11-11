@@ -4,22 +4,15 @@
 	background: none; 
 }
 
-#smoke-out .dialog {
-  top: 25%;
+.smoke-base .dialog {
+  top: 15%;
   left: 0;
   width: 100%;
 }
 
-.dialog.smoke .dialog-inner {
-  font-size: 40px;
-}
-
-.dialog.smoke .dialog-buttons {
-  margin-top: 20px;
-}
-
-#smoke-out .dialog-inner { 
-	padding: 15px;
+.smoke-base .dialog-inner { 
+	padding: 25px;
+	font-size: 30px;
 }
 
 .smoke {
@@ -32,7 +25,7 @@
 		border-radius: 0;
 }
 .dialog-buttons {
-	margin: 0px 0 5px 0;
+	margin: 20px 0 5px 0;
 }
 
 .dialog-buttons button {
@@ -48,4 +41,13 @@
 button.cancel { 
 	background-color: #999; 
 	color:#222
+}
+
+.dialog-prompt{
+	margin-top:0;
+}
+.dialog-prompt input{
+	width:300px;
+	text-align:center;
+	background-color:#ccc;
 }
