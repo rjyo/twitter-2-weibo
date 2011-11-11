@@ -41,8 +41,16 @@ public class StatusImageExtractorTest extends TestCase {
     }
 
     public void testImgly() throws Exception {
-        extract = extractor.extract(new StringBuffer("hello http://img.ly/5wsQ testing!"));
+        StringBuffer buf;
+        buf = new StringBuffer("hello http://img.ly/5wsQ testing!");
+        extract = extractor.extract(buf);
         assertNotNull(extract);
+        assertEquals("hello testing!", buf.toString());
+        
+        buf = new StringBuffer("http://img.ly/af4P 天冷了");
+        extract = extractor.extract(buf);
+        assertNotNull(extract);
+        assertEquals(" 天冷了", buf.toString());
     }
 
     public void testYfrog() throws Exception {
