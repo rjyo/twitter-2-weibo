@@ -4,90 +4,111 @@
 <p>Link your Twitter &amp; Weibo account here. Follow <a href="http://twitter.com/xu_lele">@xu_lele</a> to get updates about this service.</p>
 
 <div id="logins">
-    <div id="twitter_login" class="login"><div class="button"></div>
-        #if ($twitter_login)
-            @$twitter_user
-        #else
-        Not Linked Yet
-        #end
-    </div>
-    <div id="sync" class="#if ($weibo_login && $twitter_login) enabled #end"></div>
-    <div id="weibo_login" class="login"><div class="button"></div>
-        #if ($weibo_login)
-            @$weibo_user
-        #else
-            Not Linked Yet
-        #end
-    </div>
+  <div id="twitter_login" class="login"><div class="button"></div>
+    #if ($twitter_login)
+      @$twitter_user
+    #else
+    Not Linked Yet
+    #end
+  </div>
+  <div id="sync" class="#if ($weibo_login && $twitter_login) enabled #end"></div>
+  <div id="weibo_login" class="login"><div class="button"></div>
+    #if ($weibo_login)
+      @$weibo_user
+    #else
+      Not Linked Yet
+    #end
+  </div>
 </div>
 
 <h2 id="h_options">Options</h2>
-<form id="save_form" method="post" action="/u/save">
+<form id="save_form">
 <ul>
-  <li><input type="checkbox" name="options" value="drop_rt" id="drop_rt" #if ($user.dropRTAndReply) checked #end><label for="drop_rt">Do not sync retweets</label></li>
+  <li><input type="checkbox" name="options" value="drop_rt" id="drop_rt" #if ($user.dropRetweets) checked #end><label for="drop_rt">Do not sync retweets</label></li>
   <li><input type="checkbox" name="options" value="drop_at" id="drop_at" #if ($user.dropMentions) checked #end><label for="drop_at">Do not sync any tweets with mentions (@someone)</label></li>
   <li><input type="checkbox" name="options" value="no_image" id="no_image" #if ($user.noImage) checked #end><label for="no_image">Do not upload images</label></li>
   <li><input type="checkbox" name="options" value="with_geo" id="with_location" #if ($user.withGeo) checked #end><label for="with_location">Sync geo locations</label></li>
 </ul>
 
 <br/>
-<input type="hidden" id="action_type" name="actionType" value="save">
 <div class="middle" id="user_buttons">
-  <button class="clean-gray" value="save" id="save_button">Save</button>
-    &nbsp;&nbsp;
-  <button class="clean-gray" value="delete" id="delete_button">Delete Account ...</button>
+  <button type="button" class="clean-gray" value="save" id="save_button">Save</button>
+  &nbsp;&nbsp;
+  <button type="button" class="clean-gray" value="delete" id="delete_button">Delete Account ...</button>
 </div>
 </form>
 <br/>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+$(document).ready(function() {
 
-    $('#delete_button').click(function(e) {
-        smoke.confirm('Do you really want to delete your account and stop syncing?', function(c){
-            if (c) {
-                $('#save_form #action_type').val('delete');
-                $('#save_form').submit();
-            }
+  var f = $('#save_form');
+
+  f.submit(function() {
+    return false;
+  });
+
+  $('#delete_button').click(function(e) {
+    smoke.confirm('Do you really want to delete your account and stop syncing?', function(c){
+      if (c) {
+        $.ajax({
+          url: '/u/save'
+        , type: 'delete'
+        , success: function() {
+            window.location = "/";
+          }
+        , error: function() {
+            smoke.signal('Not able to delete your account.');
+          }
+        });
+      }
 		});
 
-        return false;
+    return false;
+  });
+
+  $('#save_button').click(function() {
+    $.ajax({
+      url: '/u/save'
+    , data: f.serialize()
+    , type: 'post'
+    , success: function() {
+        smoke.signal('Your options are saved!');
+      }
+    , error: function() {
+        smoke.signal('Not able to save your options.');
+      }
     });
+  });
 
-    #if ($message)
-        setTimeout(function() {
-            smoke.signal('$message');
-        }, 500);
-    #end
+  #if ($prompt)
+    setTimeout(function() {
+      smoke.confirm('$prompt', function(c) {
+        if (c) {
+          // do retweets
+          $.get("/tweet", function(data) {
+            smoke.signal('Thank you!');
+          });
+        }
+      });
+    }, 500);
+  #end
 
-    #if ($prompt)
-        setTimeout(function() {
-            smoke.confirm('$prompt', function(c) {
-                if (c) {
-                    // do retweets
-                    $.get("/tweet", function(data) {
-                        smoke.signal('Thank you!');
-                    });
-                }
-            });
-        }, 500);
-    #end
-
-    #if (!$twitter_login)
-        $('#twitter_login').click(function(e) {
-            window.location = "/auth/twitter";
-        });
-    #else
-        $('#twitter_login').removeClass('login');
-    #end
-
-    #if (!$weibo_login)
-        $('#weibo_login').click(function(e) {
-            window.location = "/auth/weibo";
-        });
-    #else
-        $('#weibo_login').removeClass('login');
-    #end
-
+  #if (!$twitter_login)
+    $('#twitter_login').click(function(e) {
+      window.location = "/auth/twitter";
     });
+  #else
+    $('#twitter_login').removeClass('login');
+  #end
+
+  #if (!$weibo_login)
+    $('#weibo_login').click(function(e) {
+      window.location = "/auth/weibo";
+    });
+  #else
+    $('#weibo_login').removeClass('login');
+  #end
+
+});
 </script>

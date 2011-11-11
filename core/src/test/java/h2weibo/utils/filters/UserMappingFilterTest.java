@@ -17,6 +17,7 @@
 package h2weibo.utils.filters;
 
 import h2weibo.model.DBHelper;
+import h2weibo.model.DBHelperFactory;
 import junit.framework.TestCase;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import redis.clients.jedis.JedisPool;
@@ -29,7 +30,7 @@ public class UserMappingFilterTest extends TestCase {
     private DBHelper helper;
 
     public void setUp() throws Exception {
-        helper = new DBHelper(new JedisPool(new GenericObjectPool.Config(), "localhost"));
+        helper = DBHelperFactory.createHelper(new JedisPool(new GenericObjectPool.Config(), "localhost"));
         helper.setWeiboId("Xuzhe", "xu_zhe");
         helper.setWeiboId("EatDami", "大米大仙");
     }

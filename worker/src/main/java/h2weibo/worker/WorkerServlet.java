@@ -19,6 +19,7 @@ package h2weibo.worker;
 import h2weibo.InitServlet;
 import h2weibo.Twitter2Weibo;
 import h2weibo.model.DBHelper;
+import h2weibo.model.DBHelperFactory;
 import h2weibo.model.T2WUser;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.JedisPool;
@@ -38,12 +39,12 @@ public class WorkerServlet extends InitServlet {
 
         log.info("Worker started.");
 
-        JedisPool jedisPool = getPool(getServletContext());
+        JedisPool pool = getPool(getServletContext());
 
         // 3 Threads to handle the sync job
-        new Thread(new SyncWorkerRunnable(new DBHelper(jedisPool))).start();
-        new Thread(new SyncWorkerRunnable(new DBHelper(jedisPool))).start();
-        new Thread(new SyncWorkerRunnable(new DBHelper(jedisPool))).start();
+        new Thread(new SyncWorkerRunnable(DBHelperFactory.createHelper(pool))).start();
+        new Thread(new SyncWorkerRunnable(DBHelperFactory.createHelper(pool))).start();
+        new Thread(new SyncWorkerRunnable(DBHelperFactory.createHelper(pool))).start();
     }
 
     private static class SyncWorkerRunnable implements Runnable {

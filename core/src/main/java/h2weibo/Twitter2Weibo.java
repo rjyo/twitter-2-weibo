@@ -162,7 +162,7 @@ public class Twitter2Weibo {
                     user.setLatestId(status.getId());
                 }
             }
-            user.save();
+            helper.saveUser(user);
         } catch (Exception e) {
             if (!(e instanceof TwitterException)) {
                 log.error("Failed to update.", e);

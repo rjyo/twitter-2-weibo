@@ -18,6 +18,7 @@ package h2weibo.filters;
 
 import h2weibo.Keys;
 import h2weibo.model.DBHelper;
+import h2weibo.model.DBHelperFactory;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.JedisPool;
 
@@ -40,13 +41,11 @@ public class DBFilter implements Filter {
 
         log.debug("In DBFilter");
 
-        JedisPool jedisPool = (JedisPool) context.getAttribute(Keys.CONTEXT_JEDIS_POOL);
-        DBHelper helper = new DBHelper(jedisPool);
+        DBHelper helper = DBHelperFactory.createHelper((JedisPool) context.getAttribute(Keys.CONTEXT_JEDIS_POOL));
         request.setAttribute(Keys.REQUEST_DB_HELPER, helper);
 
         chain.doFilter(req, res);
 
-        jedisPool.returnResource(helper.getJedis());
         request.removeAttribute(Keys.REQUEST_DB_HELPER);
     }
 

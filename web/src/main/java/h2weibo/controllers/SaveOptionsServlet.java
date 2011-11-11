@@ -44,25 +44,31 @@ public class SaveOptionsServlet extends HttpServlet {
 
         DBHelper helper = (DBHelper) request.getAttribute(Keys.REQUEST_DB_HELPER);
         T2WUser user = helper.findOneByUser(loginUser);
-        String actionType = request.getParameter("actionType");
 
-        if ("delete".equals(actionType)) {
-            user.delete();
-            session.invalidate();
-            response.sendRedirect("/");
+        String[] values = request.getParameterValues("options");
+
+        if (values != null) {
+            List<String> list = Arrays.asList(values);
+            user.setOptions(new HashSet<String>(list));
         } else {
-            String[] values = request.getParameterValues("options");
-
-            if (values != null) {
-                List<String> list = Arrays.asList(values);
-                user.setOptions(new HashSet<String>(list));
-            } else {
-                user.setOptions(null);
-            }
-            user.save();
-
-            session.setAttribute(Keys.SESSION_MESSAGE, "User Options Saved.");
-            response.sendRedirect("/u/" + loginUser);
+            user.setOptions(null);
         }
+        helper.saveUser(user);
+
+        session.setAttribute(Keys.SESSION_MESSAGE, "User Options Saved.");
+        response.setStatus(200);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        String loginUser = (String) session.getAttribute(Keys.SESSION_LOGIN_USER);
+        log.info("Deleting user @" + loginUser);
+
+        DBHelper helper = (DBHelper) request.getAttribute(Keys.REQUEST_DB_HELPER);
+        T2WUser user = helper.findOneByUser(loginUser);
+        helper.deleteUser(user);
+        session.invalidate();
+        response.setStatus(200);
     }
 }

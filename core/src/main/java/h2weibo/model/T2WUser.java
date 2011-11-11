@@ -17,7 +17,6 @@
 package h2weibo.model;
 
 import org.apache.log4j.Logger;
-import redis.clients.jedis.Jedis;
 
 import java.util.Set;
 
@@ -27,8 +26,6 @@ import java.util.Set;
  * @author Rakuraku Jyo
  */
 public class T2WUser {
-    private static final Logger log = Logger.getLogger(T2WUser.class.getName());
-
     private String userId;
     private Long latestId;
     private String token;
@@ -37,15 +34,6 @@ public class T2WUser {
     private String twitterToken;
     private Set<String> options;
 
-    private transient DBHelper helper;
-
-    public DBHelper getHelper() {
-        return helper;
-    }
-
-    public void setHelper(DBHelper helper) {
-        this.helper = helper;
-    }
 
     /**
      * Twitter user ID
@@ -124,49 +112,7 @@ public class T2WUser {
         this.options = options;
     }
 
-    public String getWeiboId() {
-        return helper.getWeiboId(this.userId);
-    }
-
-    public void setWeiboId(String weiboId) {
-        helper.setWeiboId(this.userId, weiboId);
-    }
-
     public T2WUser() {
-    }
-
-    public void save() {
-        Jedis j = helper.getJedis();
-
-        j.set("id:" + this.userId + ":latestId", String.valueOf(this.latestId));
-        if (this.token != null) j.set("id:" + this.userId + ":token", this.token);
-        if (this.tokenSecret != null) j.set("id:" + this.userId + ":tokenSecret", this.tokenSecret);
-        if (this.twitterToken != null) j.set("id:" + this.userId + ":twitter_token", this.twitterToken);
-        if (this.twitterTokenSecret != null)
-            j.set("id:" + this.userId + ":twitter_tokenSecret", this.twitterTokenSecret);
-
-        String optionsKey = "id:" + this.userId + ":options";
-        j.del(optionsKey);
-
-        if (options != null) {
-            for (String option : options) {
-                log.debug("Adding " + option + " to " + optionsKey);
-                j.sadd(optionsKey, option);
-            }
-        }
-        j.sadd("twitter:ids", this.userId);
-    }
-
-    public void delete() {
-        Jedis j = helper.getJedis();
-
-        j.del("id:" + this.userId + ":latestId");
-        j.del("id:" + this.userId + ":token");
-        j.del("id:" + this.userId + ":tokenSecret");
-        j.del("id:" + this.userId + ":twitter_token");
-        j.del("id:" + this.userId + ":twitter_tokenSecret");
-        j.del("id:" + this.userId + ":options");
-        j.srem("twitter:ids", this.userId);
     }
 
     @Override

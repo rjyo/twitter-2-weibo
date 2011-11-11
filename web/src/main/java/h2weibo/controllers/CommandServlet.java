@@ -18,6 +18,7 @@ package h2weibo.controllers;
 
 import h2weibo.*;
 import h2weibo.model.DBHelper;
+import h2weibo.model.DBHelperFactory;
 import h2weibo.model.T2WUser;
 import it.sauronsoftware.cron4j.Scheduler;
 import org.apache.log4j.Logger;
@@ -80,13 +81,12 @@ public class CommandServlet extends InitServlet {
                 t.start();
                 response.sendRedirect("/");
             } else if (router.is(":cmd", "info")) {
-                String info = helper.getJedis().info();
+                String info = helper.getJedisInfo();
                 writer.println(info);
             } else if (router.is(":cmd", "del")) {
                 if (router.has(":id")) {
                     String user = router.get(":id");
-                    T2WUser id = helper.findOneByUser(user);
-                    id.delete();
+                    helper.deleteUser(helper.findOneByUser(user));
                     response.sendRedirect("/u/" + user);
                 }
             } else if (router.is(":cmd", "u")) {
@@ -94,7 +94,7 @@ public class CommandServlet extends InitServlet {
                     T2WUser u = helper.findOneByUser(router.get(":id"));
                     writer.println(String.format("Latest tweet ID is %d", u.getLatestId()));
                     writer.println(String.format("Twitter ID is %s", router.get(":id")));
-                    writer.println(String.format("Weibo ID is %s", u.getWeiboId()));
+                    writer.println(String.format("Weibo ID is %s", helper.getWeiboId(u.getUserId())));
                     writer.println(String.format("Twitter Token %s", u.getTwitterToken()));
                     writer.println(String.format("Twitter Secret %s", u.getTwitterTokenSecret()));
                     writer.println(String.format("Weibo Token %s", u.getToken()));
@@ -114,21 +114,21 @@ public class CommandServlet extends InitServlet {
         log.info("Web started.");
 
         JedisPool jedisPool = getPool(getServletContext());
-        DBHelper helper = new DBHelper(jedisPool);
+        DBHelper helper = DBHelperFactory.createHelper(jedisPool);
         // clear the queue
         helper.clearQueue();
 
         Scheduler scheduler = new Scheduler();
 
         QueueTask task = new QueueTask();
-        task.setHelper(new DBHelper(jedisPool));
+        task.setHelper(DBHelperFactory.createHelper(jedisPool));
         scheduler.schedule("*/2 * * * *", task);
 
         System.setProperty("h2weibo.awsAccessKey", config.getInitParameter("accessKey"));
         System.setProperty("h2weibo.awsSecretAccessKey", config.getInitParameter("secretAccessKey"));
 
         S3BackupTask task2 = new S3BackupTask();
-        task2.setHelper(new DBHelper(jedisPool));
+        task2.setHelper(DBHelperFactory.createHelper(jedisPool));
         scheduler.schedule("0 * * * *", task2);
 
         scheduler.start();

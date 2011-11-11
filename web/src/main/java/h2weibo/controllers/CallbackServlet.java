@@ -71,7 +71,7 @@ public class CallbackServlet extends HttpServlet {
 
                     tid.setToken(accessToken.getToken());
                     tid.setTokenSecret(accessToken.getTokenSecret());
-                    tid.save();
+                    helper.saveUser(tid);
                 } else {
                     log.error("Can't auth " + loginUser + " for Weibo. " + request.getQueryString());
                 }
@@ -106,7 +106,7 @@ public class CallbackServlet extends HttpServlet {
 
                     tid.setTwitterToken(accessToken.getToken());
                     tid.setTwitterTokenSecret(accessToken.getTokenSecret());
-                    tid.save();
+                    helper.saveUser(tid);
 
                     session.setAttribute(Keys.SESSION_LOGIN_USER, loginUser);
                 }

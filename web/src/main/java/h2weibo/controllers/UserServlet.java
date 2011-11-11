@@ -57,7 +57,7 @@ public class UserServlet extends VelocityLayoutServlet {
             return getTemplate("full.vm");
         }
 
-        T2WUser t2wUser = helper.findOneByUser(uId);
+        T2WUser user = helper.findOneByUser(uId);
         if (r.has(":id")) {
             log.info("Displaying user info for @" + uId);
 
@@ -65,21 +65,21 @@ public class UserServlet extends VelocityLayoutServlet {
             ctx.put("user", helper.findOneByUser(uId));
 
             try {
-                weibo4j.User user = (weibo4j.User) session.getAttribute(Keys.SESSION_WEIBO_USER);
-                if (user == null) {
+                weibo4j.User weiboUser = (weibo4j.User) session.getAttribute(Keys.SESSION_WEIBO_USER);
+                if (weiboUser == null) {
                     Weibo w = new Weibo();
-                    w.setToken(t2wUser.getToken(), t2wUser.getTokenSecret());
-                    user = w.verifyCredentials();
+                    w.setToken(user.getToken(), user.getTokenSecret());
+                    weiboUser = w.verifyCredentials();
 
-                    session.setAttribute(Keys.SESSION_WEIBO_USER, user);
+                    session.setAttribute(Keys.SESSION_WEIBO_USER, weiboUser);
                 }
 
-                ctx.put("weibo_user", user.getScreenName());
-                ctx.put("weibo_user_image", user.getProfileImageURL().toString());
+                ctx.put("weibo_user", weiboUser.getScreenName());
+                ctx.put("weibo_user_image", weiboUser.getProfileImageURL().toString());
                 ctx.put("weibo_login", 1);
 
-                // save user ID mapping
-                t2wUser.setWeiboId(user.getScreenName());
+                // save weiboUser ID mapping
+                helper.setWeiboId(user.getUserId(), weiboUser.getScreenName());
             } catch (Exception e) {
                 // 401 = not logged in
                 if (e instanceof WeiboException && ((WeiboException) e).getStatusCode() != 401) {
@@ -88,18 +88,18 @@ public class UserServlet extends VelocityLayoutServlet {
             }
 
             try {
-                twitter4j.User user = (twitter4j.User) session.getAttribute(Keys.SESSION_TWITTER_USER);
-                if (user == null) {
+                twitter4j.User twitterUser = (twitter4j.User) session.getAttribute(Keys.SESSION_TWITTER_USER);
+                if (twitterUser == null) {
                     TwitterFactory factory = new TwitterFactory();
                     Twitter t = factory.getInstance();
-                    t.setOAuthAccessToken(new AccessToken(t2wUser.getTwitterToken(), t2wUser.getTwitterTokenSecret()));
+                    t.setOAuthAccessToken(new AccessToken(user.getTwitterToken(), user.getTwitterTokenSecret()));
 
-                    user = t.verifyCredentials();
-                    session.setAttribute(Keys.SESSION_TWITTER_USER, user);
+                    twitterUser = t.verifyCredentials();
+                    session.setAttribute(Keys.SESSION_TWITTER_USER, twitterUser);
                 }
 
-                ctx.put("twitter_user", user.getScreenName());
-                ctx.put("twitter_user_image", user.getProfileImageURL().toString());
+                ctx.put("twitter_user", twitterUser.getScreenName());
+                ctx.put("twitter_user_image", twitterUser.getProfileImageURL().toString());
                 ctx.put("twitter_login", 1);
             } catch (Exception e) {
                 // 401 = not logged in
