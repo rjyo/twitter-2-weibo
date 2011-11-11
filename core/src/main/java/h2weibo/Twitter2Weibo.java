@@ -154,7 +154,14 @@ public class Twitter2Weibo {
             }
             user.save();
         } catch (Exception e) {
-            log.error("Failed to update.", e);
+            if (e instanceof TwitterException) {
+                TwitterException te = (TwitterException) e;
+                if (te.getStatusCode() != 400 && te.getStatusCode() != 404) {
+                    log.error(te.getMessage());
+                }
+            } else {
+                log.error("Failed to update.", e);
+            }
         }
     }
 }

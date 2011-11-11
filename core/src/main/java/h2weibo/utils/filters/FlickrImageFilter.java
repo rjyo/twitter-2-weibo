@@ -51,24 +51,28 @@ public class FlickrImageFilter implements StatusFilter {
     private String extraceFromShortURL(String input) {
         Pattern p = Pattern.compile("flic.kr/p/(\\w+)/?.*");
         Matcher m = p.matcher(input);
-        if (m.find()) input = "http://www.flickr.com/photo.gne?short=" + m.group(1);
+        if (m.find()) {
+            input = "http://www.flickr.com/photo.gne?short=" + m.group(1);
 
-        String imageUrl = null;
-        try {
-            URL url = new URL(input);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setInstanceFollowRedirects(false);
-            conn.connect();
-            int code = conn.getResponseCode();
-            if (code == 302) {
-                String loc = conn.getHeaderField("location");
-                imageUrl = extraceFromFullURL("http://www.flickr.com" + loc);
+            String imageUrl = null;
+            try {
+                URL url = new URL(input);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setInstanceFollowRedirects(false);
+                conn.connect();
+                int code = conn.getResponseCode();
+                if (code == 302) {
+                    String loc = conn.getHeaderField("location");
+                    imageUrl = extraceFromFullURL("http://www.flickr.com" + loc);
+                }
+                conn.disconnect();
+            } catch (Exception e) {
+                log.error("Not able to handle flickr's short url/", e);
             }
-            conn.disconnect();
-        } catch (Exception e) {
-            log.error("Not able to handle flickr's short url/", e);
+            return imageUrl;
+        } else {
+            return null;
         }
-        return imageUrl;
     }
 
     private String extraceFromFullURL(String input) {
