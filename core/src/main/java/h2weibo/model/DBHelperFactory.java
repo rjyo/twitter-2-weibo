@@ -16,13 +16,16 @@
 
 package h2weibo.model;
 
+import org.apache.log4j.Logger;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.exceptions.JedisException;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 public class DBHelperFactory {
+    private static final Logger log = Logger.getLogger(DBHelperFactory.class.getName());
 
 
     private static class JedisInvocationHandler implements InvocationHandler {
@@ -33,10 +36,19 @@ public class DBHelperFactory {
         }
 
         public Object invoke(Object o, Method method, Object[] args) throws Throwable {
-            helper.prepareJedis();
-            Object result = method.invoke(helper, args);
-            helper.returnJedis();
-            return result;
+            try {
+                helper.prepareJedis();
+                Object result = method.invoke(helper, args);
+                helper.returnJedis();
+                return result;
+            } catch (JedisException e) {
+                log.error(e);
+                log.info("Trying to recover Jedis connection");
+                helper.returnBrokenJedis();
+                Object result = method.invoke(helper, args);
+                helper.returnJedis();
+                return result;
+            }
         }
     }
 

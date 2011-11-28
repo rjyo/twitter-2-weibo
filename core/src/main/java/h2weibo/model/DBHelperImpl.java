@@ -52,6 +52,12 @@ class DBHelperImpl implements DBHelper {
         jedis = null;
     }
 
+    void returnBrokenJedis() {
+        log.debug("Return borken Jedis");
+        pool.returnBrokenResource(jedis);
+        jedis = null;
+    }
+
     public Set<String> getAuthorizedIds() {
         return jedis.smembers(USER_SET_KEY);
     }
