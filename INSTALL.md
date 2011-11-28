@@ -13,10 +13,10 @@
 ## Step.0 前提条件
 
 1. 服务器架设在 cloudfoundry.com，这是 VMWare 提供的免费云服务。需要架设的同学需要先申请一个账号。
-2. cloudfoundy 没有 GUI 的界面管理应用，需要使用一个叫做 vmc 的命令来上传应用。这个应用是一个 ruby 代码，所以需要你的本地环境能够安装 ruby 的 gem
-3. 代码用 Java 书写，至少需要有一个能够编译 Java 代码的环境。代码管理和编译使用 Apache Maven2
+2. cloudfoundy 没有 GUI 的界面管理应用，需要使用一个叫做 vmc 的命令来上传应用。这个命令是 ruby 写的，所以需要你的本地有 ruby 的运行环境和 gem (ruby 的包管理软件)
+3. 代码用 Java 书写，至少需要有一个能够编译 Java 代码的环境。代码管理和编译使用的 Apache Maven2 也必须有。
 
-如果看到上面三项已经让你觉得头疼，很好，你可以到此收手了。试试看别的同步应用。
+如果看到上面三项已经让你觉得头疼，很好，你可以到此收手，试试看别的同步应用。
 
 
 ## Step.1 创建应用
@@ -24,7 +24,6 @@
 为了完成同步，首先需要在围脖和 Twitter 各创建一个应用，一个负责取数据，一个负责写数据。
 
 * 在 https://dev.twitter.com/ 创建一个新应用，取得 Consumer key 和 Consumer Secret
-
 * 在 http://open.weibo.com/ 创建一个网站。名称地址介绍等都可以随便填，域名绑定选择否。完成后看应用信息可以看到 App Key 和 App Secret
 
 ## Step.2 编译 h2weibo
