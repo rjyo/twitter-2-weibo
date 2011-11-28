@@ -8,12 +8,24 @@
         <servlet-class>h2weibo.controllers.CommandServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
         <init-param>
-            <param-name>accessKey</param-name>
-            <param-value>${s3.access}</param-value>
+            <param-name>t_k</param-name>
+            <param-value>${t_k}</param-value>
         </init-param>
         <init-param>
-            <param-name>secretAccessKey</param-name>
-            <param-value>${s3.secret}</param-value>
+            <param-name>t_s</param-name>
+            <param-value>${t_s}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>w_k</param-name>
+            <param-value>${w_k}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>w_s</param-name>
+            <param-value>${w_s}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>admin</param-name>
+            <param-value>${admin.user}</param-value>
         </init-param>
     </servlet>
 

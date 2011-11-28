@@ -37,7 +37,8 @@ public class AdminFilter implements Filter {
         HttpSession session = ((HttpServletRequest) req).getSession();
         String user = (String) session.getAttribute(Keys.SESSION_LOGIN_USER);
 
-        if (!"xu_lele".equals(user)) {
+        String admin = System.getProperty("h2weibo.admin.user", "xu_lele");
+        if (!admin.equals(user)) {
             log.info("Not logged in. Redirect to twitter login.");
             session.setAttribute(Keys.SESSION_REQUEST_URL, ((HttpServletRequest) req).getRequestURL().toString());
             ((HttpServletResponse) res).sendRedirect("/auth/twitter");

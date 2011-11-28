@@ -43,8 +43,6 @@ public class WorkerServlet extends InitServlet {
 
         // 3 Threads to handle the sync job
         new Thread(new SyncWorkerRunnable(DBHelperFactory.createHelper(pool))).start();
-        new Thread(new SyncWorkerRunnable(DBHelperFactory.createHelper(pool))).start();
-        new Thread(new SyncWorkerRunnable(DBHelperFactory.createHelper(pool))).start();
     }
 
     private static class SyncWorkerRunnable implements Runnable {

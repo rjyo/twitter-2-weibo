@@ -49,60 +49,45 @@ public class CommandServlet extends InitServlet {
 
         final DBHelper helper = (DBHelper) request.getAttribute(Keys.REQUEST_DB_HELPER);
 
-        if (router.is(":cmd", "dump")) {
-            S3BackupTask task = new S3BackupTask();
-            task.setHelper(helper);
-            task.run();
+        if (router.is(":cmd", "users")) {
+            Set<String> ids = helper.getAuthorizedIds();
+            Map<String, String> mappings = helper.getMappings();
+
+            writer.println(String.format("Syncing user list: (%d users)", ids.size()));
+            for (String id : ids) {
+                writer.println(String.format("  %s => %s", id, mappings.get(id)));
+            }
+        } else if (router.is(":cmd", "mapping")) {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    helper.createUserMap();
+                }
+            });
+            t.start();
             response.sendRedirect("/");
-        } else if (router.is(":cmd", "restore")) {
-            S3BackupTask task = new S3BackupTask();
+        } else if (router.is(":cmd", "info")) {
+            String info = helper.getJedisInfo();
+            writer.println(info);
+        } else if (router.is(":cmd", "del")) {
             if (router.has(":id")) {
-                task.restore(router.get(":id"));
-                response.sendRedirect("/");
-            } else {
-                writer.println("Parameter error");
+                String user = router.get(":id");
+                helper.deleteUser(helper.findOneByUser(user));
+                response.sendRedirect("/u/" + user);
+            }
+        } else if (router.is(":cmd", "u")) {
+            if (router.has(":id")) {
+                T2WUser u = helper.findOneByUser(router.get(":id"));
+                writer.println(String.format("Latest tweet ID is %d", u.getLatestId()));
+                writer.println(String.format("Twitter ID is %s", router.get(":id")));
+                writer.println(String.format("Weibo ID is %s", helper.getWeiboId(u.getUserId())));
+                writer.println(String.format("Twitter Token %s", u.getTwitterToken()));
+                writer.println(String.format("Twitter Secret %s", u.getTwitterTokenSecret()));
+                writer.println(String.format("Weibo Token %s", u.getToken()));
+                writer.println(String.format("Weibo Secret %s", u.getTokenSecret()));
             }
         } else {
-            if (router.is(":cmd", "users")) {
-                Set<String> ids = helper.getAuthorizedIds();
-                Map<String, String> mappings = helper.getMappings();
-
-                writer.println(String.format("Syncing user list: (%d users)", ids.size()));
-                for (String id : ids) {
-                    writer.println(String.format("  %s => %s", id, mappings.get(id)));
-                }
-            } else if (router.is(":cmd", "mapping")) {
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        helper.createUserMap();
-                    }
-                });
-                t.start();
-                response.sendRedirect("/");
-            } else if (router.is(":cmd", "info")) {
-                String info = helper.getJedisInfo();
-                writer.println(info);
-            } else if (router.is(":cmd", "del")) {
-                if (router.has(":id")) {
-                    String user = router.get(":id");
-                    helper.deleteUser(helper.findOneByUser(user));
-                    response.sendRedirect("/u/" + user);
-                }
-            } else if (router.is(":cmd", "u")) {
-                if (router.has(":id")) {
-                    T2WUser u = helper.findOneByUser(router.get(":id"));
-                    writer.println(String.format("Latest tweet ID is %d", u.getLatestId()));
-                    writer.println(String.format("Twitter ID is %s", router.get(":id")));
-                    writer.println(String.format("Weibo ID is %s", helper.getWeiboId(u.getUserId())));
-                    writer.println(String.format("Twitter Token %s", u.getTwitterToken()));
-                    writer.println(String.format("Twitter Secret %s", u.getTwitterTokenSecret()));
-                    writer.println(String.format("Weibo Token %s", u.getToken()));
-                    writer.println(String.format("Weibo Secret %s", u.getTokenSecret()));
-                }
-            } else {
-                response.sendRedirect("/");
-            }
+            response.sendRedirect("/");
         }
         writer.close();
     }
@@ -113,26 +98,60 @@ public class CommandServlet extends InitServlet {
 
         log.info("Web started.");
 
-        JedisPool jedisPool = getPool(getServletContext());
-        DBHelper helper = DBHelperFactory.createHelper(jedisPool);
+        JedisPool pool = getPool(getServletContext());
+        DBHelper helper = DBHelperFactory.createHelper(pool);
         // clear the queue
         helper.clearQueue();
 
         Scheduler scheduler = new Scheduler();
 
         QueueTask task = new QueueTask();
-        task.setHelper(DBHelperFactory.createHelper(jedisPool));
+        task.setHelper(DBHelperFactory.createHelper(pool));
         scheduler.schedule("*/2 * * * *", task);
-
-        System.setProperty("h2weibo.awsAccessKey", config.getInitParameter("accessKey"));
-        System.setProperty("h2weibo.awsSecretAccessKey", config.getInitParameter("secretAccessKey"));
-
-        S3BackupTask task2 = new S3BackupTask();
-        task2.setHelper(DBHelperFactory.createHelper(jedisPool));
-        scheduler.schedule("0 * * * *", task2);
 
         scheduler.start();
 
         log.info("Cron scheduler started.");
+
+
+        log.info("Worker started.");
+        // 1 Threads to handle the sync job
+        new Thread(new SyncWorkerRunnable(DBHelperFactory.createHelper(pool))).start();
     }
+
+    private static class SyncWorkerRunnable implements Runnable {
+        private DBHelper helper;
+
+        public SyncWorkerRunnable(DBHelper helper) {
+            this.helper = helper;
+        }
+
+        @Override
+        public void run() {
+            long size = helper.getQueueSize();
+            log.info("Start running, queue size = " + size + ", user count = " + helper.getUserCount());
+
+            int multiper = 1;
+            while (true) {
+                T2WUser user = helper.pop();
+                if (user != null) {
+                    multiper = 1;
+                    String userId = user.getUserId();
+                    Twitter2Weibo weibo = new Twitter2Weibo(helper);
+                    weibo.syncTwitter(userId);
+                    log.debug("Syncing for " + userId);
+                } else {
+                    try {
+                        log.info("No task found, sleeping");
+                        Thread.sleep(4000 * multiper);
+                        multiper *= 2;
+                    } catch (InterruptedException e) {
+                        log.error("Error when try to sleep thread.", e);
+                    }
+                }
+            }
+
+        }
+    }
+
 }

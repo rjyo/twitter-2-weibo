@@ -77,15 +77,17 @@ public class InitServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
+        System.setProperty("h2weibo.admin.user", config.getInitParameter("admin"));
+
         // Key for Weibo App
-        System.setProperty("weibo4j.oauth.consumerKey", "2440858351");
-        System.setProperty("weibo4j.oauth.consumerSecret", "1faf4ed7b4af302907e25429a0b88dfc");
+        System.setProperty("weibo4j.oauth.consumerKey", config.getInitParameter("w_k"));
+        System.setProperty("weibo4j.oauth.consumerSecret", config.getInitParameter("w_s"));
 
         System.setProperty("weibo4j.debug", "false");
 
         // Key for Twitter App
-        System.setProperty("twitter4j.oauth.consumerKey", "Scwn2HbdT7v3yOEjkAQrfQ");
-        System.setProperty("twitter4j.oauth.consumerSecret", "QIz4dbgb5ABzNMjfP1Sb0YdwKTY2oKQwhLoehk0ug");
+        System.setProperty("twitter4j.oauth.consumerKey", config.getInitParameter("t_k"));
+        System.setProperty("twitter4j.oauth.consumerSecret", config.getInitParameter("t_s"));
 
         log.info("System initialized.");
 
