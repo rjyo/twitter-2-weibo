@@ -84,11 +84,11 @@
 将下面的 h2w-test1 改为你任意的应用名
 
 	$ vmc push h2w-test1 --path ./web/target/h2weibo
-	Application Deployed URL ["h2w-single.cloudfoundry.com"]:
+	Application Deployed URL [" h2w-test1.cloudfoundry.com"]:
 	Detected a Java Web Application, is this correct? [Yn]: y
 	Memory Reservation ("64M", "128M", "256M", "512M", "1G") ["512M"]: 256M
 	Creating Application: OK
-	Would you like to bind any services to 'h2w-single'? [yN]: y
+	Would you like to bind any services to ' h2w-test1'? [yN]: y
 	Would you like to use an existing provisioned service? [yN]: n
 	The following system services are available
 	1: mongodb
@@ -97,9 +97,9 @@
 	4: rabbitmq
 	5: redis
 	Please select one you wish to provision: 5
-	Specify the name of the service ["redis-b529f"]: h2w-single
+	Specify the name of the service ["redis-b529f"]:  h2w-test1
 	Creating Service: OK
-	Binding Service [h2w-single]: OK
+	Binding Service [ h2w-test1]: OK
 	Uploading Application:
 	  Checking for available resources: OK
 	  Processing resources: OK
