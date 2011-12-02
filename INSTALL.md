@@ -25,6 +25,7 @@
 
 * 在 https://dev.twitter.com/ 创建一个新应用，取得 Consumer key 和 Consumer Secret
 * 在 http://open.weibo.com/ 创建一个网站。名称地址介绍等都可以随便填，域名绑定选择否。完成后看应用信息可以看到 App Key 和 App Secret
+* 这四个畸形字符串填入项目根目录下的 default.properties
 
 ## Step.2 编译 h2weibo
 
