@@ -18,6 +18,8 @@
 
 如果看到上面三项已经让你觉得头疼，很好，你可以到此收手，试试看别的同步应用。
 
+另：如果安装中碰到了问题可以先看看下面的反馈信息，如不能解决可以 [@xu_lele](http://twitter.com/xu_lele) 直接问我。
+
 
 ## Step.1 创建应用
 
@@ -110,3 +112,9 @@
 ## Step.4 使用
 
 直接访问以刚才的应用名打头的地址 http://h2w-test1.cloudfoundry.com 即可
+
+## 反馈信息
+
+* via [@StXh](http://twitter.com/StXh) - 安装成功了。maven不能用ubuntu 11.10源里的，下载了安装文档里的才能编译过
+* via [@cneeduy](http://twitter.com/cneeduy) - h2weibo搭建成功了，编译要用jdk1.6，否则过不了
+* via [@lelige](http://twitter.com/lelige) - 自建 #H2Weibo 注意事项：在墙内执行“gem install vmc”会失败，建议VPN；JDK要预先装好，JRE是不够的
