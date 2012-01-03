@@ -38,9 +38,8 @@ public class AdminFilter implements Filter {
         String user = (String) session.getAttribute(Keys.SESSION_LOGIN_USER);
 
         if (!"xu_lele".equals(user)) {
-            log.info("Not logged in. Redirect to twitter login.");
-            session.setAttribute(Keys.SESSION_REQUEST_URL, ((HttpServletRequest) req).getRequestURL().toString());
-            ((HttpServletResponse) res).sendRedirect("/auth/twitter");
+            log.info("Not logged in as Admin.");
+            ((HttpServletResponse) res).sendRedirect("/");
         } else {
             chain.doFilter(req, res);
         }
