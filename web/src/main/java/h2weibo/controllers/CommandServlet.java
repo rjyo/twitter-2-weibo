@@ -100,6 +100,16 @@ public class CommandServlet extends InitServlet {
                     writer.println(String.format("Weibo Token %s", u.getToken()));
                     writer.println(String.format("Weibo Secret %s", u.getTokenSecret()));
                 }
+            } else if (router.is(":cmd", "blank")) {
+                Set<String> ids = helper.getAuthorizedIds();
+
+                for (String id : ids) {
+                    T2WUser u = helper.findOneByUser(id);
+                    u.setLatestId(0L);
+                    helper.saveUser(u);
+                }
+
+                writer.println("All latestId set to 0 now");
             } else {
                 response.sendRedirect("/");
             }
