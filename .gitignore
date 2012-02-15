@@ -8,3 +8,4 @@ target
 *.id
 *.id
 *.log
+default.properties
