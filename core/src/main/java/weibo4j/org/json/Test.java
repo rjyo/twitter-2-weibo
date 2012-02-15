@@ -6,7 +6,7 @@ import java.util.Map;
 import java.io.StringWriter;
 
 /**
- * HelloWeibo class. This file is not formally a member of the weibo4j.org.json library.
+ * Test class. This file is not formally a member of the org.json library.
  * It is just a casual test tool.
  */
 public class Test {
@@ -72,7 +72,7 @@ public class Test {
     	Obj obj = new Obj("A beany object", 42, true);
         
         try {     
-            j = XML.toJSONObject("<![CDATA[This is a collection of test patterns and examples for weibo4j.org.json.]]>  Ignore the stuff past the end.  ");
+            j = XML.toJSONObject("<![CDATA[This is a collection of test patterns and examples for org.json.]]>  Ignore the stuff past the end.  ");
             System.out.println(j.toString());
 
             s = "{     \"list of lists\" : [         [1, 2, 3],         [4, 5, 6],     ] }";

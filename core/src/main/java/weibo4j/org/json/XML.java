@@ -133,7 +133,7 @@ public class XML {
         String     s;
         Object     t;
 
-// HelloWeibo for and skip past these forms:
+// Test for and skip past these forms:
 //      <!-- ... -->
 //      <!   ...   >
 //      <![  ... ]]>

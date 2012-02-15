@@ -33,7 +33,7 @@ import weibo4j.org.json.JSONObject;
  * A data class representing Treand.
  *
  * @author Yusuke Yamamoto - yusuke at mac.com
- * @since Weibo4J 2.0.2
+ * @since Weibo4J 1.2.1
  */
 public class Trend implements java.io.Serializable{
     private String name;

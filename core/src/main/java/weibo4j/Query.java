@@ -56,7 +56,7 @@ public class Query {
     private boolean base_app=true;//是否不基于当前应用来获取数据
     private int filter_ori=0;//过滤器，是否为原创，0为全部，5为原创，4为转发。默认为0。
     private int filter_pic;//过滤器。是否包含图片。0为全部，1为包含，2为不包含。
-    private Integer fuid;//微博作者的用户ID。
+    private long fuid;//微博作者的用户ID。
     private Date starttime;//开始时间，Unix时间戳
     private Date endtime;//结束时间，Unix时间戳
     private boolean needcount=false;//返回结果中是否包含返回记录数。true则返回搜索结果记录数。
@@ -154,7 +154,7 @@ public class Query {
 	public void setFilter_pic(int filterPic) {
 		filter_pic = filterPic;
 	}
-	public Integer getFuid() {
+	public long getFuid() {
 		return fuid;
 	}
 	public void setFuid(Integer fuid) {
@@ -215,6 +215,8 @@ public class Query {
 			return new PostParameter(name, value.toString());
 		}else if(value instanceof Integer){
 			return new PostParameter(name,Integer.toString((Integer)value));
+		}else if(value instanceof Long){
+			return new PostParameter(name,Long.toString((Long)value));
 		}else if(value instanceof Gender) {
 			return new PostParameter(name,Gender.valueOf((Gender)value));
 		}

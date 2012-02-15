@@ -166,9 +166,9 @@ public class OAuth implements java.io.Serializable {
 
     /**
      * The request parameters are collected, sorted and concatenated into a normalized string:<br>
-     * 鈥�Parameters in the OAuth HTTP Authorization header excluding the realm parameter.<br>
-     * 鈥�Parameters in the HTTP POST request body (with a content-type of application/x-www-form-urlencoded).<br>
-     * 鈥�HTTP GET parameters added to the URLs in the query part (as defined by [RFC3986] section 3).<br>
+     * Parameters in the OAuth HTTP Authorization header excluding the realm parameter.<br>
+     * Parameters in the HTTP POST request body (with a content-type of application/x-www-form-urlencoded).<br>
+     * HTTP GET parameters added to the URLs in the query part (as defined by [RFC3986] section 3).<br>
      * <br>
      * The oauth_signature parameter MUST be excluded.<br>
      * The parameters are normalized into a single string as follows:<br>

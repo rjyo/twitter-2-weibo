@@ -43,14 +43,14 @@ import weibo4j.http.HttpClient;
         USE_SSL = Configuration.useSSL();
         setClientVersion(null);
         setClientURL(null);
-        setUserId(userId);
-        setPassword(password);
+//        setUserId(userId);
+//        setPassword(password);
     }
 
     /**
      * Sets the User-Agent header. System property -Dsinat4j.http.userAgent overrides this attribute.
      * @param userAgent UserAgent
-     * @since Weibo4J 1.1.8
+     * @since Weibo4J 1.2.1
      */
     public void setUserAgent(String userAgent){
         http.setUserAgent(userAgent);
@@ -59,7 +59,7 @@ import weibo4j.http.HttpClient;
     /**
      *
      * @return UserAgent
-     * @since Weibo4J 1.1.8
+     * @since Weibo4J 1.2.1
      */
     public String getUserAgent(){
         return http.getUserAgent();
@@ -68,7 +68,7 @@ import weibo4j.http.HttpClient;
     /**
      * Sets the X-Weibo-Client-Version header. System property -Dsinat4j.clientVersion overrides this attribute.
      * @param version client version
-     * @since Weibo4J 1.1.8
+     * @since Weibo4J 1.2.1
      */
     public void setClientVersion(String version){
         setRequestHeader("X-Weibo-Client-Version", Configuration.getCilentVersion(version));
@@ -77,7 +77,7 @@ import weibo4j.http.HttpClient;
     /**
      *
      * @return client version
-     * @since Weibo4J 1.1.8
+     * @since Weibo4J 1.2.1
      */
     public String getClientVersion(){
         return http.getRequestHeader("X-Weibo-Client-Version");
@@ -86,7 +86,7 @@ import weibo4j.http.HttpClient;
     /**
      * Sets the X-Weibo-Client-URL header. System property -Dsinat4j.clientURL overrides this attribute.
      * @param clientURL client URL
-     * @since Weibo4J 1.1.8
+     * @since Weibo4J 1.2.1
      */
     public void setClientURL(String clientURL){
         setRequestHeader("X-Weibo-Client-URL", Configuration.getClientURL(clientURL));
@@ -95,20 +95,20 @@ import weibo4j.http.HttpClient;
     /**
      *
      * @return client URL
-     * @since Weibo4J 1.1.8
+     * @since Weibo4J 1.2.1
      */
     public String getClientURL(){
         return http.getRequestHeader("X-Weibo-Client-URL");
     }
 
-    /**
-     * Sets the userid
-     *
-     * @param userId new userid
-     */
-    public synchronized void setUserId(String userId) {
-        http.setUserId(Configuration.getUser(userId));
-    }
+//    /**
+//     * Sets the userid
+//     *
+//     * @param userId new userid
+//     */
+//    public synchronized void setUserId(String userId) {
+//        http.setUserId(Configuration.getUser(userId));
+//    }
 
     /**
      * Returns authenticating userid
@@ -119,14 +119,14 @@ import weibo4j.http.HttpClient;
         return http.getUserId();
     }
 
-    /**
-     * Sets the password
-     *
-     * @param password new password
-     */
-    public synchronized void setPassword(String password) {
-        http.setPassword(Configuration.getPassword(password));
-    }
+//    /**
+//     * Sets the password
+//     *
+//     * @param password new password
+//     */
+//    public synchronized void setPassword(String password) {
+//        http.setPassword(Configuration.getPassword(password));
+//    }
 
     /**
      * Returns authenticating password
@@ -142,7 +142,7 @@ import weibo4j.http.HttpClient;
      *
      * @param proxyHost proxy host, can be overridden system property -Dsinat4j.http.proxyHost , -Dhttp.proxyHost
      * @param proxyPort proxy port, can be overridden system property -Dsinat4j.http.proxyPort , -Dhttp.proxyPort
-     * @since Weibo4J 1.1.6
+     * @since Weibo4J 1.2.1
      */
     public void setHttpProxy(String proxyHost, int proxyPort) {
         http.setProxyHost(proxyHost);
@@ -152,9 +152,9 @@ import weibo4j.http.HttpClient;
     /**
      * Adds authentication on HTTP proxy
      *
-     * @param proxyUser proxy userId, can be overridden system property -Dsinat4j.http.proxyUser
+     * @param proxyUser proxy user, can be overridden system property -Dsinat4j.http.proxyUser
      * @param proxyPass proxy password, can be overridden system property -Dsinat4j.http.proxyPassword
-     * @since Weibo4J 1.1.6
+     * @since Weibo4J 1.2.1
      */
     public void setHttpProxyAuth(String proxyUser, String proxyPass) {
         http.setProxyAuthUser(proxyUser);
@@ -166,7 +166,7 @@ import weibo4j.http.HttpClient;
      * System property -Dsinat4j.http.connectionTimeout overrides this attribute.
      *
      * @param connectionTimeout an int that specifies the connect timeout value in milliseconds
-     * @since Weibo4J 1.1.6
+     * @since Weibo4J 1.2.1
      */
     public void setHttpConnectionTimeout(int connectionTimeout) {
         http.setConnectionTimeout(connectionTimeout);
@@ -176,7 +176,7 @@ import weibo4j.http.HttpClient;
      * Sets the read timeout to a specified timeout, in milliseconds.
      *
      * @param readTimeoutMilliSecs an int that specifies the timeout value to be used in milliseconds
-     * @since Weibo4J 1.1.6
+     * @since Weibo4J 1.2.1
      */
     public void setHttpReadTimeout(int readTimeoutMilliSecs) {
         http.setReadTimeout(readTimeoutMilliSecs);

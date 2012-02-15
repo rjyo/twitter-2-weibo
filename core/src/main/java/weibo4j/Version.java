@@ -30,7 +30,7 @@ package weibo4j;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 public class Version {
-    private final static String VERSION = "2.0.10";
+    private final static String VERSION = "1.2.1";
     private final static String TITLE = "Weibo4J";
 
     public static String getVersion(){

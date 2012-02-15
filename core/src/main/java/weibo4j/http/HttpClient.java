@@ -47,6 +47,8 @@ import java.util.Map;
 import javax.activation.MimetypesFileTypeMap;
 
 import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HostConfiguration;
+import org.apache.commons.httpclient.URI;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -65,20 +67,19 @@ import weibo4j.WeiboException;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 public class HttpClient implements java.io.Serializable {
-    private static final int OK = 200;// OK: Success!
-    private static final int NOT_MODIFIED = 304;// Not Modified: There was no new data to return.
-    private static final int BAD_REQUEST = 400;// Bad Request: The request was invalid.  An accompanying error message will explain why. This is the status code will be returned during rate limiting.
-    private static final int NOT_AUTHORIZED = 401;// Not Authorized: Authentication credentials were missing or incorrect.
-    private static final int FORBIDDEN = 403;// Forbidden: The request is understood, but it has been refused.  An accompanying error message will explain why.
-    private static final int NOT_FOUND = 404;// Not Found: The URI requested is invalid or the resource requested, such as a userId, does not exists.
-    private static final int NOT_ACCEPTABLE = 406;// Not Acceptable: Returned by the Search API when an invalid format is specified in the request.
+    private static final int OK 				= 200;						// OK: Success!
+    private static final int NOT_MODIFIED 		= 304;			// Not Modified: There was no new data to return.
+    private static final int BAD_REQUEST 		= 400;				// Bad Request: The request was invalid.  An accompanying error message will explain why. This is the status code will be returned during rate limiting.
+    private static final int NOT_AUTHORIZED 	= 401;			// Not Authorized: Authentication credentials were missing or incorrect.
+    private static final int FORBIDDEN 			= 403;				// Forbidden: The request is understood, but it has been refused.  An accompanying error message will explain why.
+    private static final int NOT_FOUND = 404;				// Not Found: The URI requested is invalid or the resource requested, such as a user, does not exists.
+    private static final int NOT_ACCEPTABLE = 406;		// Not Acceptable: Returned by the Search API when an invalid format is specified in the request.
     private static final int INTERNAL_SERVER_ERROR = 500;// Internal Server Error: Something is broken.  Please post to the group so the Weibo team can investigate.
     private static final int BAD_GATEWAY = 502;// Bad Gateway: Weibo is down or being upgraded.
     private static final int SERVICE_UNAVAILABLE = 503;// Service Unavailable: The Weibo servers are up, but overloaded with requests. Try again later. The search and trend methods use this to indicate when you are being rate limited.
 
     private final static boolean DEBUG = Configuration.getDebug();
 
-    private String basic;
     private int retryCount = Configuration.getRetryCount();
     private int retryIntervalMillis = Configuration.getRetryIntervalSecs() * 1000;
     private String userId = Configuration.getUser();
@@ -111,29 +112,12 @@ public class HttpClient implements java.io.Serializable {
         }
     }
 
-    public HttpClient(String userId, String password) {
-        this();
-        setUserId(userId);
-        setPassword(password);
-    }
-
     public HttpClient() {
-        this.basic = null;
         setUserAgent(null);
         setOAuthConsumer(null, null);
         setRequestHeader("Accept-Encoding","gzip");
     }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-        encodeBasicAuthenticationString();
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-        encodeBasicAuthenticationString();
-    }
-
+    
     public String getUserId() {
         return userId;
     }
@@ -143,15 +127,15 @@ public class HttpClient implements java.io.Serializable {
     }
 
     public boolean isAuthenticationEnabled(){
-        return null != basic || null != oauth;
+        return null != oauth;
     }
    
     /**
-     * Sets the consumer key and consumer secret.<br>
+     * 设置 consumer key 和 consumer secret.<br>
      * System property -Dsinat4j.oauth.consumerKey and -Dhttp.oauth.consumerSecret override this attribute.
      * @param consumerKey Consumer Key
      * @param consumerSecret Consumer Secret
-     * @since Weibo4J 2.0.0
+     * @since Weibo4J 1.2.1
      * @see <a href="http://open.t.sina.com.cn/wiki/index.php/Oauth">Applications Using Weibo</a>
      */
     public void setOAuthConsumer(String consumerKey, String consumerSecret) {
@@ -173,7 +157,7 @@ public class HttpClient implements java.io.Serializable {
      *
      * @return request token
      * @throws WeiboException tw
-     * @since Weibo4J 2.0.0
+     * @since Weibo4J 1.2.1
      */
     public RequestToken getOAuthRequestToken() throws WeiboException {
         this.oauthToken = new RequestToken(httpRequest(requestTokenURL, null, true), this);
@@ -184,7 +168,7 @@ public class HttpClient implements java.io.Serializable {
      * @param callback_url callback url
      * @return request token
      * @throws WeiboException tw
-     * @since Weibo4J 2.0.9
+     * @since Weibo4J 1.2.1
      */
     public RequestToken getOauthRequestToken(String callback_url) throws WeiboException {
         this.oauthToken = new RequestToken(httpRequest(requestTokenURL,
@@ -198,24 +182,24 @@ public class HttpClient implements java.io.Serializable {
      * @param token request token
      * @return access token
      * @throws WeiboException
-     * @since Weibo4J 2.0.0
+     * @since Weibo4J 1.2.1
      */
     public AccessToken getOAuthAccessToken(RequestToken token) throws WeiboException {
         try {
             this.oauthToken = token;
             this.oauthToken = new AccessToken(httpRequest(accessTokenURL, new PostParameter[0], true));
         } catch (WeiboException te) {
-            throw new WeiboException("The userId has not given access to the account.", te, te.getStatusCode());
+            throw new WeiboException("The user has not given access to the account.", te, te.getStatusCode());
         }
         return (AccessToken) this.oauthToken;
     }
 
     /**
      *
-     * @param token request token
+     * @param 通过request token和pin获取access token
      * @return access token
      * @throws WeiboException
-     * @since Weibo4J 2.0.8
+     * @since Weibo4J 1.2.1
      */
     public AccessToken getOAuthAccessToken(RequestToken token, String pin) throws WeiboException {
         try {
@@ -223,7 +207,7 @@ public class HttpClient implements java.io.Serializable {
             this.oauthToken = new AccessToken(httpRequest(accessTokenURL
                     , new PostParameter[]{new PostParameter("oauth_verifier", pin)}, true));
         } catch (WeiboException te) {
-            throw new WeiboException("The userId has not given access to the account.", te, te.getStatusCode());
+            throw new WeiboException("The user has not given access to the account.", te, te.getStatusCode());
         }
         return (AccessToken) this.oauthToken;
     }
@@ -234,7 +218,7 @@ public class HttpClient implements java.io.Serializable {
      * @param tokenSecret request token secret
      * @return access token
      * @throws WeiboException
-     * @since Weibo4J 2.0.1
+     * @since Weibo4J 1.2.1
      */
     public AccessToken getOAuthAccessToken(String token, String tokenSecret) throws WeiboException {
         try {
@@ -242,19 +226,19 @@ public class HttpClient implements java.io.Serializable {
             };
             this.oauthToken = new AccessToken(httpRequest(accessTokenURL, new PostParameter[0], true));
         } catch (WeiboException te) {
-            throw new WeiboException("The userId has not given access to the account.", te, te.getStatusCode());
+            throw new WeiboException("The user has not given access to the account.", te, te.getStatusCode());
         }
         return (AccessToken) this.oauthToken;
     }
 
     /**
      *
-     * @param token request token
+     * @param 通过token，tokensecret以及oauth_verifier获取access token
      * @param tokenSecret request token secret
      * @param oauth_verifier oauth_verifier or pin
      * @return access token
      * @throws WeiboException
-     * @since Weibo4J 2.0.8
+     * @since Weibo4J 1.2.1
      */
     public AccessToken getOAuthAccessToken(String token, String tokenSecret
             , String oauth_verifier) throws WeiboException {
@@ -264,11 +248,11 @@ public class HttpClient implements java.io.Serializable {
             this.oauthToken = new AccessToken(httpRequest(accessTokenURL,
                     new PostParameter[]{new PostParameter("oauth_verifier", oauth_verifier)}, true));
         } catch (WeiboException te) {
-            throw new WeiboException("The userId has not given access to the account.", te, te.getStatusCode());
+            throw new WeiboException("The user has not given access to the account.", te, te.getStatusCode());
         }
         return (AccessToken) this.oauthToken;
     }
-
+     
     public AccessToken getXAuthAccessToken(String userId,String passWord,String mode) throws WeiboException {
     	this.oauthToken = new AccessToken(httpRequest(accessTokenURL,
     			new PostParameter[]{
@@ -282,7 +266,7 @@ public class HttpClient implements java.io.Serializable {
     /**
      * Sets the authorized access token
      * @param token authorized access token
-     * @since Weibo4J 2.0.0
+     * @since Weibo4J 1.2.1
      */
 
     public void setOAuthAccessToken(AccessToken token){
@@ -314,7 +298,7 @@ public class HttpClient implements java.io.Serializable {
 		this.authenticationURL = authenticationURL;
 	}
     /**
-     * since Weibo4J 2.0.10
+     * since Weibo4J 1.2.1
      */
     public String getAuthenticationRL() {
         return authenticationURL;
@@ -359,7 +343,7 @@ public class HttpClient implements java.io.Serializable {
     }
 
     /**
-     * Sets proxy authentication userId.
+     * Sets proxy authentication user.
      * System property -Dsinat4j.http.proxyUser overrides this attribute.
      * @param proxyAuthUser
      */
@@ -405,14 +389,6 @@ public class HttpClient implements java.io.Serializable {
         this.readTimeout = Configuration.getReadTimeout(readTimeout);
     }
 
-    private void encodeBasicAuthenticationString() {
-        if (null != userId && null != password) {
-            this.basic = "Basic " +
-                    new String(new BASE64Encoder().encode((userId + ":" + password).getBytes()));
-            oauth=null;
-        }
-    }
-
     public void setRetryCount(int retryCount) {
         if (retryCount >= 0) {
             this.retryCount = Configuration.getRetryCount(retryCount);
@@ -439,9 +415,7 @@ public class HttpClient implements java.io.Serializable {
 
     public Response post(String url, PostParameter[] postParameters,
                          boolean authenticated) throws WeiboException {
-    	PostParameter[] newPostParameters=Arrays.copyOf(postParameters, postParameters.length+1);
-    	newPostParameters[ postParameters.length]=new PostParameter("source", Weibo.CONSUMER_KEY);
-        return httpRequest(url, newPostParameters, authenticated);
+        return httpRequest(url, postParameters, authenticated);
     }
     public Response post(String url, String key,String value,
             boolean authenticated) throws WeiboException {
@@ -485,18 +459,15 @@ public class HttpClient implements java.io.Serializable {
     		 List<Header> headers = new ArrayList<Header>();
 
     		 if (authenticated) {
-    	            if (basic == null && oauth == null) {
+    	            if (oauth == null) {
     	            }
     	            String authorization = null;
     	            if (null != oauth) {
     	                // use OAuth
     	                authorization = oauth.generateAuthorizationHeader( "POST" , url, params, oauthToken);
-    	            } else if (null != basic) {
-    	                // use Basic Auth
-    	                authorization = this.basic;
     	            } else {
     	                throw new IllegalStateException(
-    	                        "Neither userId ID/password combination nor OAuth consumer key/secret combination supplied");
+    	                        "Neither user ID/password combination nor OAuth consumer key/secret combination supplied");
     	            }
     	            headers.add(new Header("Authorization", authorization));
     	            log("Authorization: " + authorization);
@@ -542,18 +513,15 @@ public class HttpClient implements java.io.Serializable {
     		 List<Header> headers = new ArrayList<Header>();
 
     		 if (authenticated) {
-    	            if (basic == null && oauth == null) {
+    	            if (oauth == null) {
     	            }
     	            String authorization = null;
     	            if (null != oauth) {
     	                // use OAuth
     	                authorization = oauth.generateAuthorizationHeader( "POST" , url, params, oauthToken);
-    	            } else if (null != basic) {
-    	                // use Basic Auth
-    	                authorization = this.basic;
     	            } else {
     	                throw new IllegalStateException(
-    	                        "Neither userId ID/password combination nor OAuth consumer key/secret combination supplied");
+    	                        "Neither user ID/password combination nor OAuth consumer key/secret combination supplied");
     	            }
     	            headers.add(new Header("Authorization", authorization));
     	            log("Authorization: " + authorization);
@@ -621,18 +589,11 @@ public class HttpClient implements java.io.Serializable {
 
     protected Response httpRequest(String url, PostParameter[] postParams,
             boolean authenticated) throws WeiboException {
-    	//统一增加source 参数
-		int len = 1;
-		PostParameter[] newPostParameters = postParams;
     	String method = "GET";
     	if (postParams != null) {
     		method = "POST";
-			len = postParams.length + 1;
-			newPostParameters = Arrays.copyOf(postParams, len);
-			newPostParameters[postParams.length] = new PostParameter("source",
-					Weibo.CONSUMER_KEY);
     	}
-    	return httpRequest(url, newPostParameters, authenticated, method);
+    	return httpRequest(url, postParams, authenticated, method);
     }
 
     public Response httpRequest(String url, PostParameter[] postParams,
@@ -751,18 +712,15 @@ public class HttpClient implements java.io.Serializable {
         log(httpMethod + " ", url);
 
         if (authenticated) {
-            if (basic == null && oauth == null) {
+            if ( oauth == null) {
             }
             String authorization = null;
             if (null != oauth) {
                 // use OAuth
                 authorization = oauth.generateAuthorizationHeader(httpMethod, url, params, oauthToken);
-            } else if (null != basic) {
-                // use Basic Auth
-                authorization = this.basic;
             } else {
                 throw new IllegalStateException(
-                        "Neither userId ID/password combination nor OAuth consumer key/secret combination supplied");
+                        "Neither user ID/password combination nor OAuth consumer key/secret combination supplied");
             }
             connection.addRequestProperty("Authorization", authorization);
             log("Authorization: " + authorization);
@@ -821,67 +779,133 @@ public class HttpClient implements java.io.Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof HttpClient)) return false;
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((accessTokenURL == null) ? 0 : accessTokenURL.hashCode());
+		result = prime
+				* result
+				+ ((authenticationURL == null) ? 0 : authenticationURL
+						.hashCode());
+		result = prime
+				* result
+				+ ((authorizationURL == null) ? 0 : authorizationURL.hashCode());
+		result = prime * result + connectionTimeout;
+		result = prime * result + ((oauth == null) ? 0 : oauth.hashCode());
+		result = prime * result
+				+ ((oauthToken == null) ? 0 : oauthToken.hashCode());
+		result = prime * result
+				+ ((password == null) ? 0 : password.hashCode());
+		result = prime
+				* result
+				+ ((proxyAuthPassword == null) ? 0 : proxyAuthPassword
+						.hashCode());
+		result = prime * result
+				+ ((proxyAuthUser == null) ? 0 : proxyAuthUser.hashCode());
+		result = prime * result
+				+ ((proxyHost == null) ? 0 : proxyHost.hashCode());
+		result = prime * result + proxyPort;
+		result = prime * result + readTimeout;
+		result = prime * result
+				+ ((requestHeaders == null) ? 0 : requestHeaders.hashCode());
+		result = prime * result
+				+ ((requestTokenURL == null) ? 0 : requestTokenURL.hashCode());
+		result = prime * result + retryCount;
+		result = prime * result + retryIntervalMillis;
+		result = prime * result + ((token == null) ? 0 : token.hashCode());
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+		return result;
+	}
 
-        HttpClient that = (HttpClient) o;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		HttpClient other = (HttpClient) obj;
+		if (accessTokenURL == null) {
+			if (other.accessTokenURL != null)
+				return false;
+		} else if (!accessTokenURL.equals(other.accessTokenURL))
+			return false;
+		if (authenticationURL == null) {
+			if (other.authenticationURL != null)
+				return false;
+		} else if (!authenticationURL.equals(other.authenticationURL))
+			return false;
+		if (authorizationURL == null) {
+			if (other.authorizationURL != null)
+				return false;
+		} else if (!authorizationURL.equals(other.authorizationURL))
+			return false;
+		if (connectionTimeout != other.connectionTimeout)
+			return false;
+		if (oauth == null) {
+			if (other.oauth != null)
+				return false;
+		} else if (!oauth.equals(other.oauth))
+			return false;
+		if (oauthToken == null) {
+			if (other.oauthToken != null)
+				return false;
+		} else if (!oauthToken.equals(other.oauthToken))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (proxyAuthPassword == null) {
+			if (other.proxyAuthPassword != null)
+				return false;
+		} else if (!proxyAuthPassword.equals(other.proxyAuthPassword))
+			return false;
+		if (proxyAuthUser == null) {
+			if (other.proxyAuthUser != null)
+				return false;
+		} else if (!proxyAuthUser.equals(other.proxyAuthUser))
+			return false;
+		if (proxyHost == null) {
+			if (other.proxyHost != null)
+				return false;
+		} else if (!proxyHost.equals(other.proxyHost))
+			return false;
+		if (proxyPort != other.proxyPort)
+			return false;
+		if (readTimeout != other.readTimeout)
+			return false;
+		if (requestHeaders == null) {
+			if (other.requestHeaders != null)
+				return false;
+		} else if (!requestHeaders.equals(other.requestHeaders))
+			return false;
+		if (requestTokenURL == null) {
+			if (other.requestTokenURL != null)
+				return false;
+		} else if (!requestTokenURL.equals(other.requestTokenURL))
+			return false;
+		if (retryCount != other.retryCount)
+			return false;
+		if (retryIntervalMillis != other.retryIntervalMillis)
+			return false;
+		if (token == null) {
+			if (other.token != null)
+				return false;
+		} else if (!token.equals(other.token))
+			return false;
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
+			return false;
+		return true;
+	}
 
-        if (connectionTimeout != that.connectionTimeout) return false;
-        if (proxyPort != that.proxyPort) return false;
-        if (readTimeout != that.readTimeout) return false;
-        if (retryCount != that.retryCount) return false;
-        if (retryIntervalMillis != that.retryIntervalMillis) return false;
-        if (accessTokenURL != null ? !accessTokenURL.equals(that.accessTokenURL) : that.accessTokenURL != null)
-            return false;
-        if (!authenticationURL.equals(that.authenticationURL)) return false;
-        if (!authorizationURL.equals(that.authorizationURL)) return false;
-        if (basic != null ? !basic.equals(that.basic) : that.basic != null)
-            return false;
-        if (oauth != null ? !oauth.equals(that.oauth) : that.oauth != null)
-            return false;
-        if (oauthToken != null ? !oauthToken.equals(that.oauthToken) : that.oauthToken != null)
-            return false;
-        if (password != null ? !password.equals(that.password) : that.password != null)
-            return false;
-        if (proxyAuthPassword != null ? !proxyAuthPassword.equals(that.proxyAuthPassword) : that.proxyAuthPassword != null)
-            return false;
-        if (proxyAuthUser != null ? !proxyAuthUser.equals(that.proxyAuthUser) : that.proxyAuthUser != null)
-            return false;
-        if (proxyHost != null ? !proxyHost.equals(that.proxyHost) : that.proxyHost != null)
-            return false;
-        if (!requestHeaders.equals(that.requestHeaders)) return false;
-        if (!requestTokenURL.equals(that.requestTokenURL)) return false;
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = basic != null ? basic.hashCode() : 0;
-        result = 31 * result + retryCount;
-        result = 31 * result + retryIntervalMillis;
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (proxyHost != null ? proxyHost.hashCode() : 0);
-        result = 31 * result + proxyPort;
-        result = 31 * result + (proxyAuthUser != null ? proxyAuthUser.hashCode() : 0);
-        result = 31 * result + (proxyAuthPassword != null ? proxyAuthPassword.hashCode() : 0);
-        result = 31 * result + connectionTimeout;
-        result = 31 * result + readTimeout;
-        result = 31 * result + requestHeaders.hashCode();
-        result = 31 * result + (oauth != null ? oauth.hashCode() : 0);
-        result = 31 * result + requestTokenURL.hashCode();
-        result = 31 * result + authorizationURL.hashCode();
-        result = 31 * result + authenticationURL.hashCode();
-        result = 31 * result + (accessTokenURL != null ? accessTokenURL.hashCode() : 0);
-        result = 31 * result + (oauthToken != null ? oauthToken.hashCode() : 0);
-        return result;
-    }
-
-    private static void log(String message) {
+	private static void log(String message) {
         if (DEBUG) {
             System.out.println("[" + new java.util.Date() + "]" + message);
         }
@@ -908,7 +932,7 @@ public class HttpClient implements java.io.Serializable {
                 cause = "The request is understood, but it has been refused.  An accompanying error message will explain why.";
                 break;
             case NOT_FOUND:
-                cause = "The URI requested is invalid or the resource requested, such as a userId, does not exists.";
+                cause = "The URI requested is invalid or the resource requested, such as a user, does not exists.";
                 break;
             case NOT_ACCEPTABLE:
                 cause = "Returned by the Search API when an invalid format is specified in the request.";

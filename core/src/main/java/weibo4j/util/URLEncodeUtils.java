@@ -4,7 +4,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.BitSet;
 /**
- * @author yuanming
+ * @author sinaWeibo
  * 
  */
 public class URLEncodeUtils {
@@ -76,7 +76,7 @@ public class URLEncodeUtils {
 	 * @return
 	 */
 	public static final boolean isURLEncoded(String str) {
-		if (str==null &&"".equals(str)) {
+		if (str==null||"".equals(str)) {
 			return false;
 		}
 		char[] chars = str.toCharArray();

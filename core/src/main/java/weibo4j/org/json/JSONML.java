@@ -56,7 +56,7 @@ public class JSONML {
         Object     token;
         String	   tagName = null;
         
-// HelloWeibo for and skip past these forms:
+// Test for and skip past these forms:
 //      <!-- ... -->
 //      <![  ... ]]>
 //      <!   ...   >

@@ -39,7 +39,7 @@ import java.util.List;
  * A data class representing a Saved Search
  *
  * @author Yusuke Yamamoto - yusuke at mac.com
- * @since Weibo4J 2.0.8
+ * @since Weibo4J 1.2.1
  */
 public class SavedSearch extends WeiboResponse {
     private Date createdAt;

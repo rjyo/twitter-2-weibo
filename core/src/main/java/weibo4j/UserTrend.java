@@ -12,7 +12,7 @@ import weibo4j.org.json.JSONObject;
  * 话题
  *
  * @author SinaWeibo
- * @since Weibo4J 2.0.3
+ * @since Weibo4J 1.2.1
  */
 public class UserTrend extends WeiboResponse{
     private String num;

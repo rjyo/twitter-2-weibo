@@ -9,7 +9,7 @@ import weibo4j.org.json.JSONException;
 import weibo4j.org.json.JSONObject;
 
 /**
- * @author Reilost
+ * @author SinaWeibo
  *
  */
 public class Emotion extends WeiboResponse{

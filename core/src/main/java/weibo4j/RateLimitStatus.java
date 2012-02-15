@@ -39,10 +39,10 @@ import weibo4j.org.json.JSONObject;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 public class RateLimitStatus extends WeiboResponse {
-    private int remainingHits;
-    private int hourlyLimit;
-    private int resetTimeInSeconds;
-    private Date resetTime;
+    private int remainingHits;         //剩余调用次数
+    private int hourlyLimit;           //每小时限制
+    private int resetTimeInSeconds;    //距重置时间还有多少秒
+    private Date resetTime;            //重置时间
     private static final long serialVersionUID = 933996804168952707L;
 
     /* package */ RateLimitStatus(Response res) throws WeiboException {
@@ -89,7 +89,7 @@ public class RateLimitStatus extends WeiboResponse {
     }
 
     /**
-     * @since Weibo4J 2.0.9
+     * @since  Weibo4J 1.2.1
      */
     public Date getResetTime() {
         return resetTime;
