@@ -1,0 +1,5 @@
+w_k=Weibo_App_Key
+w_s=Weibo_APP_Secret
+t_k=Twitter_Consumer_Key
+t_s=Twitter_Consumer_Secret
+admin.user=Admin_Name
