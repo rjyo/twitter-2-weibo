@@ -91,7 +91,7 @@ public class Twitter2Weibo {
 
                     String name = status.getUser().getScreenName();
                     String statusText = status.getText();
-                    log.info(String.format("@%s - %s", name, statusText));
+                    log.info(String.format("%s - %s", name, statusText));
                     try {
                         if (status.isRetweet()) {
                             if (user.isDropRetweets()) {
@@ -155,10 +155,13 @@ public class Twitter2Weibo {
                         }
                     } catch (WeiboException e) {
                         if (e.getStatusCode() != 400) { // resending same tweet
-                            log.warn("Failed to update Weibo");
+                            log.error("Failed to update Weibo", e);
                             break;
+                        } else {
+                            log.error("Sending same message", e);
                         }
                     }
+                    log.info(String.format("Sent: by %s - %s", name, statusText));
                     user.setLatestId(status.getId());
                 }
             }

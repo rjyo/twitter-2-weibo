@@ -16,15 +16,14 @@
 
 package h2weibo.utils;
 
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.apache.log4j.Logger;
 import twitter4j.internal.org.json.JSONException;
 import twitter4j.internal.org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,7 +51,7 @@ public class StatusImageExtractor {
         for (String key : simplePatterns.keySet()) {
             Pattern p = Pattern.compile(key);
             Matcher m = p.matcher(input);
-            
+
             if (m.find()) {
                 String mediaUrl = simplePatterns.get(key);
                 mediaUrl = mediaUrl.replaceAll("_KEY_", m.group(1));
@@ -79,7 +78,7 @@ public class StatusImageExtractor {
                     byte[] jsonData = downloadUrl(jsonUrl);
                     JSONObject obj = new JSONObject(new String(jsonData));
                     String imageUrl = (String) obj.get(jsonPatterns.get(key)[1]);
-                    
+
                     return downloadUrl(imageUrl);
                 } catch (IOException e) {
                     log.error("Not able to download image", e);
@@ -95,11 +94,11 @@ public class StatusImageExtractor {
     private byte[] downloadUrl(String mediaUrl) throws IOException {
         URL url = new URL(mediaUrl);
         InputStream in = url.openStream();
-        ByteOutputStream out = new ByteOutputStream();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         for (int b; (b = in.read()) != -1; ) {
             out.write(b);
         }
-        byte[] bytes = out.getBytes();
+        byte[] bytes = out.toByteArray();
         out.close();
         in.close();
 

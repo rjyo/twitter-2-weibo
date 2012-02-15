@@ -16,12 +16,12 @@
 
 package h2weibo.utils.filters;
 
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.apache.log4j.Logger;
 import twitter4j.internal.org.json.JSONArray;
 import twitter4j.internal.org.json.JSONException;
 import twitter4j.internal.org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -113,11 +113,11 @@ public class FlickrImageFilter implements StatusFilter {
     private byte[] downloadUrl(String mediaUrl) throws IOException {
         URL url = new URL(mediaUrl);
         InputStream in = url.openStream();
-        ByteOutputStream out = new ByteOutputStream();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         for (int b; (b = in.read()) != -1; ) {
             out.write(b);
         }
-        byte[] bytes = out.getBytes();
+        byte[] bytes = out.toByteArray();
         out.close();
         in.close();
 
