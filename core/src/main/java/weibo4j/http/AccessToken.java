@@ -58,7 +58,7 @@ public class AccessToken extends OAuthToken {
     /**
      *
      * @return screen name
-     * @since Weibo4J 2.0.4
+     * @since Weibo4J 1.2.1
      */
 
 	public String getScreenName() {
@@ -68,7 +68,7 @@ public class AccessToken extends OAuthToken {
     /**
      *
      * @return user id
-     * @since Weibo4J 2.0.4
+     * @since Weibo4J 1.2.1
      */
 
 	public long getUserId() {

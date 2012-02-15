@@ -42,7 +42,7 @@ public class BASE64Encoder {
     public BASE64Encoder() {
     }
 
-    public  String encode(byte[] from) {
+    public static  String encode(byte[] from) {
         StringBuffer to = new StringBuffer((int) (from.length * 1.34) + 3);
         int num = 0;
         char currentByte = 0;

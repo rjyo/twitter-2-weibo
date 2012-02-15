@@ -12,7 +12,7 @@ import weibo4j.org.json.JSONException;
 import weibo4j.org.json.JSONObject;
 /**
  * 
- * @author haidong
+ * @author sinaWeibo
  *
  */
 public class SearchResult extends WeiboResponse implements java.io.Serializable {

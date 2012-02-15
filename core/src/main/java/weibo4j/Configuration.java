@@ -49,7 +49,7 @@ public class Configuration {
         //defaultProperty.setProperty("weibo4j.clientVersion","");
         defaultProperty.setProperty("weibo4j.clientURL", "http://open.t.sina.com.cn/-{weibo4j.clientVersion}.xml");
         defaultProperty.setProperty("weibo4j.http.userAgent", "weibo4j http://open.t.sina.com.cn/ /{weibo4j.clientVersion}");
-        //defaultProperty.setProperty("weibo4j.userId","");
+        //defaultProperty.setProperty("weibo4j.user","");
         //defaultProperty.setProperty("weibo4j.password","");
         defaultProperty.setProperty("weibo4j.http.useSSL", "false");
         //defaultProperty.setProperty("weibo4j.http.proxyHost","");
@@ -205,11 +205,11 @@ public class Configuration {
     }
 
     public static String getUser() {
-        return getProperty("weibo4j.userId");
+        return getProperty("weibo4j.user");
     }
 
     public static String getUser(String userId) {
-        return getProperty("weibo4j.userId", userId);
+        return getProperty("weibo4j.user", userId);
     }
 
     public static String getPassword() {

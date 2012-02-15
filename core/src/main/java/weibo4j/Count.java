@@ -12,7 +12,7 @@ import weibo4j.org.json.JSONException;
 import weibo4j.org.json.JSONObject;
 
 /**
- * @author hezhou
+ * @author SinaWeibo
  *
  */
 public class Count implements java.io.Serializable{
@@ -72,23 +72,27 @@ public class Count implements java.io.Serializable{
 	        }
 	   }
 	
-	@Override
-    public int hashCode() {
-        return (int) id;
-    }
-
     @Override
-    public boolean equals(Object obj) {
-        if (null == obj) {
-            return false;
-        }
-        if (this == obj) {
-            return true;
-        }
-        return obj instanceof Count && ((Count) obj).id == this.id;
-    }
-
-    public long getComments() {
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Count other = (Count) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	public long getComments() {
 		return comments;
 	}
 

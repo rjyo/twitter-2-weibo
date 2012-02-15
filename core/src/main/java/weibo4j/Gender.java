@@ -1,7 +1,7 @@
 package weibo4j;
 
 /**
- * @author Reilost
+ * @author SinaWeibo
  * 
  */
 public enum Gender {

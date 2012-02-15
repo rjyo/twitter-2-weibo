@@ -40,7 +40,7 @@ import weibo4j.org.json.JSONObject;
  * A data class representing array of numeric IDs.
  *
  * @author Yusuke Yamamoto - yusuke at mac.com
- * @editor Reilost
+ * @editor SinaWeibo
  */
 public class IDs extends WeiboResponse {
     private long[] ids;
@@ -100,7 +100,7 @@ public class IDs extends WeiboResponse {
 
     /**
      *
-     * @since Weibo4J 2.0.10
+     * @since Weibo4J 1.2.1
      */
     public boolean hasPrevious(){
         return 0 != previousCursor;
@@ -108,7 +108,7 @@ public class IDs extends WeiboResponse {
 
     /**
      *
-     * @since Weibo4J 2.0.10
+     * @since Weibo4J 1.2.1
      */
     public long getPreviousCursor() {
         return previousCursor;
@@ -116,7 +116,7 @@ public class IDs extends WeiboResponse {
 
     /**
      *
-     * @since Weibo4J 2.0.10
+     * @since Weibo4J 1.2.1
      */
     public boolean hasNext(){
         return 0 != nextCursor;
@@ -124,7 +124,7 @@ public class IDs extends WeiboResponse {
 
     /**
      *
-     * @since Weibo4J 2.0.10
+     * @since Weibo4J 1.2.1
      */
     public long getNextCursor() {
         return nextCursor;

@@ -42,7 +42,7 @@ import java.util.Arrays;
  * A data class representing Treands.
  *
  * @author Yusuke Yamamoto - yusuke at mac.com
- * @since Weibo4J 2.0.2
+ * @since Weibo4J 1.2.1
  */
 public class Trends extends WeiboResponse implements Comparable<Trends> {
     private Date asOf;
