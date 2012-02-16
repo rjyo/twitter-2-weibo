@@ -37,11 +37,10 @@
 	$ cd twitter-2-weibo
 	$ git checkout single
 
-下载编译用的和库支持管理的 Maven
+下载编译用的和库支持管理的 Maven (http://ftp.riken.jp/net/apache/maven/binaries/)
 
 	$ cd ..
 	$ wget http://ftp.riken.jp/net/apache/maven/binaries/apache-maven-3.0.4-bin.tar.gz
-  // 或者可在浏览器访问此列表获取: http://ftp.riken.jp/net/apache/maven/binaries/  
 	$ tar zxvf apache-maven-3.0.3-bin.tar.gz
 
 编译	
