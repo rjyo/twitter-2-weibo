@@ -41,14 +41,14 @@
 
 	$ cd ..
 	$ wget http://ftp.riken.jp/net/apache/maven/binaries/apache-maven-3.0.4-bin.tar.gz
-	$ tar zxvf apache-maven-3.0.3-bin.tar.gz
+	$ tar zxvf apache-maven-3.0.4-bin.tar.gz
 
 编译	
 
 	$ cd twitter-2-weibo	
-	$ ../apache-maven-3.0.3/bin/mvn install:install-file -Dfile=./lib/cron4j-2.2.3.jar -DgroupId=cron4j -DartifactId=cron4j -Dversion=2.2.3 -Dpackaging=jar
-	$ ../apache-maven-3.0.3/bin/mvn compile
-	$ ../apache-maven-3.0.3/bin/mvn -Dmaven.test.skip=true package
+	$ ../apache-maven-3.0.4/bin/mvn install:install-file -Dfile=./lib/cron4j-2.2.3.jar -DgroupId=cron4j -DartifactId=cron4j -Dversion=2.2.3 -Dpackaging=jar
+	$ ../apache-maven-3.0.4/bin/mvn compile
+	$ ../apache-maven-3.0.4/bin/mvn -Dmaven.test.skip=true package
 	
 看见如下内容就说明编译通过了
 	
