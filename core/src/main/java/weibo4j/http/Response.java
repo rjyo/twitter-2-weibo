@@ -40,11 +40,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import weibo4j.Configuration;
-import weibo4j.WeiboException;
+import weibo4j.model.Configuration;
+import weibo4j.model.WeiboException;
 import weibo4j.org.json.JSONArray;
 import weibo4j.org.json.JSONException;
 import weibo4j.org.json.JSONObject;
@@ -56,6 +57,8 @@ import weibo4j.org.json.JSONObject;
  */
 public class Response {
     private final static boolean DEBUG = Configuration.getDebug();
+    static Logger log = Logger.getLogger(Response.class.getName());
+
 
     private static ThreadLocal<DocumentBuilder> builders =
             new ThreadLocal<DocumentBuilder>() {
@@ -258,10 +261,10 @@ public class Response {
                 ", con=" + con +
                 '}';
     }
-
+    
     private void log(String message) {
         if (DEBUG) {
-            System.out.println("[" + new java.util.Date() + "]" + message);
+        	log.debug("[" + new java.util.Date() + "]" + message);
         }
     }
 

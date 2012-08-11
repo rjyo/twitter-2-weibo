@@ -1,78 +1,102 @@
-/*
-Copyright (c) 2007-2009, Yusuke Yamamoto
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of the Yusuke Yamamoto nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY Yusuke Yamamoto ``AS IS'' AND ANY
-EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL Yusuke Yamamoto BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
 package weibo4j.http;
 
-import weibo4j.WeiboException;
+import java.io.Serializable;
 
-/**
- * Representing authorized Access Token which is passed to the service provider in order to access protected resources.<br>
- * the token and token secret can be stored into some persistent stores such as file system or RDBMS for the further accesses.
- * @author Yusuke Yamamoto - yusuke at mac.com
- */
-public class AccessToken extends OAuthToken {
-    private static final long serialVersionUID = -8344528374458826291L;
-    private String screenName;
-    private long userId;
-    
-    AccessToken(Response res) throws WeiboException {
-        this(res.asString());
-    }
+import weibo4j.model.WeiboException;
+import weibo4j.model.WeiboResponse;
+import weibo4j.org.json.JSONException;
+import weibo4j.org.json.JSONObject;
 
-    // for test unit
-    AccessToken(String str) {
-        super(str);
-        screenName = getParameter("screen_name");
-	String sUserId = getParameter("user_id");
-	if (sUserId != null) userId = Long.parseLong(sUserId);
 
-    }
+public class AccessToken extends WeiboResponse implements Serializable {
 
-    public AccessToken(String token, String tokenSecret) {
-        super(token, tokenSecret);
-    }
-
-    /**
-     *
-     * @return screen name
-     * @since Weibo4J 1.2.1
-     */
-
-	public String getScreenName() {
-		return screenName;
+	private static final long serialVersionUID = 6986530164134648944L;
+	private String accessToken;
+	private String expireIn;
+	private String refreshToken;
+	private String uid;
+	public AccessToken(Response res) throws WeiboException{
+		super(res);
+		JSONObject json =res.asJSONObject();
+		try{
+			accessToken = json.getString("access_token");
+			expireIn = json.getString("expires_in");
+			refreshToken = json.getString("refresh_token");
+			uid = json.getString("uid");
+		} catch (JSONException je) {
+			throw new WeiboException(je.getMessage() + ":" + json.toString(), je);
+		}
+	}
+	AccessToken(String res) throws WeiboException,JSONException{
+		super();
+		JSONObject json =new JSONObject(res);
+		accessToken = json.getString("access_token");
+		expireIn = json.getString("expires_in");
+		refreshToken = json.getString("refresh_token");
+		uid = json.getString("uid");
+	}
+	public String getAccessToken() {
+		return accessToken;
+	}
+	public String getExpireIn() {
+		return expireIn;
+	}
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+		+ ((accessToken == null) ? 0 : accessToken.hashCode());
+		result = prime * result
+		+ ((expireIn == null) ? 0 : expireIn.hashCode());
+		result = prime * result
+		+ ((refreshToken == null) ? 0 : refreshToken.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AccessToken other = (AccessToken) obj;
+		if (accessToken == null) {
+			if (other.accessToken != null)
+				return false;
+		} else if (!accessToken.equals(other.accessToken))
+			return false;
+		if (expireIn == null) {
+			if (other.expireIn != null)
+				return false;
+		} else if (!expireIn.equals(other.expireIn))
+			return false;
+		if (refreshToken == null) {
+			if (other.refreshToken != null)
+				return false;
+		} else if (!refreshToken.equals(other.refreshToken))
+			return false;
+		return true;
+	}
+	@Override
+	public String toString() {
+		return "AccessToken [" +
+		"accessToken=" + accessToken + 
+		", expireIn=" + expireIn + 
+		", refreshToken=" + refreshToken +
+		",uid="+uid+
+		"]";
 	}
 
-    /**
-     *
-     * @return user id
-     * @since Weibo4J 1.2.1
-     */
 
-	public long getUserId() {
-		return userId;
-	}
-    
+
+
+
+
+
+
 }

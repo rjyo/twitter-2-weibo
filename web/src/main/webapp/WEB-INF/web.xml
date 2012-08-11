@@ -16,14 +16,6 @@
             <param-value>${t_s}</param-value>
         </init-param>
         <init-param>
-            <param-name>w_k</param-name>
-            <param-value>${w_k}</param-value>
-        </init-param>
-        <init-param>
-            <param-name>w_s</param-name>
-            <param-value>${w_s}</param-value>
-        </init-param>
-        <init-param>
             <param-name>admin</param-name>
             <param-value>${admin.user}</param-value>
         </init-param>

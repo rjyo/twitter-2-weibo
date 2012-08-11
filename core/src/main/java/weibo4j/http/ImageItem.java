@@ -1,6 +1,3 @@
-/**
- *
- */
 package weibo4j.http;
 
 import java.io.ByteArrayInputStream;
@@ -11,8 +8,8 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.MemoryCacheImageInputStream;
 
-import weibo4j.Constants;
-import weibo4j.WeiboException;
+import weibo4j.model.Constants;
+import weibo4j.model.WeiboException;
 
 import com.sun.imageio.plugins.bmp.BMPImageReader;
 import com.sun.imageio.plugins.gif.GIFImageReader;
@@ -21,8 +18,6 @@ import com.sun.imageio.plugins.png.PNGImageReader;
 
 /**
  * 临时存储上传图片的内容，格式，文件信息等
- * 
- * @author 
  * 
  */
 public class ImageItem {
