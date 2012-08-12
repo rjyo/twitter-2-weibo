@@ -10,3 +10,4 @@ target
 *.log
 
 default.properties
+config.properties
