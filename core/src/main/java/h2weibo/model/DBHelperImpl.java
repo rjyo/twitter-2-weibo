@@ -21,9 +21,6 @@ import com.google.gson.reflect.TypeToken;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import weibo4j.User;
-import weibo4j.Weibo;
-import weibo4j.WeiboException;
 
 import java.lang.reflect.Type;
 import java.util.*;
@@ -77,7 +74,7 @@ class DBHelperImpl implements DBHelper {
         if (latest != null) {
             tid.setLatestId(Long.valueOf(latest));
             tid.setToken(jedis.get("id:" + tid.getUserId() + ":token"));
-            tid.setTokenSecret(jedis.get("id:" + tid.getUserId() + ":tokenSecret"));
+            tid.setWeiboUserId(jedis.get("id:" + tid.getUserId() + ":weibo_uid"));
             tid.setTwitterToken(jedis.get("id:" + tid.getUserId() + ":twitter_token"));
             tid.setTwitterTokenSecret(jedis.get("id:" + tid.getUserId() + ":twitter_tokenSecret"));
             tid.setOptions(jedis.smembers("id:" + tid.getUserId() + ":options"));
@@ -103,31 +100,32 @@ class DBHelperImpl implements DBHelper {
     }
 
     public void createUserMap() {
-        Set<String> userIds = getAuthorizedIds();
-
-        Weibo w = new Weibo();
-        for (String userId : userIds) {
-            T2WUser user = findOneByUser(userId);
-
-            if (user.ready()) {
-                w.setToken(user.getToken(), user.getTokenSecret());
-
-                try {
-                    User weiboUser = w.verifyCredentials();
-                    this.setWeiboId(user.getUserId(), weiboUser.getName());
-                    log.info("Get Weibo credentials for @" + userId + " is @" + weiboUser.getName());
-                } catch (WeiboException e) {
-                    if (e.getStatusCode() == 401) {
-                        user.setToken(null);
-                        user.setTokenSecret(null);
-                    }
-                    log.error("Failed to find Weibo ID for @" + user.getUserId() + ", removing weibo tokens.");
-                } catch (Exception e) {
-                    log.error("Failed to find Weibo ID for @" + user.getUserId(), e);
-                }
-            }
-
-        }
+//        Set<String> userIds = getAuthorizedIds();
+//
+//        Weibo w = new Weibo();
+//        for (String userId : userIds) {
+//            T2WUser user = findOneByUser(userId);
+//
+//            if (user.ready()) {
+//                // todo: save the new token
+//                w.setToken(user.getToken());
+//                Users um = new Users();
+//                try {
+//                    User weiboUser = um.showUserById(user.)
+//                    this.setWeiboId(user.getUserId(), weiboUser.getName());
+//                    log.info("Get Weibo credentials for @" + userId + " is @" + weiboUser.getName());
+//                } catch (WeiboException e) {
+//                    if (e.getStatusCode() == 401) {
+//                        user.setToken(null);
+//                        user.setTokenSecret(null);
+//                    }
+//                    log.error("Failed to find Weibo ID for @" + user.getUserId() + ", removing weibo tokens.");
+//                } catch (Exception e) {
+//                    log.error("Failed to find Weibo ID for @" + user.getUserId(), e);
+//                }
+//            }
+//
+//        }
     }
 
     public void setWeiboId(String twitterId, String weiboId) {
@@ -174,7 +172,7 @@ class DBHelperImpl implements DBHelper {
     public void saveUser(T2WUser u) {
         jedis.set("id:" + u.getUserId() + ":latestId", String.valueOf(u.getLatestId()));
         if (u.getToken() != null) jedis.set("id:" + u.getUserId() + ":token", u.getToken());
-        if (u.getTokenSecret() != null) jedis.set("id:" + u.getUserId() + ":tokenSecret", u.getTokenSecret());
+        if (u.getWeiboUserId() != null) jedis.set("id:" + u.getUserId() + ":weibo_uid", u.getWeiboUserId());
         if (u.getTwitterToken() != null) jedis.set("id:" + u.getUserId() + ":twitter_token", u.getTwitterToken());
         if (u.getTwitterTokenSecret() != null)
             jedis.set("id:" + u.getUserId() + ":twitter_tokenSecret", u.getTwitterTokenSecret());

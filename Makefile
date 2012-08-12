@@ -1,4 +1,5 @@
 MVN_INSTALL_FLAGS = install:install-file -Dfile=./lib/cron4j-2.2.3.jar -DgroupId=cron4j -DartifactId=cron4j -Dversion=2.2.3 -Dpackaging=jar
+MAVEN_OPTS = -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n
 
 WEB_TARGET_DIR = ./web/target/h2weibo
 WEB_NAME = h2w-single
@@ -14,6 +15,7 @@ clean:
 	@find . -name "*.log" |xargs rm
 
 run:
+	export MAVEN_OPTS="${MAVEN_OPTS}"
 	@mvn tomcat:run
 
 update: compile

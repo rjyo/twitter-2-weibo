@@ -26,6 +26,9 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * @author Rakuraku Jyo
@@ -77,17 +80,20 @@ public class InitServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
-        System.setProperty("h2weibo.admin.user", config.getInitParameter("admin"));
+        Properties properties = new Properties();
+        try {
+            properties.load(this.getClass().getClassLoader().getResourceAsStream("config.properties"));
 
-        // Key for Weibo App
-        System.setProperty("weibo4j.oauth.consumerKey", config.getInitParameter("w_k"));
-        System.setProperty("weibo4j.oauth.consumerSecret", config.getInitParameter("w_s"));
+            System.setProperty("h2weibo.admin.user", properties.getProperty("admin", ""));
+
+            // Key for Twitter App
+            System.setProperty("twitter4j.oauth.consumerKey", properties.getProperty("twitter_key", ""));
+            System.setProperty("twitter4j.oauth.consumerSecret", properties.getProperty("twitter_secret", ""));
+        } catch (IOException e) {
+            log.error(e);
+        }
 
         System.setProperty("weibo4j.debug", "false");
-
-        // Key for Twitter App
-        System.setProperty("twitter4j.oauth.consumerKey", config.getInitParameter("t_k"));
-        System.setProperty("twitter4j.oauth.consumerSecret", config.getInitParameter("t_s"));
 
         log.info("System initialized.");
 

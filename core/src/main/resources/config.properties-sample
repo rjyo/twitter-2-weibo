@@ -1,0 +1,16 @@
+# for weibo
+client_ID=
+client_SERCRET=
+# weibo won't allow format like http://localhost:3000/callback/weibo, what the fuck!
+# change "http://localhost:3000" to your server
+redirect_URI=http://localhost:3000/callback/weibo.jsp
+baseURL=https://api.weibo.com/2/
+accessTokenURL=https://api.weibo.com/oauth2/access_token
+authorizeURL=https://api.weibo.com/oauth2/authorize
+
+#for twitter
+twitter_key=
+twitter_secret=
+
+#for h2weibo admins
+admin=

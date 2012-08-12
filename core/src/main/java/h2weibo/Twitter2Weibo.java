@@ -23,9 +23,10 @@ import h2weibo.utils.filters.*;
 import org.apache.log4j.Logger;
 import twitter4j.*;
 import twitter4j.auth.AccessToken;
+import weibo4j.Timeline;
 import weibo4j.Weibo;
-import weibo4j.WeiboException;
 import weibo4j.http.ImageItem;
+import weibo4j.model.WeiboException;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class Twitter2Weibo {
     public void syncTwitter(String userId) {
         T2WUser user = helper.findOneByUser(userId);
 
-        weibo.setToken(user.getToken(), user.getTokenSecret());
+        weibo.setToken(user.getToken());
 
         Twitter twitter = new TwitterFactory().getInstance();
         if (user.getTwitterToken() != null) {
@@ -80,6 +81,7 @@ public class Twitter2Weibo {
                 }
                 log.info(String.format("First time use for @%s. Set latest ID to %d.", userId, latestId));
             } else {
+                Timeline tl = new Timeline();
                 Paging paging = new Paging(latestId);
                 List<Status> statuses = twitter.getUserTimeline(screenName, paging);
 
@@ -136,7 +138,7 @@ public class Twitter2Weibo {
                                 user.setLatestId(status.getId());
                                 try {
                                     statusText = buf.toString(); // with image urls removed
-                                    weibo.uploadStatus(statusText, new ImageItem(image));
+                                    tl.UploadStatus(statusText, new ImageItem(image));
                                     log.info(String.format("@%s - %s sent with image.", name, statusText));
                                 } catch (WeiboException e) {
                                     log.error("Faile to update image.", e);
@@ -147,10 +149,10 @@ public class Twitter2Weibo {
 
                         GeoLocation location = status.getGeoLocation();
                         if (user.isWithGeo() && location != null) {
-                            weibo.updateStatus(statusText, location.getLatitude(), location.getLongitude());
+                            tl.UpdateStatus(statusText, (float) location.getLatitude(), (float) location.getLongitude(), "");
                             log.info(String.format("@%s - %s sent with geo locations.", name, statusText));
                         } else {
-                            weibo.updateStatus(statusText);
+                            tl.UpdateStatus(statusText);
                             log.info(String.format("@%s - %s sent.", name, statusText));
                         }
                     } catch (WeiboException e) {

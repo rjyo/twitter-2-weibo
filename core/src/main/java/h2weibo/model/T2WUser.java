@@ -16,8 +16,6 @@
 
 package h2weibo.model;
 
-import org.apache.log4j.Logger;
-
 import java.util.Set;
 
 /**
@@ -27,13 +25,20 @@ import java.util.Set;
  */
 public class T2WUser {
     private String userId;
+    private String weiboUserId;
     private Long latestId;
     private String token;
-    private String tokenSecret;
     private String twitterTokenSecret;
     private String twitterToken;
     private Set<String> options;
 
+    public void setWeiboUserId(String uid) {
+        this.weiboUserId = uid;
+    }
+
+    public String getWeiboUserId() {
+        return weiboUserId;
+    }
 
     /**
      * Twitter user ID
@@ -52,10 +57,6 @@ public class T2WUser {
         return token;
     }
 
-    public String getTokenSecret() {
-        return tokenSecret;
-    }
-
     public void setUserId(String userId) {
         this.userId = userId;
     }
@@ -66,10 +67,6 @@ public class T2WUser {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public void setTokenSecret(String tokenSecret) {
-        this.tokenSecret = tokenSecret;
     }
 
     public void setTwitterTokenSecret(String twitterTokenSecret) {
@@ -121,7 +118,7 @@ public class T2WUser {
                 "userId='" + userId + '\'' +
                 ", latestId=" + latestId +
                 ", token='" + token + '\'' +
-                ", tokenSecret='" + tokenSecret + '\'' +
+                ", weiboUserId='" + weiboUserId + '\'' +
                 ", twitterTokenSecret='" + twitterTokenSecret + '\'' +
                 ", twitterToken='" + twitterToken + '\'' +
                 ", options=" + options +
@@ -131,4 +128,5 @@ public class T2WUser {
     public boolean ready() {
         return (token != null && twitterToken != null);
     }
+
 }

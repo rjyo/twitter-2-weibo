@@ -23,9 +23,13 @@ import h2weibo.model.T2WUser;
 import org.apache.log4j.Logger;
 import twitter4j.*;
 import twitter4j.auth.RequestToken;
+import weibo4j.Account;
+import weibo4j.Oauth;
 import weibo4j.Weibo;
-import weibo4j.WeiboException;
 import weibo4j.http.AccessToken;
+import weibo4j.model.WeiboException;
+import weibo4j.org.json.JSONException;
+import weibo4j.org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -51,33 +55,45 @@ public class CallbackServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
         String loginUser = (String) session.getAttribute(Keys.SESSION_LOGIN_USER);
-        String token = (String) session.getAttribute(Keys.SESSION_TOKEN);
-        String tokenSecret = (String) session.getAttribute(Keys.SESSION_TOKEN_SECRET);
         String oauthVerifier = request.getParameter("oauth_verifier");
 
         DBHelper helper = (DBHelper) request.getAttribute(Keys.REQUEST_DB_HELPER);
 
-        if (r.is(":type", "weibo")) {
-            try {
-                Weibo weibo = new Weibo();
+        if (r.is(":type", "weibo.jsp")) {
+            String code = request.getParameter("code");
 
-                AccessToken accessToken = weibo.getOAuthAccessToken(token, tokenSecret, oauthVerifier);
-                if (accessToken != null) {
-                    T2WUser tid = helper.findOneByUser(loginUser);
+            if (code != null) {
+                T2WUser tid = helper.findOneByUser(loginUser);
 
-                    if (tid.getToken() == null) { // send for the first time
-                        session.setAttribute(Keys.SESSION_PROMPT_TWEET, "You are ready to go! Do you want to tweet about this service and share it with your friends?");
+                if (tid.getToken() == null) { // send for the first time
+                    session.setAttribute(Keys.SESSION_PROMPT_TWEET, "You are ready to go! Do you want to tweet about this service and share it with your friends?");
+                }
+
+                Oauth oauth = new Oauth();
+                try {
+                    AccessToken token = oauth.getAccessTokenByCode(code);
+                    tid.setToken(token.getAccessToken());
+
+                    Weibo weibo = new Weibo();
+                    weibo.setToken(tid.getToken());
+                    Account am = new Account();
+                    try {
+                        JSONObject obj = am.getUid();
+                        String uid = obj.getString("uid");
+                        tid.setWeiboUserId(uid);
+                    } catch (WeiboException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
 
-                    tid.setToken(accessToken.getToken());
-                    tid.setTokenSecret(accessToken.getTokenSecret());
                     helper.saveUser(tid);
-                } else {
-                    log.error("Can't auth " + loginUser + " for Weibo. " + request.getQueryString());
+                } catch (WeiboException e) {
+                    log.error(e);
                 }
-            } catch (WeiboException e) {
-                log.error("Weibo Exception", e);
-                throw new RuntimeException(e);
+
+            } else {
+                log.error("Can't auth " + loginUser + " for Weibo. " + request.getQueryString());
             }
         } else if (r.is(":type", "twitter")) {
             try {

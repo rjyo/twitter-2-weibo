@@ -84,7 +84,7 @@ public class CommandServlet extends InitServlet {
                 writer.println(String.format("Twitter Token %s", u.getTwitterToken()));
                 writer.println(String.format("Twitter Secret %s", u.getTwitterTokenSecret()));
                 writer.println(String.format("Weibo Token %s", u.getToken()));
-                writer.println(String.format("Weibo Secret %s", u.getTokenSecret()));
+                writer.println(String.format("Weibo User ID %s", u.getWeiboUserId()));
             }
         } else {
             response.sendRedirect("/");

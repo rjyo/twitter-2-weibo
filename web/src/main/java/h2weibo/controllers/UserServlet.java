@@ -28,8 +28,9 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
-import weibo4j.Weibo;
-import weibo4j.WeiboException;
+import weibo4j.Users;
+import weibo4j.model.User;
+import weibo4j.model.WeiboException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,12 +66,10 @@ public class UserServlet extends VelocityLayoutServlet {
             ctx.put("user", helper.findOneByUser(uId));
 
             try {
-                weibo4j.User weiboUser = (weibo4j.User) session.getAttribute(Keys.SESSION_WEIBO_USER);
+                User weiboUser = (User) session.getAttribute(Keys.SESSION_WEIBO_USER);
                 if (weiboUser == null) {
-                    Weibo w = new Weibo();
-                    w.setToken(user.getToken(), user.getTokenSecret());
-                    weiboUser = w.verifyCredentials();
-
+                    Users um = new Users();
+                    weiboUser = um.showUserById(user.getWeiboUserId());
                     session.setAttribute(Keys.SESSION_WEIBO_USER, weiboUser);
                 }
 

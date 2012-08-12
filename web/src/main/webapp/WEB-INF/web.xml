@@ -7,18 +7,6 @@
         <servlet-name>SyncServlet</servlet-name>
         <servlet-class>h2weibo.controllers.CommandServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
-        <init-param>
-            <param-name>t_k</param-name>
-            <param-value>${t_k}</param-value>
-        </init-param>
-        <init-param>
-            <param-name>t_s</param-name>
-            <param-value>${t_s}</param-value>
-        </init-param>
-        <init-param>
-            <param-name>admin</param-name>
-            <param-value>${admin.user}</param-value>
-        </init-param>
     </servlet>
 
     <servlet-mapping>
